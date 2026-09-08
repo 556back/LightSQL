@@ -1,60 +1,38 @@
 import { Link } from "@tanstack/react-router"
-
-import { useTheme } from "@/components/theme-provider"
+import { Layers2 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import icon from "/assets/images/fastapi-icon.svg"
-import iconLight from "/assets/images/fastapi-icon-light.svg"
-import logo from "/assets/images/fastapi-logo.svg"
-import logoLight from "/assets/images/fastapi-logo-light.svg"
-
-interface LogoProps {
-  variant?: "full" | "icon" | "responsive"
-  className?: string
-  asLink?: boolean
-}
 
 export function Logo({
   variant = "full",
   className,
   asLink = true,
-}: LogoProps) {
-  const { resolvedTheme } = useTheme()
-  const isDark = resolvedTheme === "dark"
-
-  const fullLogo = isDark ? logoLight : logo
-  const iconLogo = isDark ? iconLight : icon
-
-  const content =
-    variant === "responsive" ? (
-      <>
-        <img
-          src={fullLogo}
-          alt="FastAPI"
+}: {
+  variant?: "full" | "icon" | "responsive"
+  className?: string
+  asLink?: boolean
+}) {
+  const content = (
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-[10px] bg-primary text-primary-foreground">
+        <Layers2 className="size-5" />
+      </span>
+      {variant !== "icon" && (
+        <span
           className={cn(
-            "h-6 w-auto group-data-[collapsible=icon]:hidden",
-            className,
+            "text-xl font-semibold tracking-tight",
+            variant === "responsive" && "group-data-[collapsible=icon]:hidden",
           )}
-        />
-        <img
-          src={iconLogo}
-          alt="FastAPI"
-          className={cn(
-            "size-5 hidden group-data-[collapsible=icon]:block",
-            className,
-          )}
-        />
-      </>
-    ) : (
-      <img
-        src={variant === "full" ? fullLogo : iconLogo}
-        alt="FastAPI"
-        className={cn(variant === "full" ? "h-6 w-auto" : "size-5", className)}
-      />
-    )
-
-  if (!asLink) {
-    return content
-  }
-
-  return <Link to="/">{content}</Link>
+        >
+          Light<span className="font-normal text-primary">SQL</span>
+        </span>
+      )}
+    </span>
+  )
+  return asLink ? (
+    <Link to="/" aria-label="LightSQL 首页">
+      {content}
+    </Link>
+  ) : (
+    content
+  )
 }

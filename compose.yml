@@ -52,7 +52,9 @@ services:
       db:
         condition: service_healthy
         restart: true
-    environment:
+      prestart:
+        condition: service_completed_successfully
+    environment: &backend-environment
       PROJECT_NAME: ${PROJECT_NAME:?Variable not set}
       SECRET_KEY: ${SECRET_KEY:?Variable not set}
       FIRST_SUPERUSER: ${FIRST_SUPERUSER:?Variable not set}
@@ -63,6 +65,13 @@ services:
       EMAILS_FROM_EMAIL: ${EMAILS_FROM_EMAIL}
       DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:?Variable not set}@db:5432/app
       SENTRY_DSN: ${SENTRY_DSN:-}
+      DATASOURCE_ENCRYPTION_KEY: ${DATASOURCE_ENCRYPTION_KEY:-}
+      DATASOURCE_ALLOWED_HOSTS: ${DATASOURCE_ALLOWED_HOSTS:-[]}
+      MODEL_GATEWAY_ALLOWED_BASE_URLS: ${MODEL_GATEWAY_ALLOWED_BASE_URLS:-[]}
+      QUERY_MAX_CONCURRENCY: ${QUERY_MAX_CONCURRENCY:-5}
+      QUERY_SOURCE_MAX_CONCURRENCY: ${QUERY_SOURCE_MAX_CONCURRENCY:-2}
+      QUERY_MAX_QUEUE_SECONDS: ${QUERY_MAX_QUEUE_SECONDS:-30}
+      ENABLE_PUBLIC_SIGNUP: "false"
 
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check/"]
@@ -83,6 +92,47 @@ services:
       # Route HTTP traffic for this domain
       - traefik.http.routers.backend-http.rule=Host(`${DOMAIN:-localhost}`)
       - traefik.http.routers.backend-http.entrypoints=http
+
+  prestart:
+    image: backend:latest
+    command: ["bash", "scripts/prestart.sh"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment: *backend-environment
+
+  catalog-worker:
+    image: backend:latest
+    command: ["python", "-m", "app.modules.catalog.worker"]
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    environment: *backend-environment
+
+  integration-worker:
+    image: backend:latest
+    command: ["python", "-m", "app.modules.integration.worker"]
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    environment: *backend-environment
+
+  query-worker:
+    image: backend:latest
+    command: ["python", "-m", "app.modules.query.worker"]
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    environment: *backend-environment
 
 volumes:
   app-db-data:

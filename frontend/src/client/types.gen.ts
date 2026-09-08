@@ -5,6 +5,162 @@ export type ClientOptions = {
 };
 
 /**
+ * AnalysisFact
+ */
+export type AnalysisFact = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Value
+     */
+    value: string;
+};
+
+/**
+ * AnalysisFinding
+ */
+export type AnalysisFinding = {
+    /**
+     * Fact Ids
+     */
+    fact_ids: Array<string>;
+    /**
+     * Interpretation
+     */
+    interpretation: string;
+    /**
+     * Next Step
+     */
+    next_step?: string;
+};
+
+/**
+ * AnalysisPublic
+ */
+export type AnalysisPublic = {
+    /**
+     * Facts
+     */
+    facts: Array<AnalysisFact>;
+    /**
+     * Findings
+     */
+    findings?: Array<AnalysisFinding>;
+    /**
+     * Scope
+     */
+    scope: string;
+    /**
+     * Model
+     */
+    model?: string;
+};
+
+/**
+ * AnswerEvidence
+ */
+export type AnswerEvidence = {
+    /**
+     * Topic
+     */
+    topic: string;
+    /**
+     * Semantic Version
+     */
+    semantic_version: number;
+    /**
+     * Catalog Version
+     */
+    catalog_version: number;
+    /**
+     * Published At
+     */
+    published_at: string;
+    /**
+     * Owner
+     */
+    owner: string;
+    /**
+     * Timezone
+     */
+    timezone: string;
+    /**
+     * Database Type
+     */
+    database_type: string;
+    /**
+     * Sources
+     */
+    sources: Array<string>;
+    /**
+     * Metrics
+     */
+    metrics: Array<string>;
+    /**
+     * Fixed Filters
+     */
+    fixed_filters: Array<string>;
+    /**
+     * Policy
+     */
+    policy: string;
+    /**
+     * Notes
+     */
+    notes: Array<string>;
+    /**
+     * Query Id
+     */
+    query_id?: string | null;
+    /**
+     * Queried At
+     */
+    queried_at?: string | null;
+    /**
+     * Expires At
+     */
+    expires_at?: string | null;
+};
+
+/**
+ * AskInput
+ */
+export type AskInput = {
+    /**
+     * Request Id
+     */
+    request_id: string;
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+    /**
+     * Question
+     */
+    question: string;
+    /**
+     * Reset Context
+     */
+    reset_context?: boolean;
+    /**
+     * Mode
+     */
+    mode?: 'auto' | 'metrics' | 'explore';
+    /**
+     * Entity Choices
+     */
+    entity_choices?: {
+        [key: string]: string;
+    };
+};
+
+/**
  * Body_login-login_access_token
  */
 export type Body_login_login_access_token = {
@@ -35,6 +191,897 @@ export type Body_login_login_access_token = {
 };
 
 /**
+ * CatalogPublic
+ */
+export type CatalogPublic = {
+    /**
+     * Source Id
+     */
+    source_id: string;
+    /**
+     * Revision
+     */
+    revision: number;
+    /**
+     * Source Revision
+     */
+    source_revision: number;
+    /**
+     * Scope
+     */
+    scope: Array<ObjectRef>;
+    /**
+     * Tables
+     */
+    tables: Array<TableMeta>;
+    /**
+     * Version
+     */
+    version: number;
+    /**
+     * Synced At
+     */
+    synced_at: string | null;
+    /**
+     * Needs Sync
+     */
+    needs_sync: boolean;
+    /**
+     * Needs Confirmation
+     */
+    needs_confirmation: boolean;
+};
+
+/**
+ * Change
+ */
+export type Change = {
+    /**
+     * Action
+     */
+    action: 'added' | 'removed' | 'changed';
+    /**
+     * Path
+     */
+    path: string;
+    /**
+     * Detail
+     */
+    detail: string;
+    /**
+     * Before
+     */
+    before?: string | null;
+    /**
+     * After
+     */
+    after?: string | null;
+};
+
+/**
+ * CleanupConfirmation
+ */
+export type CleanupConfirmation = {
+    /**
+     * Note
+     */
+    note: string;
+};
+
+/**
+ * ColumnMeta
+ */
+export type ColumnMeta = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Ordinal
+     */
+    ordinal: number;
+    /**
+     * Data Type
+     */
+    data_type: string;
+    /**
+     * Nullable
+     */
+    nullable: boolean;
+    /**
+     * Comment
+     */
+    comment?: string;
+    /**
+     * Primary Key
+     */
+    primary_key?: boolean;
+};
+
+/**
+ * ConnectionTestResult
+ */
+export type ConnectionTestResult = {
+    /**
+     * Success
+     */
+    success: boolean;
+    /**
+     * Message
+     */
+    message: string;
+    /**
+     * Latency Ms
+     */
+    latency_ms: number;
+    /**
+     * Tested At
+     */
+    tested_at: string;
+    /**
+     * Readonly Verified
+     */
+    readonly_verified?: boolean;
+};
+
+/**
+ * ConversationCreate
+ */
+export type ConversationCreate = {
+    /**
+     * Topic Id
+     */
+    topic_id: string;
+};
+
+/**
+ * ConversationPublic
+ */
+export type ConversationPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Topic Id
+     */
+    topic_id: string;
+    /**
+     * Revision
+     */
+    revision: number;
+    /**
+     * Expires At
+     */
+    expires_at: string;
+    /**
+     * Turns
+     */
+    turns: Array<TurnPublic>;
+    /**
+     * Created At
+     */
+    created_at: string;
+};
+
+/**
+ * DataSourceCreate
+ */
+export type DataSourceCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Database Type
+     */
+    database_type: 'postgresql' | 'mysql' | 'oracle' | 'dameng' | 'kingbase';
+    /**
+     * Host
+     */
+    host: string;
+    /**
+     * Port
+     */
+    port: number;
+    /**
+     * Database
+     */
+    database: string;
+    /**
+     * Username
+     */
+    username: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * Tls Mode
+     */
+    tls_mode?: 'verify-full' | 'disable';
+    /**
+     * Enabled
+     */
+    enabled?: boolean;
+};
+
+/**
+ * DataSourcePublic
+ */
+export type DataSourcePublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Database Type
+     */
+    database_type: 'postgresql' | 'mysql' | 'oracle' | 'dameng' | 'kingbase';
+    /**
+     * Host
+     */
+    host: string;
+    /**
+     * Port
+     */
+    port: number;
+    /**
+     * Database
+     */
+    database: string;
+    /**
+     * Username
+     */
+    username: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * Tls Mode
+     */
+    tls_mode?: 'verify-full' | 'disable';
+    /**
+     * Enabled
+     */
+    enabled?: boolean;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Revision
+     */
+    revision: number;
+    /**
+     * Status
+     */
+    status: string;
+    /**
+     * Last Tested At
+     */
+    last_tested_at: string | null;
+    /**
+     * Latency Ms
+     */
+    latency_ms: number | null;
+    /**
+     * Last Error
+     */
+    last_error: string | null;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+    /**
+     * Has Password
+     */
+    has_password?: boolean;
+};
+
+/**
+ * DataSourceUpdate
+ */
+export type DataSourceUpdate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Database Type
+     */
+    database_type: 'postgresql' | 'mysql' | 'oracle' | 'dameng' | 'kingbase';
+    /**
+     * Host
+     */
+    host: string;
+    /**
+     * Port
+     */
+    port: number;
+    /**
+     * Database
+     */
+    database: string;
+    /**
+     * Username
+     */
+    username: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * Tls Mode
+     */
+    tls_mode?: 'verify-full' | 'disable';
+    /**
+     * Enabled
+     */
+    enabled?: boolean;
+    /**
+     * Password
+     */
+    password?: null;
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+};
+
+/**
+ * DataSourcesPublic
+ */
+export type DataSourcesPublic = {
+    /**
+     * Data
+     */
+    data: Array<DataSourcePublic>;
+    /**
+     * Count
+     */
+    count: number;
+};
+
+/**
+ * DatasetInput
+ */
+export type DatasetInput = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Topic Id
+     */
+    topic_id: string;
+    /**
+     * Semantic Version
+     */
+    semantic_version: number;
+    /**
+     * Source Snapshot
+     */
+    source_snapshot: string;
+    /**
+     * As Of
+     */
+    as_of: string;
+    /**
+     * Timezone
+     */
+    timezone: string;
+    /**
+     * Provenance
+     */
+    provenance: 'synthetic' | 'business_reviewed';
+    /**
+     * Owner
+     */
+    owner: string;
+    /**
+     * Cases
+     */
+    cases: Array<GoldCase>;
+};
+
+/**
+ * Dimension
+ */
+export type Dimension = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * Aliases
+     */
+    aliases?: Array<string>;
+    /**
+     * Model Id
+     */
+    model_id: string;
+    /**
+     * Column
+     */
+    column: string;
+    /**
+     * Value Type
+     */
+    value_type: 'string' | 'number' | 'date' | 'datetime' | 'boolean' | 'entity';
+    /**
+     * Timezone Semantics
+     */
+    timezone_semantics?: 'date_only' | 'utc' | 'topic_local';
+    /**
+     * Sensitive
+     */
+    sensitive?: boolean;
+    /**
+     * External Allowed
+     */
+    external_allowed?: boolean;
+    /**
+     * Value External Allowed
+     */
+    value_external_allowed?: false;
+};
+
+/**
+ * DraftUpdate
+ */
+export type DraftUpdate = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * Enabled
+     */
+    enabled: boolean;
+    definition: SemanticDefinition;
+};
+
+/**
+ * EntityAmbiguity
+ */
+export type EntityAmbiguity = {
+    /**
+     * Mention
+     */
+    mention: string;
+    /**
+     * Options
+     */
+    options: Array<EntityOption>;
+};
+
+/**
+ * EntityEntry
+ */
+export type EntityEntry = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Dimension Id
+     */
+    dimension_id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Aliases
+     */
+    aliases?: Array<string>;
+    /**
+     * Value
+     */
+    value: string;
+};
+
+/**
+ * EntityOption
+ */
+export type EntityOption = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Dimension
+     */
+    dimension: string;
+};
+
+/**
+ * ExportPublic
+ */
+export type ExportPublic = {
+    /**
+     * Filename
+     */
+    filename: string;
+    /**
+     * Content
+     */
+    content: string;
+};
+
+/**
+ * FeedbackInput
+ */
+export type FeedbackInput = {
+    /**
+     * Rating
+     */
+    rating: 'helpful' | 'incorrect';
+    /**
+     * Category
+     */
+    category?: 'none' | 'metric' | 'filter' | 'data' | 'chart' | 'other';
+    /**
+     * Comment
+     */
+    comment?: string;
+};
+
+/**
+ * FeedbackPublic
+ */
+export type FeedbackPublic = {
+    /**
+     * Rating
+     */
+    rating: 'helpful' | 'incorrect';
+    /**
+     * Category
+     */
+    category?: 'none' | 'metric' | 'filter' | 'data' | 'chart' | 'other';
+    /**
+     * Comment
+     */
+    comment?: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+};
+
+/**
+ * FeedbackReviewPublic
+ */
+export type FeedbackReviewPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Topic Id
+     */
+    topic_id: string;
+    /**
+     * Turn Id
+     */
+    turn_id: string;
+    /**
+     * Status
+     */
+    status: string;
+    /**
+     * Revision
+     */
+    revision: number;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+    /**
+     * Expires At
+     */
+    expires_at: string;
+    /**
+     * Snapshot
+     */
+    snapshot: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * FixedFilter
+ */
+export type FixedFilter = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Dimension Id
+     */
+    dimension_id: string;
+    /**
+     * Operator
+     */
+    operator: 'eq' | 'in' | 'gt' | 'gte' | 'lt' | 'lte' | 'between' | 'is_null' | 'is_not_null';
+    /**
+     * Values
+     */
+    values?: Array<string>;
+};
+
+/**
+ * ForeignKeyMeta
+ */
+export type ForeignKeyMeta = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Columns
+     */
+    columns: Array<string>;
+    /**
+     * Target Schema
+     */
+    target_schema: string;
+    /**
+     * Target Table
+     */
+    target_table: string;
+    /**
+     * Target Columns
+     */
+    target_columns: Array<string>;
+};
+
+/**
+ * GatewayInput
+ */
+export type GatewayInput = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Provider
+     */
+    provider: 'zhipu' | 'deepseek' | 'qwen' | 'custom';
+    /**
+     * Base Url
+     */
+    base_url: string;
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Api Key
+     */
+    api_key?: null;
+    /**
+     * Timeout Seconds
+     */
+    timeout_seconds?: number;
+    /**
+     * Max Tokens
+     */
+    max_tokens?: number;
+    /**
+     * Json Mode
+     */
+    json_mode?: boolean;
+    /**
+     * Thinking
+     */
+    thinking?: 'default' | 'enabled' | 'disabled';
+    /**
+     * Expected Revision
+     */
+    expected_revision?: number;
+};
+
+/**
+ * GatewayPublic
+ */
+export type GatewayPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Provider
+     */
+    provider: string;
+    /**
+     * Base Url
+     */
+    base_url: string;
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Timeout Seconds
+     */
+    timeout_seconds: number;
+    /**
+     * Max Tokens
+     */
+    max_tokens: number;
+    /**
+     * Json Mode
+     */
+    json_mode: boolean;
+    /**
+     * Thinking
+     */
+    thinking: string;
+    /**
+     * Revision
+     */
+    revision: number;
+    /**
+     * Has Key
+     */
+    has_key: boolean;
+    /**
+     * Active
+     */
+    active: boolean;
+};
+
+/**
+ * GatewayRevision
+ */
+export type GatewayRevision = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+};
+
+/**
+ * GatewayTest
+ */
+export type GatewayTest = {
+    /**
+     * Success
+     */
+    success: boolean;
+    /**
+     * Message
+     */
+    message: string;
+    /**
+     * Elapsed Ms
+     */
+    elapsed_ms: number;
+};
+
+/**
+ * GoldCase
+ */
+export type GoldCase = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Group
+     */
+    group: string;
+    /**
+     * Split
+     */
+    split: 'dev' | 'blind';
+    /**
+     * Question
+     */
+    question: string;
+    /**
+     * History
+     */
+    history?: Array<string>;
+    /**
+     * Mode
+     */
+    mode?: 'auto' | 'metrics' | 'explore';
+    /**
+     * Actor Role
+     */
+    actor_role: string;
+    /**
+     * Tags
+     */
+    tags?: Array<string>;
+    /**
+     * Expected Action
+     */
+    expected_action: 'answer' | 'clarify' | 'unsupported';
+    /**
+     * Columns
+     */
+    columns?: Array<string>;
+    /**
+     * Numeric Columns
+     */
+    numeric_columns?: Array<string>;
+    /**
+     * Expected Rows
+     */
+    expected_rows?: Array<Array<string | boolean | null>>;
+    /**
+     * Ordered
+     */
+    ordered?: boolean;
+    /**
+     * Tolerance
+     */
+    tolerance?: number | string;
+    /**
+     * Reference Sql
+     */
+    reference_sql?: string;
+    /**
+     * Reference Plan
+     */
+    reference_plan?: {
+        [key: string]: unknown;
+    };
+};
+
+/**
+ * Grouping
+ */
+export type Grouping = {
+    /**
+     * Dimension Id
+     */
+    dimension_id: string;
+    /**
+     * Grain
+     */
+    grain?: 'value' | 'day' | 'month' | 'year';
+};
+
+/**
  * HTTPValidationError
  */
 export type HTTPValidationError = {
@@ -42,6 +1089,20 @@ export type HTTPValidationError = {
      * Detail
      */
     detail?: Array<ValidationError>;
+};
+
+/**
+ * ImportRequest
+ */
+export type ImportRequest = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+    /**
+     * Content
+     */
+    content: string;
 };
 
 /**
@@ -113,6 +1174,20 @@ export type ItemsPublic = {
 };
 
 /**
+ * MembersUpdate
+ */
+export type MembersUpdate = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+    /**
+     * User Ids
+     */
+    user_ids: Array<string>;
+};
+
+/**
  * Message
  */
 export type Message = {
@@ -120,6 +1195,80 @@ export type Message = {
      * Message
      */
     message: string;
+};
+
+/**
+ * Metric
+ */
+export type Metric = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Aliases
+     */
+    aliases?: Array<string>;
+    /**
+     * Model Id
+     */
+    model_id: string;
+    /**
+     * Aggregation
+     */
+    aggregation: 'sum' | 'count' | 'count_distinct' | 'avg' | 'min' | 'max' | 'ratio';
+    /**
+     * Column
+     */
+    column?: string | null;
+    /**
+     * Unit
+     */
+    unit: string;
+    /**
+     * Time Dimension
+     */
+    time_dimension?: string | null;
+    /**
+     * Allowed Dimensions
+     */
+    allowed_dimensions?: Array<string>;
+    /**
+     * Filter Ids
+     */
+    filter_ids?: Array<string>;
+    /**
+     * Additivity
+     */
+    additivity?: 'additive' | 'semi_additive' | 'non_additive';
+    /**
+     * Non Additive Dimensions
+     */
+    non_additive_dimensions?: Array<string>;
+    /**
+     * Numerator
+     */
+    numerator?: string | null;
+    /**
+     * Denominator
+     */
+    denominator?: string | null;
+    /**
+     * Zero Denominator
+     */
+    zero_denominator?: 'null';
+    /**
+     * External Allowed
+     */
+    external_allowed?: boolean;
 };
 
 /**
@@ -134,6 +1283,134 @@ export type NewPassword = {
      * New Password
      */
     new_password: string;
+};
+
+/**
+ * ObjectRef
+ */
+export type ObjectRef = {
+    /**
+     * Schema Name
+     */
+    schema_name: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Kind
+     */
+    kind: 'table' | 'view';
+};
+
+/**
+ * Observation
+ */
+export type Observation = {
+    /**
+     * Case Id
+     */
+    case_id: string;
+    /**
+     * Action
+     */
+    action: 'answer' | 'clarify' | 'unsupported' | 'error';
+    /**
+     * Columns
+     */
+    columns?: Array<string>;
+    /**
+     * Rows
+     */
+    rows?: Array<Array<string | boolean | null>>;
+    /**
+     * Truncated
+     */
+    truncated?: boolean;
+    /**
+     * Elapsed Ms
+     */
+    elapsed_ms: number;
+    /**
+     * Prompt Tokens
+     */
+    prompt_tokens?: number;
+    /**
+     * Completion Tokens
+     */
+    completion_tokens?: number;
+    /**
+     * Usage Measured
+     */
+    usage_measured?: boolean;
+    /**
+     * Cost
+     */
+    cost?: number | string | null;
+    /**
+     * Error Category
+     */
+    error_category?: 'none' | 'definition' | 'retrieval' | 'plan' | 'dialect' | 'permission' | 'performance' | 'model' | 'privacy';
+    /**
+     * Critical
+     */
+    critical?: boolean;
+};
+
+/**
+ * Ordering
+ */
+export type Ordering = {
+    /**
+     * Field
+     */
+    field: string;
+    /**
+     * Direction
+     */
+    direction?: 'asc' | 'desc';
+};
+
+/**
+ * PolicyPublic
+ */
+export type PolicyPublic = {
+    /**
+     * Revision
+     */
+    revision: number;
+    /**
+     * Semantic Version
+     */
+    semantic_version: number;
+    /**
+     * Stale
+     */
+    stale: boolean;
+    /**
+     * Grants
+     */
+    grants: Array<QueryGrant>;
+    /**
+     * Models
+     */
+    models: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+/**
+ * PolicyUpdate
+ */
+export type PolicyUpdate = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+    /**
+     * Grants
+     */
+    grants: Array<QueryGrant>;
 };
 
 /**
@@ -159,6 +1436,806 @@ export type PrivateUserCreate = {
 };
 
 /**
+ * PublishRequest
+ */
+export type PublishRequest = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+    /**
+     * Note
+     */
+    note: string;
+};
+
+/**
+ * PublishedDimension
+ */
+export type PublishedDimension = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Aliases
+     */
+    aliases: Array<string>;
+    /**
+     * Value Type
+     */
+    value_type: string;
+};
+
+/**
+ * PublishedMetric
+ */
+export type PublishedMetric = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Aliases
+     */
+    aliases: Array<string>;
+    /**
+     * Unit
+     */
+    unit: string;
+    /**
+     * Aggregation
+     */
+    aggregation: string;
+    /**
+     * Additivity
+     */
+    additivity: string;
+    /**
+     * Allowed Dimensions
+     */
+    allowed_dimensions: Array<string>;
+    /**
+     * Time Dimension
+     */
+    time_dimension: string | null;
+};
+
+/**
+ * PublishedTopic
+ */
+export type PublishedTopic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Version
+     */
+    version: number;
+    /**
+     * Owner
+     */
+    owner: string;
+    /**
+     * Timezone
+     */
+    timezone: string;
+    /**
+     * Metrics
+     */
+    metrics: Array<PublishedMetric>;
+    /**
+     * Dimensions
+     */
+    dimensions: Array<PublishedDimension>;
+};
+
+/**
+ * QueryEvent
+ */
+export type QueryEvent = {
+    /**
+     * Id
+     */
+    id?: string;
+    /**
+     * Job Id
+     */
+    job_id?: string | null;
+    /**
+     * Topic Id
+     */
+    topic_id: string;
+    /**
+     * Actor Id
+     */
+    actor_id: string;
+    /**
+     * Action
+     */
+    action: string;
+    /**
+     * Detail
+     */
+    detail?: string;
+    /**
+     * Created At
+     */
+    created_at?: string;
+};
+
+/**
+ * QueryFilter
+ */
+export type QueryFilter = {
+    /**
+     * Dimension Id
+     */
+    dimension_id: string;
+    /**
+     * Operator
+     */
+    operator: 'eq' | 'in' | 'gt' | 'gte' | 'lt' | 'lte' | 'between' | 'is_null' | 'is_not_null';
+    /**
+     * Values
+     */
+    values?: Array<string>;
+};
+
+/**
+ * QueryGrant
+ */
+export type QueryGrant = {
+    /**
+     * User Id
+     */
+    user_id: string;
+    /**
+     * Metric Ids
+     */
+    metric_ids?: Array<string>;
+    /**
+     * Exploration
+     */
+    exploration?: Array<TableAccess>;
+    /**
+     * Dimension Ids
+     */
+    dimension_ids?: Array<string>;
+    /**
+     * Unrestricted
+     */
+    unrestricted?: boolean;
+    /**
+     * Rows
+     */
+    rows?: Array<RowScope>;
+};
+
+/**
+ * QueryJobPublic
+ */
+export type QueryJobPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Topic Id
+     */
+    topic_id: string;
+    /**
+     * Semantic Version
+     */
+    semantic_version: number;
+    /**
+     * Status
+     */
+    status: string;
+    /**
+     * Message
+     */
+    message: string;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Started At
+     */
+    started_at: string | null;
+    /**
+     * Finished At
+     */
+    finished_at: string | null;
+    /**
+     * Expires At
+     */
+    expires_at: string;
+    /**
+     * Row Count
+     */
+    row_count: number;
+    /**
+     * Result Bytes
+     */
+    result_bytes: number;
+    /**
+     * Truncated
+     */
+    truncated: boolean;
+    /**
+     * Elapsed Ms
+     */
+    elapsed_ms: number | null;
+    /**
+     * Sql
+     */
+    sql?: string | null;
+};
+
+/**
+ * QueryPlan
+ */
+export type QueryPlan = {
+    /**
+     * Metrics
+     */
+    metrics: Array<string>;
+    /**
+     * Dimensions
+     */
+    dimensions?: Array<Grouping>;
+    /**
+     * Filters
+     */
+    filters?: Array<QueryFilter>;
+    time_range?: TimeRange | null;
+    /**
+     * Order By
+     */
+    order_by?: Array<Ordering>;
+    /**
+     * Limit
+     */
+    limit?: number;
+    /**
+     * Timeout Seconds
+     */
+    timeout_seconds?: number;
+};
+
+/**
+ * QueryPreview
+ */
+export type QueryPreview = {
+    /**
+     * Semantic Version
+     */
+    semantic_version: number;
+    /**
+     * Columns
+     */
+    columns: Array<ResultColumn>;
+    /**
+     * Sql
+     */
+    sql?: string | null;
+    /**
+     * Parameter Count
+     */
+    parameter_count: number;
+    /**
+     * Policy Label
+     */
+    policy_label: string;
+    /**
+     * Limit
+     */
+    limit: number;
+    /**
+     * Timeout Seconds
+     */
+    timeout_seconds: number;
+    /**
+     * Notes
+     */
+    notes: Array<string>;
+};
+
+/**
+ * QueryResult
+ */
+export type QueryResult = {
+    /**
+     * Columns
+     */
+    columns: Array<ResultColumn>;
+    /**
+     * Rows
+     */
+    rows: Array<Array<string | boolean | null>>;
+    /**
+     * Truncated
+     */
+    truncated: boolean;
+    /**
+     * Notes
+     */
+    notes: Array<string>;
+};
+
+/**
+ * QuerySubmission
+ */
+export type QuerySubmission = {
+    /**
+     * Topic Id
+     */
+    topic_id: string;
+    /**
+     * Request Id
+     */
+    request_id: string;
+    /**
+     * Plan
+     */
+    plan: QueryPlan | SqlPlan;
+};
+
+/**
+ * Relation
+ */
+export type Relation = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * From Model
+     */
+    from_model: string;
+    /**
+     * To Model
+     */
+    to_model: string;
+    /**
+     * From Columns
+     */
+    from_columns: Array<string>;
+    /**
+     * To Columns
+     */
+    to_columns: Array<string>;
+    /**
+     * Cardinality
+     */
+    cardinality?: 'many_to_one' | 'one_to_one' | 'one_to_many' | 'many_to_many';
+    /**
+     * Join Type
+     */
+    join_type?: 'left' | 'inner';
+    /**
+     * Description
+     */
+    description: string;
+};
+
+/**
+ * ReleasePublic
+ */
+export type ReleasePublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Version
+     */
+    version: number;
+    /**
+     * Note
+     */
+    note: string;
+    /**
+     * Catalog Version
+     */
+    catalog_version: number;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Metric Count
+     */
+    metric_count: number;
+    /**
+     * Dimension Count
+     */
+    dimension_count: number;
+    /**
+     * Changes
+     */
+    changes: Array<string>;
+};
+
+/**
+ * ResultColumn
+ */
+export type ResultColumn = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Value Type
+     */
+    value_type: string;
+    /**
+     * Unit
+     */
+    unit?: string;
+    /**
+     * Timezone
+     */
+    timezone?: string;
+};
+
+/**
+ * ReviewInput
+ */
+export type ReviewInput = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+    /**
+     * Status
+     */
+    status: 'pending' | 'confirmed' | 'dismissed' | 'resolved';
+    /**
+     * Note
+     */
+    note: string;
+    /**
+     * Dataset Id
+     */
+    dataset_id?: string | null;
+    /**
+     * Case Id
+     */
+    case_id?: string | null;
+};
+
+/**
+ * RevisionRequest
+ */
+export type RevisionRequest = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+};
+
+/**
+ * RowScope
+ */
+export type RowScope = {
+    /**
+     * Model Id
+     */
+    model_id: string;
+    /**
+     * Column
+     */
+    column: string;
+    /**
+     * Values
+     */
+    values: Array<string>;
+};
+
+/**
+ * RunInput
+ */
+export type RunInput = {
+    /**
+     * Dataset Id
+     */
+    dataset_id: string;
+    /**
+     * Dataset Digest
+     */
+    dataset_digest: string;
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Configuration
+     */
+    configuration: string;
+    /**
+     * Context Variant
+     */
+    context_variant: 'A' | 'B' | 'C' | 'D';
+    /**
+     * Evidence
+     */
+    evidence: 'protocol_replay' | 'live_model' | 'manual';
+    /**
+     * Split
+     */
+    split: 'dev' | 'blind';
+    /**
+     * Currency
+     */
+    currency?: string;
+    /**
+     * Observations
+     */
+    observations: Array<Observation>;
+};
+
+/**
+ * ScopeUpdate
+ */
+export type ScopeUpdate = {
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+    /**
+     * Expected Source Revision
+     */
+    expected_source_revision: number;
+    /**
+     * Objects
+     */
+    objects: Array<ObjectRef>;
+};
+
+/**
+ * SemanticDefinition
+ */
+export type SemanticDefinition = {
+    /**
+     * Schema Version
+     */
+    schema_version?: 1;
+    /**
+     * Owner
+     */
+    owner?: string;
+    /**
+     * Timezone
+     */
+    timezone?: string;
+    /**
+     * External Allowed
+     */
+    external_allowed?: boolean;
+    /**
+     * Models
+     */
+    models?: Array<SemanticModel>;
+    /**
+     * Dimensions
+     */
+    dimensions?: Array<Dimension>;
+    /**
+     * Metrics
+     */
+    metrics?: Array<Metric>;
+    /**
+     * Filters
+     */
+    filters?: Array<FixedFilter>;
+    /**
+     * Relations
+     */
+    relations?: Array<Relation>;
+    /**
+     * Entities
+     */
+    entities?: Array<EntityEntry>;
+};
+
+/**
+ * SemanticModel
+ */
+export type SemanticModel = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Label
+     */
+    label: string;
+    relation: ObjectRef;
+    /**
+     * Grain
+     */
+    grain: string;
+    /**
+     * Primary Key
+     */
+    primary_key?: Array<string>;
+};
+
+/**
+ * SqlPlan
+ */
+export type SqlPlan = {
+    /**
+     * Kind
+     */
+    kind?: 'sql';
+    /**
+     * Sql
+     */
+    sql: string;
+    /**
+     * Limit
+     */
+    limit?: number;
+    /**
+     * Timeout Seconds
+     */
+    timeout_seconds?: number;
+};
+
+/**
+ * SyncJobPublic
+ */
+export type SyncJobPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Source Id
+     */
+    source_id: string;
+    /**
+     * Source Revision
+     */
+    source_revision: number;
+    /**
+     * Scope Revision
+     */
+    scope_revision: number;
+    /**
+     * Status
+     */
+    status: string;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Started At
+     */
+    started_at: string | null;
+    /**
+     * Finished At
+     */
+    finished_at: string | null;
+    /**
+     * Message
+     */
+    message: string;
+    /**
+     * Table Count
+     */
+    table_count: number;
+    /**
+     * Version
+     */
+    version: number | null;
+    /**
+     * Changes
+     */
+    changes: Array<Change>;
+};
+
+/**
+ * TableAccess
+ */
+export type TableAccess = {
+    /**
+     * Model Id
+     */
+    model_id: string;
+    /**
+     * Columns
+     */
+    columns: Array<string>;
+};
+
+/**
+ * TableMeta
+ */
+export type TableMeta = {
+    /**
+     * Schema Name
+     */
+    schema_name: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Kind
+     */
+    kind: 'table' | 'view';
+    /**
+     * Comment
+     */
+    comment?: string;
+    /**
+     * Columns
+     */
+    columns: Array<ColumnMeta>;
+    /**
+     * Foreign Keys
+     */
+    foreign_keys?: Array<ForeignKeyMeta>;
+    /**
+     * Warnings
+     */
+    warnings?: Array<string>;
+};
+
+/**
+ * TimeRange
+ */
+export type TimeRange = {
+    /**
+     * Start
+     */
+    start: string;
+    /**
+     * End
+     */
+    end: string;
+};
+
+/**
  * Token
  */
 export type Token = {
@@ -170,6 +2247,198 @@ export type Token = {
      * Token Type
      */
     token_type?: string;
+};
+
+/**
+ * TopicCreate
+ */
+export type TopicCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * Source Id
+     */
+    source_id: string;
+    /**
+     * Owner
+     */
+    owner: string;
+};
+
+/**
+ * TopicDetail
+ */
+export type TopicDetail = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Source Id
+     */
+    source_id?: string | null;
+    /**
+     * Source Name
+     */
+    source_name?: string | null;
+    /**
+     * Revision
+     */
+    revision: number;
+    /**
+     * Current Version
+     */
+    current_version: number;
+    /**
+     * Enabled
+     */
+    enabled: boolean;
+    /**
+     * Availability
+     */
+    availability: 'draft' | 'ready' | 'needs_review' | 'disabled';
+    /**
+     * Metric Count
+     */
+    metric_count: number;
+    /**
+     * Dimension Count
+     */
+    dimension_count: number;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+    definition: SemanticDefinition;
+    /**
+     * Member Ids
+     */
+    member_ids: Array<string>;
+};
+
+/**
+ * TopicSummary
+ */
+export type TopicSummary = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description: string;
+    /**
+     * Source Id
+     */
+    source_id?: string | null;
+    /**
+     * Source Name
+     */
+    source_name?: string | null;
+    /**
+     * Revision
+     */
+    revision: number;
+    /**
+     * Current Version
+     */
+    current_version: number;
+    /**
+     * Enabled
+     */
+    enabled: boolean;
+    /**
+     * Availability
+     */
+    availability: 'draft' | 'ready' | 'needs_review' | 'disabled';
+    /**
+     * Metric Count
+     */
+    metric_count: number;
+    /**
+     * Dimension Count
+     */
+    dimension_count: number;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+};
+
+/**
+ * TurnPublic
+ */
+export type TurnPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Sequence
+     */
+    sequence: number;
+    /**
+     * Status
+     */
+    status: string;
+    /**
+     * Question
+     */
+    question: string;
+    /**
+     * Message
+     */
+    message: string;
+    plan?: QueryPlan | null;
+    sql_plan?: SqlPlan | null;
+    /**
+     * Chart
+     */
+    chart?: 'auto' | 'table' | 'bar' | 'line';
+    /**
+     * Analysis Requested
+     */
+    analysis_requested?: boolean;
+    /**
+     * Ambiguities
+     */
+    ambiguities?: Array<EntityAmbiguity>;
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Attempts
+     */
+    attempts: number;
+    /**
+     * Elapsed Ms
+     */
+    elapsed_ms: number;
+    /**
+     * Query Job Id
+     */
+    query_job_id: string | null;
+    feedback?: FeedbackPublic | null;
 };
 
 /**
@@ -341,6 +2610,1989 @@ export type ValidationError = {
         [key: string]: unknown;
     };
 };
+
+/**
+ * ValidationIssue
+ */
+export type ValidationIssue = {
+    /**
+     * Severity
+     */
+    severity: 'error' | 'warning';
+    /**
+     * Code
+     */
+    code: string;
+    /**
+     * Path
+     */
+    path: string;
+    /**
+     * Message
+     */
+    message: string;
+};
+
+/**
+ * ValidationReport
+ */
+export type ValidationReport = {
+    /**
+     * Valid
+     */
+    valid: boolean;
+    /**
+     * Issues
+     */
+    issues: Array<ValidationIssue>;
+    /**
+     * Catalog Version
+     */
+    catalog_version: number;
+    /**
+     * Draft Revision
+     */
+    draft_revision?: number;
+    /**
+     * Binding Digest
+     */
+    binding_digest: string;
+};
+
+/**
+ * DataSourceCreate
+ */
+export type DataSourceCreateWritable = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Database Type
+     */
+    database_type: 'postgresql' | 'mysql' | 'oracle' | 'dameng' | 'kingbase';
+    /**
+     * Host
+     */
+    host: string;
+    /**
+     * Port
+     */
+    port: number;
+    /**
+     * Database
+     */
+    database: string;
+    /**
+     * Username
+     */
+    username: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * Tls Mode
+     */
+    tls_mode?: 'verify-full' | 'disable';
+    /**
+     * Enabled
+     */
+    enabled?: boolean;
+    /**
+     * Password
+     */
+    password: string;
+};
+
+/**
+ * DataSourceUpdate
+ */
+export type DataSourceUpdateWritable = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Database Type
+     */
+    database_type: 'postgresql' | 'mysql' | 'oracle' | 'dameng' | 'kingbase';
+    /**
+     * Host
+     */
+    host: string;
+    /**
+     * Port
+     */
+    port: number;
+    /**
+     * Database
+     */
+    database: string;
+    /**
+     * Username
+     */
+    username: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * Tls Mode
+     */
+    tls_mode?: 'verify-full' | 'disable';
+    /**
+     * Enabled
+     */
+    enabled?: boolean;
+    /**
+     * Password
+     */
+    password?: string | null;
+    /**
+     * Expected Revision
+     */
+    expected_revision: number;
+};
+
+/**
+ * GatewayInput
+ */
+export type GatewayInputWritable = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Provider
+     */
+    provider: 'zhipu' | 'deepseek' | 'qwen' | 'custom';
+    /**
+     * Base Url
+     */
+    base_url: string;
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Api Key
+     */
+    api_key?: string | null;
+    /**
+     * Timeout Seconds
+     */
+    timeout_seconds?: number;
+    /**
+     * Max Tokens
+     */
+    max_tokens?: number;
+    /**
+     * Json Mode
+     */
+    json_mode?: boolean;
+    /**
+     * Thinking
+     */
+    thinking?: 'default' | 'enabled' | 'disabled';
+    /**
+     * Expected Revision
+     */
+    expected_revision?: number;
+};
+
+export type qualityOperationsOverviewData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/quality/operations';
+};
+
+export type qualityOperationsOverviewResponses = {
+    /**
+     * Response Quality-Operations Overview
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type qualityOperationsOverviewResponse = qualityOperationsOverviewResponses[keyof qualityOperationsOverviewResponses];
+
+export type qualityListFeedbackData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Offset
+         */
+        offset?: number;
+    };
+    url: '/api/v1/quality/feedback';
+};
+
+export type qualityListFeedbackErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type qualityListFeedbackError = qualityListFeedbackErrors[keyof qualityListFeedbackErrors];
+
+export type qualityListFeedbackResponses = {
+    /**
+     * Response Quality-List Feedback
+     *
+     * Successful Response
+     */
+    200: Array<FeedbackReviewPublic>;
+};
+
+export type qualityListFeedbackResponse = qualityListFeedbackResponses[keyof qualityListFeedbackResponses];
+
+export type qualityReviewFeedbackData = {
+    body: ReviewInput;
+    path: {
+        /**
+         * Feedback Id
+         */
+        feedback_id: string;
+    };
+    query?: never;
+    url: '/api/v1/quality/feedback/{feedback_id}';
+};
+
+export type qualityReviewFeedbackErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type qualityReviewFeedbackError = qualityReviewFeedbackErrors[keyof qualityReviewFeedbackErrors];
+
+export type qualityReviewFeedbackResponses = {
+    /**
+     * Successful Response
+     */
+    200: FeedbackReviewPublic;
+};
+
+export type qualityReviewFeedbackResponse = qualityReviewFeedbackResponses[keyof qualityReviewFeedbackResponses];
+
+export type qualityListDatasetsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Offset
+         */
+        offset?: number;
+    };
+    url: '/api/v1/quality/datasets';
+};
+
+export type qualityListDatasetsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type qualityListDatasetsError = qualityListDatasetsErrors[keyof qualityListDatasetsErrors];
+
+export type qualityListDatasetsResponses = {
+    /**
+     * Response Quality-List Datasets
+     *
+     * Successful Response
+     */
+    200: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type qualityListDatasetsResponse = qualityListDatasetsResponses[keyof qualityListDatasetsResponses];
+
+export type qualityCreateDatasetData = {
+    body: DatasetInput;
+    path?: never;
+    query?: never;
+    url: '/api/v1/quality/datasets';
+};
+
+export type qualityCreateDatasetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type qualityCreateDatasetError = qualityCreateDatasetErrors[keyof qualityCreateDatasetErrors];
+
+export type qualityCreateDatasetResponses = {
+    /**
+     * Response Quality-Create Dataset
+     *
+     * Successful Response
+     */
+    201: {
+        [key: string]: unknown;
+    };
+};
+
+export type qualityCreateDatasetResponse = qualityCreateDatasetResponses[keyof qualityCreateDatasetResponses];
+
+export type qualityGetDatasetData = {
+    body?: never;
+    path: {
+        /**
+         * Dataset Id
+         */
+        dataset_id: string;
+    };
+    query?: never;
+    url: '/api/v1/quality/datasets/{dataset_id}';
+};
+
+export type qualityGetDatasetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type qualityGetDatasetError = qualityGetDatasetErrors[keyof qualityGetDatasetErrors];
+
+export type qualityGetDatasetResponses = {
+    /**
+     * Response Quality-Get Dataset
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type qualityGetDatasetResponse = qualityGetDatasetResponses[keyof qualityGetDatasetResponses];
+
+export type qualityListRunsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Dataset Id
+         */
+        dataset_id?: string | null;
+        /**
+         * Offset
+         */
+        offset?: number;
+    };
+    url: '/api/v1/quality/runs';
+};
+
+export type qualityListRunsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type qualityListRunsError = qualityListRunsErrors[keyof qualityListRunsErrors];
+
+export type qualityListRunsResponses = {
+    /**
+     * Response Quality-List Runs
+     *
+     * Successful Response
+     */
+    200: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type qualityListRunsResponse = qualityListRunsResponses[keyof qualityListRunsResponses];
+
+export type qualityCreateRunData = {
+    body: RunInput;
+    path?: never;
+    query?: never;
+    url: '/api/v1/quality/runs';
+};
+
+export type qualityCreateRunErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type qualityCreateRunError = qualityCreateRunErrors[keyof qualityCreateRunErrors];
+
+export type qualityCreateRunResponses = {
+    /**
+     * Response Quality-Create Run
+     *
+     * Successful Response
+     */
+    201: {
+        [key: string]: unknown;
+    };
+};
+
+export type qualityCreateRunResponse = qualityCreateRunResponses[keyof qualityCreateRunResponses];
+
+export type qualityGetRunData = {
+    body?: never;
+    path: {
+        /**
+         * Run Id
+         */
+        run_id: string;
+    };
+    query?: never;
+    url: '/api/v1/quality/runs/{run_id}';
+};
+
+export type qualityGetRunErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type qualityGetRunError = qualityGetRunErrors[keyof qualityGetRunErrors];
+
+export type qualityGetRunResponses = {
+    /**
+     * Response Quality-Get Run
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type qualityGetRunResponse = qualityGetRunResponses[keyof qualityGetRunResponses];
+
+export type assistantGatewayPresetsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/assistant/gateways/presets';
+};
+
+export type assistantGatewayPresetsResponses = {
+    /**
+     * Response Assistant-Gateway Presets
+     *
+     * Successful Response
+     */
+    200: Array<{
+        [key: string]: string;
+    }>;
+};
+
+export type assistantGatewayPresetsResponse = assistantGatewayPresetsResponses[keyof assistantGatewayPresetsResponses];
+
+export type assistantListGatewaysData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/assistant/gateways';
+};
+
+export type assistantListGatewaysResponses = {
+    /**
+     * Response Assistant-List Gateways
+     *
+     * Successful Response
+     */
+    200: Array<GatewayPublic>;
+};
+
+export type assistantListGatewaysResponse = assistantListGatewaysResponses[keyof assistantListGatewaysResponses];
+
+export type assistantCreateGatewayData = {
+    body: GatewayInputWritable;
+    path?: never;
+    query?: never;
+    url: '/api/v1/assistant/gateways';
+};
+
+export type assistantCreateGatewayErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantCreateGatewayError = assistantCreateGatewayErrors[keyof assistantCreateGatewayErrors];
+
+export type assistantCreateGatewayResponses = {
+    /**
+     * Successful Response
+     */
+    201: GatewayPublic;
+};
+
+export type assistantCreateGatewayResponse = assistantCreateGatewayResponses[keyof assistantCreateGatewayResponses];
+
+export type assistantDeleteGatewayData = {
+    body: GatewayRevision;
+    path: {
+        /**
+         * Gateway Id
+         */
+        gateway_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/gateways/{gateway_id}';
+};
+
+export type assistantDeleteGatewayErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantDeleteGatewayError = assistantDeleteGatewayErrors[keyof assistantDeleteGatewayErrors];
+
+export type assistantDeleteGatewayResponses = {
+    /**
+     * Response Assistant-Delete Gateway
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: boolean;
+    };
+};
+
+export type assistantDeleteGatewayResponse = assistantDeleteGatewayResponses[keyof assistantDeleteGatewayResponses];
+
+export type assistantUpdateGatewayData = {
+    body: GatewayInputWritable;
+    path: {
+        /**
+         * Gateway Id
+         */
+        gateway_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/gateways/{gateway_id}';
+};
+
+export type assistantUpdateGatewayErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantUpdateGatewayError = assistantUpdateGatewayErrors[keyof assistantUpdateGatewayErrors];
+
+export type assistantUpdateGatewayResponses = {
+    /**
+     * Successful Response
+     */
+    200: GatewayPublic;
+};
+
+export type assistantUpdateGatewayResponse = assistantUpdateGatewayResponses[keyof assistantUpdateGatewayResponses];
+
+export type assistantActivateGatewayData = {
+    body: GatewayRevision;
+    path: {
+        /**
+         * Gateway Id
+         */
+        gateway_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/gateways/{gateway_id}/activate';
+};
+
+export type assistantActivateGatewayErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantActivateGatewayError = assistantActivateGatewayErrors[keyof assistantActivateGatewayErrors];
+
+export type assistantActivateGatewayResponses = {
+    /**
+     * Successful Response
+     */
+    200: GatewayPublic;
+};
+
+export type assistantActivateGatewayResponse = assistantActivateGatewayResponses[keyof assistantActivateGatewayResponses];
+
+export type assistantDeactivateGatewayData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/assistant/gateways/deactivate';
+};
+
+export type assistantDeactivateGatewayResponses = {
+    /**
+     * Response Assistant-Deactivate Gateway
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: boolean;
+    };
+};
+
+export type assistantDeactivateGatewayResponse = assistantDeactivateGatewayResponses[keyof assistantDeactivateGatewayResponses];
+
+export type assistantTestGatewayData = {
+    body: GatewayRevision;
+    path: {
+        /**
+         * Gateway Id
+         */
+        gateway_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/gateways/{gateway_id}/test';
+};
+
+export type assistantTestGatewayErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantTestGatewayError = assistantTestGatewayErrors[keyof assistantTestGatewayErrors];
+
+export type assistantTestGatewayResponses = {
+    /**
+     * Successful Response
+     */
+    200: GatewayTest;
+};
+
+export type assistantTestGatewayResponse = assistantTestGatewayResponses[keyof assistantTestGatewayResponses];
+
+export type assistantModelStatusData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/assistant/status';
+};
+
+export type assistantModelStatusResponses = {
+    /**
+     * Response Assistant-Model Status
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: string | boolean;
+    };
+};
+
+export type assistantModelStatusResponse = assistantModelStatusResponses[keyof assistantModelStatusResponses];
+
+export type assistantListConversationsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/assistant/conversations';
+};
+
+export type assistantListConversationsResponses = {
+    /**
+     * Response Assistant-List Conversations
+     *
+     * Successful Response
+     */
+    200: Array<ConversationPublic>;
+};
+
+export type assistantListConversationsResponse = assistantListConversationsResponses[keyof assistantListConversationsResponses];
+
+export type assistantCreateConversationData = {
+    body: ConversationCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/assistant/conversations';
+};
+
+export type assistantCreateConversationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantCreateConversationError = assistantCreateConversationErrors[keyof assistantCreateConversationErrors];
+
+export type assistantCreateConversationResponses = {
+    /**
+     * Successful Response
+     */
+    201: ConversationPublic;
+};
+
+export type assistantCreateConversationResponse = assistantCreateConversationResponses[keyof assistantCreateConversationResponses];
+
+export type assistantDeleteConversationData = {
+    body?: never;
+    path: {
+        /**
+         * Conversation Id
+         */
+        conversation_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/conversations/{conversation_id}';
+};
+
+export type assistantDeleteConversationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantDeleteConversationError = assistantDeleteConversationErrors[keyof assistantDeleteConversationErrors];
+
+export type assistantDeleteConversationResponses = {
+    /**
+     * Response Assistant-Delete Conversation
+     *
+     * Successful Response
+     */
+    200: {
+        [key: string]: boolean;
+    };
+};
+
+export type assistantDeleteConversationResponse = assistantDeleteConversationResponses[keyof assistantDeleteConversationResponses];
+
+export type assistantGetConversationData = {
+    body?: never;
+    path: {
+        /**
+         * Conversation Id
+         */
+        conversation_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/conversations/{conversation_id}';
+};
+
+export type assistantGetConversationErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantGetConversationError = assistantGetConversationErrors[keyof assistantGetConversationErrors];
+
+export type assistantGetConversationResponses = {
+    /**
+     * Successful Response
+     */
+    200: ConversationPublic;
+};
+
+export type assistantGetConversationResponse = assistantGetConversationResponses[keyof assistantGetConversationResponses];
+
+export type assistantConversationEventsData = {
+    body?: never;
+    path: {
+        /**
+         * Conversation Id
+         */
+        conversation_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/conversations/{conversation_id}/events';
+};
+
+export type assistantConversationEventsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantConversationEventsError = assistantConversationEventsErrors[keyof assistantConversationEventsErrors];
+
+export type assistantConversationEventsResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
+export type assistantAnswerEvidenceData = {
+    body?: never;
+    path: {
+        /**
+         * Conversation Id
+         */
+        conversation_id: string;
+        /**
+         * Turn Id
+         */
+        turn_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/conversations/{conversation_id}/turns/{turn_id}/evidence';
+};
+
+export type assistantAnswerEvidenceErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantAnswerEvidenceError = assistantAnswerEvidenceErrors[keyof assistantAnswerEvidenceErrors];
+
+export type assistantAnswerEvidenceResponses = {
+    /**
+     * Successful Response
+     */
+    200: AnswerEvidence;
+};
+
+export type assistantAnswerEvidenceResponse = assistantAnswerEvidenceResponses[keyof assistantAnswerEvidenceResponses];
+
+export type assistantSaveFeedbackData = {
+    body: FeedbackInput;
+    path: {
+        /**
+         * Conversation Id
+         */
+        conversation_id: string;
+        /**
+         * Turn Id
+         */
+        turn_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/conversations/{conversation_id}/turns/{turn_id}/feedback';
+};
+
+export type assistantSaveFeedbackErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantSaveFeedbackError = assistantSaveFeedbackErrors[keyof assistantSaveFeedbackErrors];
+
+export type assistantSaveFeedbackResponses = {
+    /**
+     * Successful Response
+     */
+    200: FeedbackPublic;
+};
+
+export type assistantSaveFeedbackResponse = assistantSaveFeedbackResponses[keyof assistantSaveFeedbackResponses];
+
+export type assistantAskData = {
+    body: AskInput;
+    path: {
+        /**
+         * Conversation Id
+         */
+        conversation_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/conversations/{conversation_id}/turns';
+};
+
+export type assistantAskErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantAskError = assistantAskErrors[keyof assistantAskErrors];
+
+export type assistantAskResponses = {
+    /**
+     * Successful Response
+     */
+    200: ConversationPublic;
+};
+
+export type assistantAskResponse = assistantAskResponses[keyof assistantAskResponses];
+
+export type assistantAnalyzeData = {
+    body?: never;
+    path: {
+        /**
+         * Conversation Id
+         */
+        conversation_id: string;
+        /**
+         * Turn Id
+         */
+        turn_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/conversations/{conversation_id}/turns/{turn_id}/analysis';
+};
+
+export type assistantAnalyzeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantAnalyzeError = assistantAnalyzeErrors[keyof assistantAnalyzeErrors];
+
+export type assistantAnalyzeResponses = {
+    /**
+     * Successful Response
+     */
+    200: AnalysisPublic;
+};
+
+export type assistantAnalyzeResponse = assistantAnalyzeResponses[keyof assistantAnalyzeResponses];
+
+export type assistantExplorationTablesData = {
+    body?: never;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/topics/{topic_id}/tables';
+};
+
+export type assistantExplorationTablesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantExplorationTablesError = assistantExplorationTablesErrors[keyof assistantExplorationTablesErrors];
+
+export type assistantExplorationTablesResponses = {
+    /**
+     * Response Assistant-Exploration Tables
+     *
+     * Successful Response
+     */
+    200: Array<{
+        [key: string]: unknown;
+    }>;
+};
+
+export type assistantExplorationTablesResponse = assistantExplorationTablesResponses[keyof assistantExplorationTablesResponses];
+
+export type assistantExecuteData = {
+    body?: never;
+    path: {
+        /**
+         * Conversation Id
+         */
+        conversation_id: string;
+        /**
+         * Turn Id
+         */
+        turn_id: string;
+    };
+    query?: never;
+    url: '/api/v1/assistant/conversations/{conversation_id}/turns/{turn_id}/execute';
+};
+
+export type assistantExecuteErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type assistantExecuteError = assistantExecuteErrors[keyof assistantExecuteErrors];
+
+export type assistantExecuteResponses = {
+    /**
+     * Successful Response
+     */
+    202: QueryJobPublic;
+};
+
+export type assistantExecuteResponse = assistantExecuteResponses[keyof assistantExecuteResponses];
+
+export type queriesCapabilitiesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/queries/capabilities';
+};
+
+export type queriesCapabilitiesResponses = {
+    /**
+     * Response Queries-Capabilities
+     *
+     * Successful Response
+     */
+    200: Array<{
+        [key: string]: string | boolean;
+    }>;
+};
+
+export type queriesCapabilitiesResponse = queriesCapabilitiesResponses[keyof queriesCapabilitiesResponses];
+
+export type queriesQueryCatalogData = {
+    body?: never;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/queries/topics/{topic_id}/catalog';
+};
+
+export type queriesQueryCatalogErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesQueryCatalogError = queriesQueryCatalogErrors[keyof queriesQueryCatalogErrors];
+
+export type queriesQueryCatalogResponses = {
+    /**
+     * Successful Response
+     */
+    200: PublishedTopic;
+};
+
+export type queriesQueryCatalogResponse = queriesQueryCatalogResponses[keyof queriesQueryCatalogResponses];
+
+export type queriesGetPolicyData = {
+    body?: never;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/queries/topics/{topic_id}/policy';
+};
+
+export type queriesGetPolicyErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesGetPolicyError = queriesGetPolicyErrors[keyof queriesGetPolicyErrors];
+
+export type queriesGetPolicyResponses = {
+    /**
+     * Successful Response
+     */
+    200: PolicyPublic;
+};
+
+export type queriesGetPolicyResponse = queriesGetPolicyResponses[keyof queriesGetPolicyResponses];
+
+export type queriesSavePolicyData = {
+    body: PolicyUpdate;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/queries/topics/{topic_id}/policy';
+};
+
+export type queriesSavePolicyErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesSavePolicyError = queriesSavePolicyErrors[keyof queriesSavePolicyErrors];
+
+export type queriesSavePolicyResponses = {
+    /**
+     * Successful Response
+     */
+    200: PolicyPublic;
+};
+
+export type queriesSavePolicyResponse = queriesSavePolicyResponses[keyof queriesSavePolicyResponses];
+
+export type queriesPreviewData = {
+    body: QueryPlan;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/queries/topics/{topic_id}/preview';
+};
+
+export type queriesPreviewErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesPreviewError = queriesPreviewErrors[keyof queriesPreviewErrors];
+
+export type queriesPreviewResponses = {
+    /**
+     * Successful Response
+     */
+    200: QueryPreview;
+};
+
+export type queriesPreviewResponse = queriesPreviewResponses[keyof queriesPreviewResponses];
+
+export type queriesListJobsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Topic Id
+         */
+        topic_id?: string | null;
+    };
+    url: '/api/v1/queries/';
+};
+
+export type queriesListJobsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesListJobsError = queriesListJobsErrors[keyof queriesListJobsErrors];
+
+export type queriesListJobsResponses = {
+    /**
+     * Response Queries-List Jobs
+     *
+     * Successful Response
+     */
+    200: Array<QueryJobPublic>;
+};
+
+export type queriesListJobsResponse = queriesListJobsResponses[keyof queriesListJobsResponses];
+
+export type queriesSubmitData = {
+    body: QuerySubmission;
+    path?: never;
+    query?: never;
+    url: '/api/v1/queries/';
+};
+
+export type queriesSubmitErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesSubmitError = queriesSubmitErrors[keyof queriesSubmitErrors];
+
+export type queriesSubmitResponses = {
+    /**
+     * Successful Response
+     */
+    202: QueryJobPublic;
+};
+
+export type queriesSubmitResponse = queriesSubmitResponses[keyof queriesSubmitResponses];
+
+export type queriesAuditData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Limit
+         */
+        limit?: number;
+    };
+    url: '/api/v1/queries/audit';
+};
+
+export type queriesAuditErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesAuditError = queriesAuditErrors[keyof queriesAuditErrors];
+
+export type queriesAuditResponses = {
+    /**
+     * Response Queries-Audit
+     *
+     * Successful Response
+     */
+    200: Array<QueryEvent>;
+};
+
+export type queriesAuditResponse = queriesAuditResponses[keyof queriesAuditResponses];
+
+export type queriesPendingCleanupData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/queries/cleanup';
+};
+
+export type queriesPendingCleanupResponses = {
+    /**
+     * Response Queries-Pending Cleanup
+     *
+     * Successful Response
+     */
+    200: Array<QueryJobPublic>;
+};
+
+export type queriesPendingCleanupResponse = queriesPendingCleanupResponses[keyof queriesPendingCleanupResponses];
+
+export type queriesConfirmCleanupData = {
+    body: CleanupConfirmation;
+    path: {
+        /**
+         * Job Id
+         */
+        job_id: string;
+    };
+    query?: never;
+    url: '/api/v1/queries/{job_id}/confirm-cleanup';
+};
+
+export type queriesConfirmCleanupErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesConfirmCleanupError = queriesConfirmCleanupErrors[keyof queriesConfirmCleanupErrors];
+
+export type queriesConfirmCleanupResponses = {
+    /**
+     * Successful Response
+     */
+    200: QueryJobPublic;
+};
+
+export type queriesConfirmCleanupResponse = queriesConfirmCleanupResponses[keyof queriesConfirmCleanupResponses];
+
+export type queriesGetJobData = {
+    body?: never;
+    path: {
+        /**
+         * Job Id
+         */
+        job_id: string;
+    };
+    query?: never;
+    url: '/api/v1/queries/{job_id}';
+};
+
+export type queriesGetJobErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesGetJobError = queriesGetJobErrors[keyof queriesGetJobErrors];
+
+export type queriesGetJobResponses = {
+    /**
+     * Successful Response
+     */
+    200: QueryJobPublic;
+};
+
+export type queriesGetJobResponse = queriesGetJobResponses[keyof queriesGetJobResponses];
+
+export type queriesCancelData = {
+    body?: never;
+    path: {
+        /**
+         * Job Id
+         */
+        job_id: string;
+    };
+    query?: never;
+    url: '/api/v1/queries/{job_id}/cancel';
+};
+
+export type queriesCancelErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesCancelError = queriesCancelErrors[keyof queriesCancelErrors];
+
+export type queriesCancelResponses = {
+    /**
+     * Successful Response
+     */
+    200: QueryJobPublic;
+};
+
+export type queriesCancelResponse = queriesCancelResponses[keyof queriesCancelResponses];
+
+export type queriesResultData = {
+    body?: never;
+    path: {
+        /**
+         * Job Id
+         */
+        job_id: string;
+    };
+    query?: never;
+    url: '/api/v1/queries/{job_id}/result';
+};
+
+export type queriesResultErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type queriesResultError = queriesResultErrors[keyof queriesResultErrors];
+
+export type queriesResultResponses = {
+    /**
+     * Successful Response
+     */
+    200: QueryResult;
+};
+
+export type queriesResultResponse = queriesResultResponses[keyof queriesResultResponses];
+
+export type topicsListTopicsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/topics/';
+};
+
+export type topicsListTopicsResponses = {
+    /**
+     * Response Topics-List Topics
+     *
+     * Successful Response
+     */
+    200: Array<TopicSummary>;
+};
+
+export type topicsListTopicsResponse = topicsListTopicsResponses[keyof topicsListTopicsResponses];
+
+export type topicsCreateTopicData = {
+    body: TopicCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/topics/';
+};
+
+export type topicsCreateTopicErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsCreateTopicError = topicsCreateTopicErrors[keyof topicsCreateTopicErrors];
+
+export type topicsCreateTopicResponses = {
+    /**
+     * Successful Response
+     */
+    201: TopicDetail;
+};
+
+export type topicsCreateTopicResponse = topicsCreateTopicResponses[keyof topicsCreateTopicResponses];
+
+export type topicsDeleteDraftTopicData = {
+    body?: never;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query: {
+        /**
+         * Expected Revision
+         */
+        expected_revision: number;
+    };
+    url: '/api/v1/topics/{topic_id}';
+};
+
+export type topicsDeleteDraftTopicErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsDeleteDraftTopicError = topicsDeleteDraftTopicErrors[keyof topicsDeleteDraftTopicErrors];
+
+export type topicsDeleteDraftTopicResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type topicsDeleteDraftTopicResponse = topicsDeleteDraftTopicResponses[keyof topicsDeleteDraftTopicResponses];
+
+export type topicsGetTopicData = {
+    body?: never;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}';
+};
+
+export type topicsGetTopicErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsGetTopicError = topicsGetTopicErrors[keyof topicsGetTopicErrors];
+
+export type topicsGetTopicResponses = {
+    /**
+     * Successful Response
+     */
+    200: TopicDetail;
+};
+
+export type topicsGetTopicResponse = topicsGetTopicResponses[keyof topicsGetTopicResponses];
+
+export type topicsSaveDraftData = {
+    body: DraftUpdate;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}/draft';
+};
+
+export type topicsSaveDraftErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsSaveDraftError = topicsSaveDraftErrors[keyof topicsSaveDraftErrors];
+
+export type topicsSaveDraftResponses = {
+    /**
+     * Successful Response
+     */
+    200: TopicDetail;
+};
+
+export type topicsSaveDraftResponse = topicsSaveDraftResponses[keyof topicsSaveDraftResponses];
+
+export type topicsValidateDraftData = {
+    body: RevisionRequest;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}/validate';
+};
+
+export type topicsValidateDraftErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsValidateDraftError = topicsValidateDraftErrors[keyof topicsValidateDraftErrors];
+
+export type topicsValidateDraftResponses = {
+    /**
+     * Successful Response
+     */
+    200: ValidationReport;
+};
+
+export type topicsValidateDraftResponse = topicsValidateDraftResponses[keyof topicsValidateDraftResponses];
+
+export type topicsListReleasesData = {
+    body?: never;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}/releases';
+};
+
+export type topicsListReleasesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsListReleasesError = topicsListReleasesErrors[keyof topicsListReleasesErrors];
+
+export type topicsListReleasesResponses = {
+    /**
+     * Response Topics-List Releases
+     *
+     * Successful Response
+     */
+    200: Array<ReleasePublic>;
+};
+
+export type topicsListReleasesResponse = topicsListReleasesResponses[keyof topicsListReleasesResponses];
+
+export type topicsPublishTopicData = {
+    body: PublishRequest;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}/releases';
+};
+
+export type topicsPublishTopicErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsPublishTopicError = topicsPublishTopicErrors[keyof topicsPublishTopicErrors];
+
+export type topicsPublishTopicResponses = {
+    /**
+     * Successful Response
+     */
+    201: ReleasePublic;
+};
+
+export type topicsPublishTopicResponse = topicsPublishTopicResponses[keyof topicsPublishTopicResponses];
+
+export type topicsRestoreReleaseData = {
+    body: RevisionRequest;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+        /**
+         * Version
+         */
+        version: number;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}/releases/{version}/restore';
+};
+
+export type topicsRestoreReleaseErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsRestoreReleaseError = topicsRestoreReleaseErrors[keyof topicsRestoreReleaseErrors];
+
+export type topicsRestoreReleaseResponses = {
+    /**
+     * Successful Response
+     */
+    200: TopicDetail;
+};
+
+export type topicsRestoreReleaseResponse = topicsRestoreReleaseResponses[keyof topicsRestoreReleaseResponses];
+
+export type topicsSaveMembersData = {
+    body: MembersUpdate;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}/members';
+};
+
+export type topicsSaveMembersErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsSaveMembersError = topicsSaveMembersErrors[keyof topicsSaveMembersErrors];
+
+export type topicsSaveMembersResponses = {
+    /**
+     * Successful Response
+     */
+    200: TopicDetail;
+};
+
+export type topicsSaveMembersResponse = topicsSaveMembersResponses[keyof topicsSaveMembersResponses];
+
+export type topicsImportDefinitionData = {
+    body: ImportRequest;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}/import';
+};
+
+export type topicsImportDefinitionErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsImportDefinitionError = topicsImportDefinitionErrors[keyof topicsImportDefinitionErrors];
+
+export type topicsImportDefinitionResponses = {
+    /**
+     * Successful Response
+     */
+    200: TopicDetail;
+};
+
+export type topicsImportDefinitionResponse = topicsImportDefinitionResponses[keyof topicsImportDefinitionResponses];
+
+export type topicsExportDefinitionData = {
+    body?: never;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: {
+        /**
+         * Format
+         */
+        format?: 'json' | 'yaml';
+        /**
+         * Version
+         */
+        version?: number;
+    };
+    url: '/api/v1/topics/{topic_id}/export';
+};
+
+export type topicsExportDefinitionErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsExportDefinitionError = topicsExportDefinitionErrors[keyof topicsExportDefinitionErrors];
+
+export type topicsExportDefinitionResponses = {
+    /**
+     * Successful Response
+     */
+    200: ExportPublic;
+};
+
+export type topicsExportDefinitionResponse = topicsExportDefinitionResponses[keyof topicsExportDefinitionResponses];
+
+export type topicsGetPublishedTopicData = {
+    body?: never;
+    path: {
+        /**
+         * Topic Id
+         */
+        topic_id: string;
+    };
+    query?: never;
+    url: '/api/v1/topics/{topic_id}/published';
+};
+
+export type topicsGetPublishedTopicErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type topicsGetPublishedTopicError = topicsGetPublishedTopicErrors[keyof topicsGetPublishedTopicErrors];
+
+export type topicsGetPublishedTopicResponses = {
+    /**
+     * Successful Response
+     */
+    200: PublishedTopic;
+};
+
+export type topicsGetPublishedTopicResponse = topicsGetPublishedTopicResponses[keyof topicsGetPublishedTopicResponses];
+
+export type catalogListSchemasData = {
+    body?: never;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query?: never;
+    url: '/api/v1/catalog/{source_id}/schemas';
+};
+
+export type catalogListSchemasErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type catalogListSchemasError = catalogListSchemasErrors[keyof catalogListSchemasErrors];
+
+export type catalogListSchemasResponses = {
+    /**
+     * Response Catalog-List Schemas
+     *
+     * Successful Response
+     */
+    200: Array<string>;
+};
+
+export type catalogListSchemasResponse = catalogListSchemasResponses[keyof catalogListSchemasResponses];
+
+export type catalogDiscoverObjectsData = {
+    body?: never;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query: {
+        /**
+         * Schema Name
+         */
+        schema_name: string;
+    };
+    url: '/api/v1/catalog/{source_id}/discover';
+};
+
+export type catalogDiscoverObjectsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type catalogDiscoverObjectsError = catalogDiscoverObjectsErrors[keyof catalogDiscoverObjectsErrors];
+
+export type catalogDiscoverObjectsResponses = {
+    /**
+     * Response Catalog-Discover Objects
+     *
+     * Successful Response
+     */
+    200: Array<ObjectRef>;
+};
+
+export type catalogDiscoverObjectsResponse = catalogDiscoverObjectsResponses[keyof catalogDiscoverObjectsResponses];
+
+export type catalogGetCatalogData = {
+    body?: never;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query?: never;
+    url: '/api/v1/catalog/{source_id}';
+};
+
+export type catalogGetCatalogErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type catalogGetCatalogError = catalogGetCatalogErrors[keyof catalogGetCatalogErrors];
+
+export type catalogGetCatalogResponses = {
+    /**
+     * Successful Response
+     */
+    200: CatalogPublic;
+};
+
+export type catalogGetCatalogResponse = catalogGetCatalogResponses[keyof catalogGetCatalogResponses];
+
+export type catalogSaveScopeData = {
+    body: ScopeUpdate;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query?: never;
+    url: '/api/v1/catalog/{source_id}/scope';
+};
+
+export type catalogSaveScopeErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type catalogSaveScopeError = catalogSaveScopeErrors[keyof catalogSaveScopeErrors];
+
+export type catalogSaveScopeResponses = {
+    /**
+     * Successful Response
+     */
+    200: CatalogPublic;
+};
+
+export type catalogSaveScopeResponse = catalogSaveScopeResponses[keyof catalogSaveScopeResponses];
+
+export type catalogSyncCatalogData = {
+    body?: never;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query?: never;
+    url: '/api/v1/catalog/{source_id}/sync';
+};
+
+export type catalogSyncCatalogErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type catalogSyncCatalogError = catalogSyncCatalogErrors[keyof catalogSyncCatalogErrors];
+
+export type catalogSyncCatalogResponses = {
+    /**
+     * Successful Response
+     */
+    202: SyncJobPublic;
+};
+
+export type catalogSyncCatalogResponse = catalogSyncCatalogResponses[keyof catalogSyncCatalogResponses];
+
+export type catalogListSyncJobsData = {
+    body?: never;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query?: never;
+    url: '/api/v1/catalog/{source_id}/jobs';
+};
+
+export type catalogListSyncJobsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type catalogListSyncJobsError = catalogListSyncJobsErrors[keyof catalogListSyncJobsErrors];
+
+export type catalogListSyncJobsResponses = {
+    /**
+     * Response Catalog-List Sync Jobs
+     *
+     * Successful Response
+     */
+    200: Array<SyncJobPublic>;
+};
+
+export type catalogListSyncJobsResponse = catalogListSyncJobsResponses[keyof catalogListSyncJobsResponses];
 
 export type loginLoginAccessTokenData = {
     body: Body_login_login_access_token;
@@ -920,6 +5172,167 @@ export type itemsUpdateItemResponses = {
 };
 
 export type itemsUpdateItemResponse = itemsUpdateItemResponses[keyof itemsUpdateItemResponses];
+
+export type datasourcesListDatasourcesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/datasources/';
+};
+
+export type datasourcesListDatasourcesResponses = {
+    /**
+     * Successful Response
+     */
+    200: DataSourcesPublic;
+};
+
+export type datasourcesListDatasourcesResponse = datasourcesListDatasourcesResponses[keyof datasourcesListDatasourcesResponses];
+
+export type datasourcesCreateDatasourceData = {
+    body: DataSourceCreateWritable;
+    path?: never;
+    query?: never;
+    url: '/api/v1/datasources/';
+};
+
+export type datasourcesCreateDatasourceErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type datasourcesCreateDatasourceError = datasourcesCreateDatasourceErrors[keyof datasourcesCreateDatasourceErrors];
+
+export type datasourcesCreateDatasourceResponses = {
+    /**
+     * Successful Response
+     */
+    201: DataSourcePublic;
+};
+
+export type datasourcesCreateDatasourceResponse = datasourcesCreateDatasourceResponses[keyof datasourcesCreateDatasourceResponses];
+
+export type datasourcesTestDraftData = {
+    body: DataSourceCreateWritable;
+    path?: never;
+    query?: never;
+    url: '/api/v1/datasources/test';
+};
+
+export type datasourcesTestDraftErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type datasourcesTestDraftError = datasourcesTestDraftErrors[keyof datasourcesTestDraftErrors];
+
+export type datasourcesTestDraftResponses = {
+    /**
+     * Successful Response
+     */
+    200: ConnectionTestResult;
+};
+
+export type datasourcesTestDraftResponse = datasourcesTestDraftResponses[keyof datasourcesTestDraftResponses];
+
+export type datasourcesDeleteDatasourceData = {
+    body?: never;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query: {
+        /**
+         * Expected Revision
+         */
+        expected_revision: number;
+    };
+    url: '/api/v1/datasources/{source_id}';
+};
+
+export type datasourcesDeleteDatasourceErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type datasourcesDeleteDatasourceError = datasourcesDeleteDatasourceErrors[keyof datasourcesDeleteDatasourceErrors];
+
+export type datasourcesDeleteDatasourceResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type datasourcesDeleteDatasourceResponse = datasourcesDeleteDatasourceResponses[keyof datasourcesDeleteDatasourceResponses];
+
+export type datasourcesUpdateDatasourceData = {
+    body: DataSourceUpdateWritable;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query?: never;
+    url: '/api/v1/datasources/{source_id}';
+};
+
+export type datasourcesUpdateDatasourceErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type datasourcesUpdateDatasourceError = datasourcesUpdateDatasourceErrors[keyof datasourcesUpdateDatasourceErrors];
+
+export type datasourcesUpdateDatasourceResponses = {
+    /**
+     * Successful Response
+     */
+    200: DataSourcePublic;
+};
+
+export type datasourcesUpdateDatasourceResponse = datasourcesUpdateDatasourceResponses[keyof datasourcesUpdateDatasourceResponses];
+
+export type datasourcesTestDatasourceData = {
+    body?: never;
+    path: {
+        /**
+         * Source Id
+         */
+        source_id: string;
+    };
+    query?: never;
+    url: '/api/v1/datasources/{source_id}/test';
+};
+
+export type datasourcesTestDatasourceErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type datasourcesTestDatasourceError = datasourcesTestDatasourceErrors[keyof datasourcesTestDatasourceErrors];
+
+export type datasourcesTestDatasourceResponses = {
+    /**
+     * Successful Response
+     */
+    200: ConnectionTestResult;
+};
+
+export type datasourcesTestDatasourceResponse = datasourcesTestDatasourceResponses[keyof datasourcesTestDatasourceResponses];
 
 export type privateCreateUserData = {
     body: PrivateUserCreate;

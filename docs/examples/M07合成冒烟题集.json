@@ -1,0 +1,43 @@
+{
+  "name": "M07 合成销售冒烟 · 非业务盲测",
+  "topic_id": "00000000-0000-0000-0000-000000000000",
+  "semantic_version": 1,
+  "source_snapshot": "M03 合成订单固定五行：paid 四行，净额 4000；需运行前核对",
+  "as_of": "2026-09-07",
+  "timezone": "Asia/Shanghai",
+  "provenance": "synthetic",
+  "owner": "本地合成演示",
+  "cases": [
+    {
+      "id": "net-total", "group": "net-aggregate", "split": "dev",
+      "question": "查询净销售额", "actor_role": "admin", "tags": ["aggregate", "fixed-filter"],
+      "expected_action": "answer", "columns": ["net_sales"], "numeric_columns": ["net_sales"],
+      "expected_rows": [["4000.00"]],
+      "reference_sql": "SELECT SUM(net_amount) AS net_sales FROM demo_sales.m03_orders WHERE status = 'paid'"
+    },
+    {
+      "id": "net-region", "group": "net-region", "split": "dev",
+      "question": "净销售额按客户区域分组", "actor_role": "admin", "tags": ["join", "grouping"],
+      "expected_action": "answer", "columns": ["region", "net_sales"], "numeric_columns": ["net_sales"],
+      "expected_rows": [["华东", "1100.00"], ["华北", "1200.00"], ["华南", "1700.00"]],
+      "reference_sql": "SELECT c.region, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region"
+    },
+    {
+      "id": "followup-region", "group": "net-region", "split": "dev",
+      "history": ["查询净销售额"], "question": "继续按客户区域分组", "actor_role": "admin", "tags": ["followup", "grouping"],
+      "expected_action": "answer", "columns": ["region", "net_sales"], "numeric_columns": ["net_sales"],
+      "expected_rows": [["华东", "1100.00"], ["华北", "1200.00"], ["华南", "1700.00"]],
+      "reference_plan": {"metrics": ["net_sales"], "dimensions": [{"dimension_id": "region"}]}
+    },
+    {
+      "id": "ambiguous-entity", "group": "ambiguous-entity", "split": "blind",
+      "question": "示例渠道的净销售额", "actor_role": "admin", "tags": ["entity", "clarification"],
+      "expected_action": "clarify"
+    },
+    {
+      "id": "metrics-yoy", "group": "unsupported-comparison", "split": "blind",
+      "question": "净销售额同比", "mode": "metrics", "actor_role": "admin", "tags": ["unsupported"],
+      "expected_action": "unsupported"
+    }
+  ]
+}

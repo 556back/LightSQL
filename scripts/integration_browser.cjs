@@ -1,0 +1,53 @@
+// Cross-origin embedding: local replay model and real synthetic SQL.
+const { chromium, expect } = require('@playwright/test')
+const fs = require('node:fs')
+const path = require('node:path')
+const local = path.join(__dirname, '../.local')
+const fixture = JSON.parse(fs.readFileSync(path.join(local, 'integration-fixture.json'), 'utf8'))
+async function main() {
+  const browser = await chromium.launch({ channel: 'msedge', headless: true, args: ['--test-third-party-cookie-phaseout'] })
+  const errors = []
+  try {
+    const context = await browser.newContext({ viewport: { width: 1240, height: 1050 } })
+    const page = await context.newPage()
+    page.on('pageerror', e => errors.push(e.message))
+    let submissions = 0
+    page.on('request', r => { if (r.method() === 'POST' && r.url().endsWith('/answers')) submissions++; if (/[?&](token|ticket|access_token)=/.test(r.url())) errors.push('Credential in URL') })
+    await page.goto(fixture.host_url)
+    const frame = page.frameLocator('iframe')
+    await expect(frame.getByRole('heading', { name: '经营问数' })).toBeVisible({ timeout: 20000 })
+    await expect(frame.getByLabel('业务主题')).toBeDisabled()
+    await frame.getByLabel('问题', { exact: true }).fill('净销售额按客户区域分组')
+    await frame.getByLabel('分析结果', { exact: true }).check()
+    const submittedResponse = page.waitForResponse(r => r.url().endsWith('/answers') && r.request().method() === 'POST')
+    await frame.getByRole('button', { name: '发送', exact: true }).click()
+    const submittedConversation = (await (await submittedResponse).json()).conversation_id
+    await expect(frame.locator('article').last()).toContainText('已完成', { timeout: 60000 })
+    await expect(frame.locator('table')).toContainText('1100')
+    await expect(frame.locator('table')).toContainText('1700')
+    await expect(frame.locator('table')).not.toContainText('华北')
+    await expect(frame.locator('article')).toContainText('仅分析本次返回')
+    const embedded = page.frames().find(f => f.url().includes('/embed/ask'))
+    const stored = await embedded.evaluate(() => localStorage.getItem('access_token'))
+    if (stored !== null) throw Error('Embed token leaked to localStorage')
+    const before = submissions
+    await page.reload()
+    await expect(page.frameLocator('iframe').getByLabel('历史会话')).toBeVisible({ timeout: 20000 })
+    await expect.poll(async () => page.frameLocator('iframe').getByLabel('历史会话').locator('option').count()).toBeGreaterThan(1)
+    const select = page.frameLocator('iframe').getByLabel('历史会话')
+    await select.selectOption(submittedConversation)
+    await expect(page.frameLocator('iframe').locator('table')).toContainText('1100', { timeout: 20000 })
+    if (submissions !== before) throw Error('Reload repeated a paid operation')
+    await page.screenshot({ path: path.join(local, 'integration-embed.png'), fullPage: true })
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.screenshot({ path: path.join(local, 'integration-embed-mobile.png'), fullPage: true })
+    const overflow = await page.frames().find(f => f.url().includes('/embed/ask')).evaluate(() => document.documentElement.scrollWidth > innerWidth)
+    if (overflow) throw Error('Embedded page overflows on mobile')
+    await page.getByRole('button', { name: '退出问数会话' }).click()
+    await expect(page.locator('#chat')).toHaveText('会话已退出', { timeout: 15000 })
+    if (errors.length) throw Error(errors.join('\n'))
+    fs.writeFileSync(path.join(local, 'integration-browser.json'), JSON.stringify({ passed: true, submissions, exactRows: ['1100', '1700'], isolatedTenant: true, reloadDoesNotSubmit: true, iframeTokenInLocalStorage: false, mobileOverflow: false, logout: true, model: 'replay-only', errors }, null, 2))
+    console.log('Integration browser checks passed: cross-origin embed, real synthetic SQL, analysis, isolation, reload, mobile, logout.')
+  } finally { await browser.close() }
+}
+main().catch(e => { console.error(e); process.exit(1) })

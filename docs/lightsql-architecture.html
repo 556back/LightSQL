@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LightSQL — 应用架构图</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f5f5f5;--ink:#2d3142;--muted:#4f5d75;--soft:#7a8399;--rule:#bfc0c0;--accent:#eb6c36;--link:#2e5aa8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Geist,Arial,sans-serif}main{max-width:1408px;margin:auto;padding:44px 40px 28px}.eyebrow{font:500 12px 'Geist Mono',Consolas,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}header{border-bottom:1px solid #dcdde0;padding-bottom:24px}h1{font:400 48px 'Instrument Serif',Georgia,serif;margin:12px 0}header p{font-size:16px;color:var(--muted);margin:0;line-height:1.6}.figure{overflow-x:auto}svg{width:100%;min-width:960px;height:auto;display:block}svg text{fill:var(--ink);font-family:Geist,Arial,sans-serif}.name{font-size:16px;font-weight:600}.body{font-size:12px;fill:var(--muted)}.tag{font:500 8px 'Geist Mono',Consolas,monospace;letter-spacing:.14em;fill:var(--muted)}.edge-label{font:400 8px 'Geist Mono',Consolas,monospace;letter-spacing:.04em;fill:var(--muted)}.aside-title{font:italic 24px 'Instrument Serif',Georgia,serif}.connector{fill:none;stroke:var(--muted);stroke-width:1.2;marker-end:url(#arrow)}.http{stroke:var(--link);marker-end:url(#arrow-link)}.async{stroke-dasharray:5 4}.note{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;padding:24px 0;border-top:1px solid #dcdde0}.note h2{font-size:16px;margin:0 0 8px}.note p{margin:0;font-size:14px;line-height:1.7;color:var(--muted)}details{font-size:12px;color:var(--muted);line-height:1.8;margin-top:16px}summary{cursor:pointer}code{font-family:'Geist Mono',Consolas,monospace;font-size:11px}footer{margin-top:24px;padding-top:16px;border-top:1px solid #dcdde0;display:flex;justify-content:space-between;gap:20px;font:10px 'Geist Mono',Consolas,monospace;color:var(--muted)}@media(max-width:700px){main{padding:24px 16px}h1{font-size:36px}.note{grid-template-columns:1fr;gap:24px}footer{display:block;line-height:2}}@media print{main{padding:0}svg{min-width:0}details{display:none}}
+
+/* 中文字体回退与最小字号，适配离线浏览。 */
+body,svg text{font-family:Geist,"Microsoft YaHei","PingFang SC",sans-serif}
+.eyebrow,.tag,.edge-label,footer{font-family:"Geist Mono","Microsoft YaHei","PingFang SC",sans-serif}
+.tag{font-size:12px;letter-spacing:.04em}
+.aside-title{font-family:"Instrument Serif","Noto Serif SC",SimSun,serif;font-style:normal}
+.edge-label.zh{font-size:12px;letter-spacing:0}
+footer{font-size:12px}
+</style>
+</head>
+<body><main>
+<header><div class="eyebrow">系统架构 / 当前实现</div><h1>LightSQL</h1><p>将自然语言问题转化为受控查询，连接 PostgreSQL、MySQL 和 Oracle。</p></header>
+<div class="figure">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="lightsql-architecture-title lightsql-architecture-desc">
+<title id="lightsql-architecture-title">LightSQL 应用架构图</title>
+<desc id="lightsql-architecture-desc">React 界面通过 Traefik 访问 FastAPI；后端连接模型服务和 PostgreSQL 元数据库及任务队列，独立的查询与目录采集进程访问业务数据库。</desc>
+<defs>
+<marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#4f5d75"/></marker>
+<marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#eb6c36"/></marker>
+<marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2e5aa8"/></marker>
+</defs>
+<rect width="1280" height="720" fill="#f5f5f5"/>
+<rect x="456" y="40" width="536" height="624" rx="8" fill="#f1f1f2" stroke="#dcdde0" stroke-width=".8"/>
+<text class="tag" x="480" y="64">LIGHTSQL 应用与持久化</text>
+<text class="tag" x="40" y="64">浏览器</text><text class="tag" x="272" y="64">访问入口</text><text class="tag" x="1040" y="64">已配置的外部服务</text>
+<!-- Connections precede nodes. The arrows show request / access direction; replies are implicit. -->
+<path class="connector http" d="M208 160 H272"/>
+<path class="connector http" d="M416 160 H480"/>
+<path class="connector http" d="M928 160 H1040"/>
+<path class="connector" d="M576 312 V432"/>
+<path class="connector async" d="M760 476 H672"/>
+<path class="connector async" d="M760 604 H672"/>
+<path class="connector" d="M968 476 H1040"/>
+<path class="connector" d="M968 604 H1040"/>
+<!-- Opaque arrow-label masks with 8px clearance from each stroke. -->
+<rect x="216" y="136" width="48" height="16" fill="#f5f5f5"/><text class="edge-label" x="240" y="148" text-anchor="middle">HTTP/S</text>
+<rect x="424" y="136" width="48" height="16" fill="#f5f5f5"/><text class="edge-label" x="448" y="148" text-anchor="middle">:8000</text>
+<rect x="948" y="136" width="72" height="16" fill="#f5f5f5"/><text class="edge-label" x="984" y="148" text-anchor="middle">HTTPS / JSON</text>
+<rect x="584" y="360" width="104" height="16" fill="#f1f1f2"/><text class="edge-label zh" x="592" y="372">状态与任务</text>
+<rect x="680" y="452" width="72" height="16" fill="#f1f1f2"/><text class="edge-label zh" x="716" y="464" text-anchor="middle">领取/回写</text>
+<rect x="680" y="580" width="72" height="16" fill="#f1f1f2"/><text class="edge-label zh" x="716" y="592" text-anchor="middle">领取/回写</text>
+<rect x="976" y="452" width="56" height="16" fill="#f5f5f5"/><text class="edge-label zh" x="1004" y="464" text-anchor="middle">只读查询</text>
+<rect x="976" y="580" width="56" height="16" fill="#f5f5f5"/><text class="edge-label zh" x="1004" y="592" text-anchor="middle">元数据</text>
+<!-- Eight components; process-internal modules stay within the API node. -->
+<g data-node="browser"><rect x="40" y="112" width="168" height="104" rx="8" fill="#e6e8ec" stroke="#7a8399"/><text class="name" x="56" y="144">React 用户界面</text><text class="body" x="56" y="168">问数 · 探索 · 可视化</text><text class="body" x="56" y="192">管理与质量控制台</text></g>
+<g data-node="proxy"><rect x="272" y="112" width="144" height="104" rx="8" fill="white" stroke="#2d3142"/><text class="name" x="288" y="144">Traefik</text><text class="body" x="288" y="168">反向代理</text><text class="body" x="288" y="192">Compose 访问入口</text></g>
+<g data-node="api"><rect x="480" y="96" width="448" height="216" rx="8" fill="#f9e9e2" stroke="#eb6c36" stroke-width="1.2"/><text class="tag" x="500" y="120">API 进程 / 模块化单体</text><text class="name" x="500" y="148">FastAPI 应用</text><text class="body" x="500" y="172">同源提供 React 静态页面与 /api/v1 接口</text><line x1="500" y1="188" x2="908" y2="188" stroke="#e1c5b8"/><text class="body" x="500" y="212">JWT 身份认证 · 主题授权 · 查询策略</text><text class="body" x="500" y="236">问数助手与模型网关 · 语义层与 SQL 校验</text><text class="body" x="500" y="260">数据源与目录管理 · 质量评测与运维</text><text class="body" x="500" y="288">查询结果、图表与进度通过 API 返回</text></g>
+<g data-node="models"><rect x="1040" y="96" width="200" height="152" rx="8" fill="#ededee" stroke="#a5a6ad"/><text class="tag" x="1056" y="120">模型服务提供方</text><text class="name" x="1056" y="148">大模型服务</text><text class="body" x="1056" y="172">智谱 · DeepSeek · 千问</text><text class="body" x="1056" y="196">或白名单内的自定义 HTTPS</text><text class="body" x="1056" y="224">结构化查询计划与结果分析</text></g>
+<g data-node="metadata"><rect x="480" y="432" width="192" height="216" rx="8" fill="#e9eaec" stroke="#4f5d75"/><text class="tag" x="496" y="456">应用元数据库</text><text class="name" x="496" y="484">PostgreSQL</text><text class="body" x="496" y="508">用户、授权与配置</text><text class="body" x="496" y="532">数据目录与语义发布版本</text><text class="body" x="496" y="556">会话与反馈</text><line x1="496" y1="572" x2="656" y2="572" stroke="#bfc0c0"/><text class="name" x="496" y="600">持久化任务队列</text><text class="body" x="496" y="624">租约、结果与审计状态</text></g>
+<g data-node="query-worker"><rect x="760" y="432" width="208" height="88" rx="8" fill="white" stroke="#2d3142"/><text class="name" x="776" y="460">查询执行进程</text><text class="body" x="776" y="484">复核权限与 SQL</text><text class="body" x="776" y="504">独立子进程 · 执行限时</text></g>
+<g data-node="catalog-worker"><rect x="760" y="560" width="208" height="88" rx="8" fill="white" stroke="#2d3142"/><text class="name" x="776" y="588">目录采集进程</text><text class="body" x="776" y="612">使用固定查询采集元数据</text><text class="body" x="776" y="632">表、字段与关联关系</text></g>
+<g data-node="sources"><rect x="1040" y="432" width="200" height="216" rx="8" fill="#ededee" stroke="#a5a6ad"/><text class="tag" x="1056" y="456">业务数据</text><text class="name" x="1056" y="484">业务源数据库</text><text class="body" x="1056" y="520">PostgreSQL</text><text class="body" x="1056" y="544">MySQL</text><text class="body" x="1056" y="568">Oracle</text><line x1="1056" y1="584" x2="1224" y2="584" stroke="#bfc0c0"/><text class="body" x="1056" y="612">只读连接</text><text class="body" x="1056" y="632">业务数据的权威来源</text></g>
+<!-- Editorial notes, not additional system nodes. -->
+<text class="tag" x="40" y="352">01 / 从问题到查询</text>
+<text class="aside-title" x="40" y="388">从提问到执行，全程受控。</text>
+<text class="body" x="40" y="420">助手依据已发布的语义定义生成查询计划。</text>
+<text class="body" x="40" y="444">执行请求写入持久化任务队列。</text>
+<text class="body" x="40" y="468">执行进程在运行 SQL 前再次校验访问权限。</text>
+<text class="tag" x="40" y="544">02 / 跨进程共享调度</text>
+<text class="aside-title" x="40" y="580">多个进程，共用并发配额。</text>
+<text class="body" x="40" y="612">默认并发：全局 5 项 · 每数据源 2 项 · 每人 1 项。</text>
+<text class="body" x="40" y="636">排队满 30 秒的任务自动过期。</text>
+<line x1="40" y1="680" x2="1240" y2="680" stroke="#dcdde0"/>
+<text class="tag" x="40" y="704">连接说明</text>
+<line x1="152" y1="700" x2="184" y2="700" stroke="#2e5aa8" stroke-width="1.2"/><text class="body" x="196" y="704">HTTP / API</text>
+<line x1="320" y1="700" x2="352" y2="700" stroke="#4f5d75" stroke-width="1.2"/><text class="body" x="364" y="704">数据库访问</text>
+<line x1="536" y1="700" x2="568" y2="700" stroke="#4f5d75" stroke-dasharray="5 4"/><text class="body" x="580" y="704">异步任务轮询</text>
+<text class="body" x="932" y="704">箭头表示访问方向，响应沿原路返回。</text>
+</svg></div>
+<section class="note">
+<div><h2>查询规划与结果分析使用不同的模型输入</h2><p>查询规划使用用户问题与受控上下文。结果分析向模型发送安全处理后的问题，以及本地计算的数值事实。模型网关仅访问白名单中的 HTTPS 地址；业务数据库查询由执行进程完成。</p></div>
+<div><h2>本图范围</h2><p>依据当前代码与 Docker Compose 拓扑绘制。各 API 模块归入同一进程，查询执行与目录采集分别运行。图中省略连接探测、启动迁移、邮件、可选的 Sentry 及开发工具；不代表实际部署状态。</p></div>
+</section>
+<details><summary>代码依据与说明</summary><p><code>compose.yml</code> 定义代理、后端、元数据库及两类后台进程。<code>backend/app/main.py</code> 提供前端页面与 API。<code>backend/app/api/main.py</code> 注册各业务模块。<code>backend/app/modules/assistant/{service,gateway,analysis}.py</code> 实现查询规划、模型调用与基于事实的分析。<code>backend/app/modules/query/{service,worker,executor}.py</code> 实现任务提交、共享调度与隔离执行。<code>backend/app/modules/catalog/{worker,introspection}.py</code> 实现元数据采集。当前业务数据库范围为 PostgreSQL、MySQL 和 Oracle，见 <code>README.md</code>；暂缓兼容的数据库未列入本图。应用数据库除元数据外也保存查询结果快照，业务源数据库仍为权威数据来源。</p></details>
+<footer><span>LIGHTSQL / 架构图 · 2026-09-07</span><span>8 个组件 · 基于代码 · Diagram Design 默认配色</span></footer>
+</main></body></html>

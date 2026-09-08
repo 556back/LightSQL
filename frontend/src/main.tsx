@@ -12,18 +12,16 @@ import { client } from "./client/client.gen"
 import { ThemeProvider } from "./components/theme-provider"
 import { Toaster } from "./components/ui/sonner"
 import "./index.css"
+import { EmbedAsk } from "./components/Integration/EmbedAsk"
 import { routeTree } from "./routeTree.gen"
 
 client.setConfig({
-  baseURL: import.meta.env.VITE_API_URL ?? "",
+  baseURL: (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, ""),
   auth: () => localStorage.getItem("access_token") || "",
 })
 
 const handleApiError = (error: Error) => {
-  if (
-    error instanceof AxiosError &&
-    [401, 403].includes(error.response?.status ?? 0)
-  ) {
+  if (error instanceof AxiosError && error.response?.status === 401) {
     localStorage.removeItem("access_token")
     window.location.href = "/login"
   }
@@ -46,11 +44,15 @@ declare module "@tanstack/react-router" {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <Toaster richColors closeButton />
-      </QueryClientProvider>
-    </ThemeProvider>
+    {window.location.pathname === "/embed/ask" ? (
+      <EmbedAsk />
+    ) : (
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <Toaster richColors closeButton />
+        </QueryClientProvider>
+      </ThemeProvider>
+    )}
   </StrictMode>,
 )

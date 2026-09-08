@@ -1,0 +1,351 @@
+schema_version: 1
+owner: 经营分析组
+timezone: Asia/Shanghai
+external_allowed: false
+models:
+- id: orders
+  label: 销售订单
+  relation:
+    schema_name: demo_sales
+    name: m03_orders
+    kind: table
+  grain: 每行一笔订单；订单主键在全表唯一。
+  primary_key:
+  - id
+- id: customers
+  label: 客户档案
+  relation:
+    schema_name: demo_sales
+    name: m03_customers
+    kind: table
+  grain: 每行一个租户下的客户；不同租户可以使用同一客户编号。
+  primary_key:
+  - tenant_id
+  - customer_id
+dimensions:
+- id: order_day
+  label: 订单日期
+  description: 按业务自然日期统计，时区为上海。
+  aliases: []
+  model_id: orders
+  column: order_date
+  value_type: date
+  timezone_semantics: date_only
+  sensitive: false
+  external_allowed: false
+  value_external_allowed: false
+- id: channel
+  label: 销售渠道
+  description: 线上直营、合作渠道、门店销售。
+  aliases: []
+  model_id: orders
+  column: channel
+  value_type: entity
+  timezone_semantics: date_only
+  sensitive: false
+  external_allowed: false
+  value_external_allowed: false
+- id: order_status
+  label: 订单状态
+  description: paid 表示已支付；cancelled 表示已取消。
+  aliases: []
+  model_id: orders
+  column: status
+  value_type: string
+  timezone_semantics: date_only
+  sensitive: false
+  external_allowed: false
+  value_external_allowed: false
+- id: region
+  label: 客户区域
+  description: 订单通过租户与客户复合键关联到客户区域。
+  aliases: []
+  model_id: customers
+  column: region
+  value_type: string
+  timezone_semantics: date_only
+  sensitive: false
+  external_allowed: false
+  value_external_allowed: false
+- id: customer
+  label: 客户
+  description: 合成客户名称，仅用于本地演示。
+  aliases: []
+  model_id: customers
+  column: customer_name
+  value_type: entity
+  timezone_semantics: date_only
+  sensitive: true
+  external_allowed: false
+  value_external_allowed: false
+metrics:
+- id: gross_sales
+  label: 销售总额
+  description: 已支付订单的含税销售金额合计，退款前口径。
+  aliases: []
+  model_id: orders
+  aggregation: sum
+  column: gross_amount
+  unit: 元
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: additive
+  non_additive_dimensions: []
+  numerator: null
+  denominator: null
+  zero_denominator: 'null'
+  external_allowed: false
+- id: refund_amount
+  label: 退款金额
+  description: 已支付订单截至当前的退款金额合计，按原订单日期归属。
+  aliases: []
+  model_id: orders
+  aggregation: sum
+  column: refund_amount
+  unit: 元
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: additive
+  non_additive_dimensions: []
+  numerator: null
+  denominator: null
+  zero_denominator: 'null'
+  external_allowed: false
+- id: net_sales
+  label: 净销售额
+  description: 已支付订单净金额合计；净金额为销售总额减累计退款金额，按原订单日期归属。
+  aliases:
+  - 净营收
+  - 扣退销售额
+  model_id: orders
+  aggregation: sum
+  column: net_amount
+  unit: 元
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: additive
+  non_additive_dimensions: []
+  numerator: null
+  denominator: null
+  zero_denominator: 'null'
+  external_allowed: false
+- id: order_count
+  label: 支付订单数
+  description: 已支付订单行数，一行一单，排除取消订单。
+  aliases: []
+  model_id: orders
+  aggregation: count
+  column: null
+  unit: 笔
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: additive
+  non_additive_dimensions: []
+  numerator: null
+  denominator: null
+  zero_denominator: 'null'
+  external_allowed: false
+- id: max_order
+  label: 最高订单金额
+  description: 已支付订单中最大的单笔净金额，不可跨组直接相加。
+  aliases: []
+  model_id: orders
+  aggregation: max
+  column: net_amount
+  unit: 元
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: non_additive
+  non_additive_dimensions: []
+  numerator: null
+  denominator: null
+  zero_denominator: 'null'
+  external_allowed: false
+- id: min_order
+  label: 最低订单金额
+  description: 已支付订单中最小的单笔净金额，不可跨组直接相加。
+  aliases: []
+  model_id: orders
+  aggregation: min
+  column: net_amount
+  unit: 元
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: non_additive
+  non_additive_dimensions: []
+  numerator: null
+  denominator: null
+  zero_denominator: 'null'
+  external_allowed: false
+- id: avg_refund
+  label: 单均退款金额
+  description: 已支付订单的平均退款金额，包括退款为零的订单。
+  aliases: []
+  model_id: orders
+  aggregation: avg
+  column: refund_amount
+  unit: 元/笔
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: non_additive
+  non_additive_dimensions: []
+  numerator: null
+  denominator: null
+  zero_denominator: 'null'
+  external_allowed: false
+- id: channel_count
+  label: 成交渠道数
+  description: 已支付订单涉及的不同渠道编码数量，忽略空值，不可跨组累加。
+  aliases: []
+  model_id: orders
+  aggregation: count_distinct
+  column: channel
+  unit: 个
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: non_additive
+  non_additive_dimensions: []
+  numerator: null
+  denominator: null
+  zero_denominator: 'null'
+  external_allowed: false
+- id: avg_order
+  label: 客单价
+  description: 净销售额除以支付订单数，在相同日期、渠道及客户范围内先聚合再相除；分母为零返回空值。
+  aliases: []
+  model_id: orders
+  aggregation: ratio
+  column: null
+  unit: 元/笔
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: non_additive
+  non_additive_dimensions: []
+  numerator: net_sales
+  denominator: order_count
+  zero_denominator: 'null'
+  external_allowed: false
+- id: refund_rate
+  label: 退款金额占比
+  description: 退款金额除以退款前销售总额，结果为 0–1 比例，按原订单日期归属；分母为零返回空值。
+  aliases: []
+  model_id: orders
+  aggregation: ratio
+  column: null
+  unit: 比例
+  time_dimension: order_day
+  allowed_dimensions:
+  - order_day
+  - channel
+  - region
+  - customer
+  filter_ids:
+  - paid_only
+  additivity: non_additive
+  non_additive_dimensions: []
+  numerator: refund_amount
+  denominator: gross_sales
+  zero_denominator: 'null'
+  external_allowed: false
+filters:
+- id: paid_only
+  label: 仅已支付订单
+  dimension_id: order_status
+  operator: eq
+  values:
+  - paid
+relations:
+- id: order_customer
+  label: 订单归属客户
+  from_model: orders
+  to_model: customers
+  from_columns:
+  - tenant_id
+  - customer_id
+  to_columns:
+  - tenant_id
+  - customer_id
+  cardinality: many_to_one
+  join_type: left
+  description: 租户编号与客户编号同时匹配，左连接保留客户未匹配的订单。
+entities:
+- id: channel_online
+  dimension_id: channel
+  label: 线上直营
+  aliases:
+  - 官网
+  - 自营网店
+  value: online
+- id: channel_partner
+  dimension_id: channel
+  label: 合作渠道
+  aliases:
+  - 代理
+  - 经销渠道
+  value: partner
+- id: channel_store
+  dimension_id: channel
+  label: 门店
+  aliases:
+  - 线下门店
+  value: store
+- id: customer_east
+  dimension_id: customer
+  label: 华东示例客户
+  aliases:
+  - 华东样例
+  value: 华东示例客户

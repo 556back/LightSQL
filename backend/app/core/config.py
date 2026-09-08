@@ -3,6 +3,7 @@ from typing import Literal, Self
 
 from pydantic import (
     EmailStr,
+    Field,
     HttpUrl,
     PostgresDsn,
     computed_field,
@@ -28,6 +29,13 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str
     SENTRY_DSN: HttpUrl | None = None
+    DATASOURCE_ENCRYPTION_KEY: str | None = Field(default=None, repr=False)
+    DATASOURCE_ALLOWED_HOSTS: list[str] = []
+    ENABLE_PUBLIC_SIGNUP: bool = False
+    MODEL_GATEWAY_ALLOWED_BASE_URLS: list[str] = []
+    QUERY_MAX_CONCURRENCY: int = Field(default=5, ge=1, le=5)
+    QUERY_SOURCE_MAX_CONCURRENCY: int = Field(default=2, ge=1, le=2)
+    QUERY_MAX_QUEUE_SECONDS: int = Field(default=30, ge=1, le=30)
     DATABASE_URL: PostgresDsn
 
     @field_validator("DATABASE_URL", mode="before")

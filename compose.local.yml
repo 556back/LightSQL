@@ -1,0 +1,83 @@
+name: lightsql-local
+
+x-environment: &environment
+  PROJECT_NAME: LightSQL
+  SECRET_KEY: ${SECRET_KEY:?Run scripts/init-local-env.ps1 first}
+  FIRST_SUPERUSER: ${FIRST_SUPERUSER:?Set administrator email}
+  FIRST_SUPERUSER_PASSWORD: ${FIRST_SUPERUSER_PASSWORD:?Set administrator password}
+  DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:?Set database password}@db:5432/app
+  DATASOURCE_ENCRYPTION_KEY: ${DATASOURCE_ENCRYPTION_KEY:?Set persistent encryption key}
+  DATASOURCE_ALLOWED_HOSTS: ${DATASOURCE_ALLOWED_HOSTS:-[]}
+  MODEL_GATEWAY_ALLOWED_BASE_URLS: ${MODEL_GATEWAY_ALLOWED_BASE_URLS:-[]}
+  FRONTEND_HOST: http://localhost:${LIGHTSQL_PORT:-18000}
+  ENABLE_PUBLIC_SIGNUP: "false"
+  QUERY_MAX_CONCURRENCY: "5"
+  QUERY_SOURCE_MAX_CONCURRENCY: "2"
+  QUERY_MAX_QUEUE_SECONDS: "30"
+
+x-worker: &worker
+  image: lightsql-local:latest
+  restart: unless-stopped
+  environment: *environment
+  depends_on:
+    backend:
+      condition: service_healthy
+
+services:
+  db:
+    image: postgres:18
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set database password}
+      POSTGRES_DB: app
+    volumes:
+      - metadata:/var/lib/postgresql
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U postgres -d app]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  prestart:
+    image: lightsql-local:latest
+    environment: *environment
+    command: [bash, scripts/prestart.sh]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  backend:
+    image: lightsql-local:latest
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        VITE_API_URL: /
+    restart: unless-stopped
+    environment: *environment
+    ports:
+      - "127.0.0.1:${LIGHTSQL_PORT:-18000}:8000"
+    depends_on:
+      prestart:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/utils/health-check/', timeout=3)"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  catalog-worker:
+    <<: *worker
+    command: [python, -m, app.modules.catalog.worker]
+
+  query-worker:
+    <<: *worker
+    command: [python, -m, app.modules.query.worker]
+
+  integration-worker:
+    <<: *worker
+    command: [python, -m, app.modules.integration.worker]
+
+volumes:
+  metadata:

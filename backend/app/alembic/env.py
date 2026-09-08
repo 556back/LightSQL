@@ -20,7 +20,14 @@ fileConfig(config.config_file_name)
 # target_metadata = None
 
 from app.models import SQLModel  # noqa
+from app.modules.datasources.models import DataSource, DataSourceAudit  # noqa
+from app.modules.catalog.models import CatalogState, SyncJob  # noqa
+from app.modules.semantic.models import Topic, TopicMember, SemanticRelease, TopicAudit  # noqa
+from app.modules.query.models import QueryPolicy, QueryGate, QueryJob, QueryEvent  # noqa
+from app.modules.assistant.models import ModelGateway, GatewayState, GatewayAudit, Conversation, AssistantTurn  # noqa
+from app.modules.quality.models import QualityFeedback, QualityAudit, EvaluationDataset, EvaluationRun, WorkerHeartbeat, BackupRecord  # noqa
 from app.core.config import settings # noqa
+from app.modules.integration.models import IntegrationClient, IntegrationIdentity, IntegrationTask, IntegrationAudit, EmbedTicket, EmbedSession, AssertionUse  # noqa
 
 target_metadata = SQLModel.metadata
 

@@ -1,0 +1,74 @@
+name: lightsql-module-demo
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_PASSWORD: ${DEMO_POSTGRES_PASSWORD:?Set demo credentials}
+      POSTGRES_DB: lightsql_demo
+    ports:
+      - "127.0.0.1:15432:5432"
+    volumes:
+      - demo-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d lightsql_demo"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DEMO_MYSQL_PASSWORD:?Set demo credentials}
+      MYSQL_DATABASE: sales_demo
+    ports:
+      - "127.0.0.1:13306:3306"
+    volumes:
+      - demo-mysql:/var/lib/mysql
+  oracle:
+    image: container-registry.oracle.com/database/free@sha256:cf540c3fa190d7cffad08c491652ac07fc70314e510f6b87890449517d565e94
+    environment:
+      ORACLE_PWD: ${DEMO_ORACLE_PASSWORD:?Set demo credentials}
+    ports:
+      - "127.0.0.1:11521:1521"
+    mem_limit: 3g
+    shm_size: 1g
+    cpus: 2
+    volumes:
+      - demo-oracle:/opt/oracle/oradata
+  dameng:
+    image: dm8_single:dm8_20241022_rev244896_x86_rh6_64
+    pull_policy: never
+    profiles: [extended]
+    environment:
+      SYSDBA_PWD: ${DEMO_DAMENG_PASSWORD:?Set demo credentials}
+      PAGE_SIZE: 16
+      UNICODE_FLAG: 1
+      BUFFER: 256
+      INSTANCE_NAME: LIGHTSQL_DM
+      LD_LIBRARY_PATH: /opt/dmdbms/bin
+    ports:
+      - "127.0.0.1:15236:5236"
+    mem_limit: 2g
+    cpus: 2
+    volumes:
+      - demo-dameng:/opt/dmdbms/data
+  kingbase:
+    image: if010/kingbase@sha256:b59ae9f1abca31d1060eac4fb507709b75645f9bf2480188d756657bd4765e88
+    profiles: [extended]
+    environment:
+      DB_USER: system
+      DB_PASSWORD: ${DEMO_KINGBASE_PASSWORD:?Set demo credentials}
+      DB_MODE: pg
+      ENABLE_CI: "no"
+      NEED_START: "yes"
+    ports:
+      - "127.0.0.1:15421:54321"
+    mem_limit: 2g
+    cpus: 2
+    volumes:
+      - demo-kingbase:/home/kingbase/userdata
+volumes:
+  demo-postgres:
+  demo-mysql:
+  demo-oracle:
+  demo-dameng:
+  demo-kingbase:

@@ -1,0 +1,1550 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "LightSQL Integration API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/integration/v1/token": {
+      "post": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Token",
+        "operationId": "token_api_integration_v1_token_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenPublic"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/topics": {
+      "get": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Topics",
+        "operationId": "topics_api_integration_v1_topics_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Topics Api Integration V1 Topics Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/integration/v1/topics/{topic_id}/catalog": {
+      "get": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Catalog",
+        "operationId": "catalog_api_integration_v1_topics__topic_id__catalog_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "topic_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Topic Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Catalog Api Integration V1 Topics  Topic Id  Catalog Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/answers": {
+      "post": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Answer",
+        "operationId": "answer_api_integration_v1_answers_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskPublic"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/queries": {
+      "post": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Query",
+        "operationId": "query_api_integration_v1_queries_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QueryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskPublic"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/tasks": {
+      "get": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Tasks",
+        "operationId": "tasks_api_integration_v1_tasks_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TaskPublic"
+                  },
+                  "type": "array",
+                  "title": "Response Tasks Api Integration V1 Tasks Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/integration/v1/tasks/{task_id}": {
+      "get": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Task",
+        "operationId": "task_api_integration_v1_tasks__task_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskPublic"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/tasks/{task_id}/result": {
+      "get": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Result",
+        "operationId": "result_api_integration_v1_tasks__task_id__result_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/tasks/{task_id}/analysis": {
+      "post": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Analysis",
+        "operationId": "analysis_api_integration_v1_tasks__task_id__analysis_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Task Id"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "title": "Idempotency-Key"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskPublic"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/tasks/{task_id}/cancel": {
+      "post": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Cancel",
+        "operationId": "cancel_api_integration_v1_tasks__task_id__cancel_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Task Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaskPublic"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/embed/tickets": {
+      "post": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Ticket",
+        "operationId": "ticket_api_integration_v1_embed_tickets_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Ticket Api Integration V1 Embed Tickets Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/integration/v1/embed/config/{client_id}": {
+      "get": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Embed Config",
+        "operationId": "embed_config_api_integration_v1_embed_config__client_id__get",
+        "parameters": [
+          {
+            "name": "client_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Client Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Embed Config Api Integration V1 Embed Config  Client Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integration/v1/embed/sessions": {
+      "post": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Exchange",
+        "operationId": "exchange_api_integration_v1_embed_sessions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionPublic"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Revoke All",
+        "operationId": "revoke_all_api_integration_v1_embed_sessions_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Revoke All Api Integration V1 Embed Sessions Delete"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/integration/v1/embed/sessions/{session_id}": {
+      "delete": {
+        "tags": [
+          "integration"
+        ],
+        "summary": "Revoke",
+        "operationId": "revoke_api_integration_v1_embed_sessions__session_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Revoke Api Integration V1 Embed Sessions  Session Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalysisFact": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value": {
+            "type": "string",
+            "title": "Value"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "value"
+        ],
+        "title": "AnalysisFact"
+      },
+      "AnalysisFinding": {
+        "properties": {
+          "fact_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Fact Ids"
+          },
+          "interpretation": {
+            "type": "string",
+            "maxLength": 600,
+            "title": "Interpretation"
+          },
+          "next_step": {
+            "type": "string",
+            "maxLength": 400,
+            "title": "Next Step",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "fact_ids",
+          "interpretation"
+        ],
+        "title": "AnalysisFinding"
+      },
+      "AnalysisPublic": {
+        "properties": {
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisFact"
+            },
+            "type": "array",
+            "title": "Facts"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/AnalysisFinding"
+            },
+            "type": "array",
+            "title": "Findings",
+            "default": []
+          },
+          "scope": {
+            "type": "string",
+            "title": "Scope"
+          },
+          "model": {
+            "type": "string",
+            "title": "Model",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "facts",
+          "scope"
+        ],
+        "title": "AnalysisPublic"
+      },
+      "AnswerInput": {
+        "properties": {
+          "topic_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Topic Id"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "metrics",
+              "auto",
+              "explore"
+            ],
+            "title": "Mode",
+            "default": "metrics"
+          },
+          "include_analysis": {
+            "type": "boolean",
+            "title": "Include Analysis",
+            "default": false
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Expected Revision",
+            "default": 0
+          },
+          "entity_choices": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "maxProperties": 20,
+            "title": "Entity Choices"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "topic_id",
+          "question"
+        ],
+        "title": "AnswerInput"
+      },
+      "Grouping": {
+        "properties": {
+          "dimension_id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]{0,47}$",
+            "title": "Dimension Id"
+          },
+          "grain": {
+            "type": "string",
+            "enum": [
+              "value",
+              "day",
+              "month",
+              "year"
+            ],
+            "title": "Grain",
+            "default": "value"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dimension_id"
+        ],
+        "title": "Grouping"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "IntegrationResult": {
+        "properties": {
+          "columns": {
+            "items": {
+              "$ref": "#/components/schemas/ResultColumn"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "rows": {
+            "items": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Notes"
+          },
+          "task_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Task Id"
+          },
+          "row_count": {
+            "type": "integer",
+            "title": "Row Count"
+          },
+          "queried_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Queried At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "semantic_version": {
+            "type": "integer",
+            "title": "Semantic Version"
+          },
+          "chart": {
+            "type": "string",
+            "title": "Chart"
+          },
+          "analysis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalysisPublic"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "analysis_status": {
+            "type": "string",
+            "title": "Analysis Status"
+          },
+          "evidence": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "columns",
+          "rows",
+          "truncated",
+          "notes",
+          "task_id",
+          "row_count",
+          "queried_at",
+          "expires_at",
+          "semantic_version",
+          "chart",
+          "analysis",
+          "analysis_status",
+          "evidence",
+          "warnings"
+        ],
+        "title": "IntegrationResult"
+      },
+      "Ordering": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]{0,47}$",
+            "title": "Field"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "title": "Direction",
+            "default": "asc"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field"
+        ],
+        "title": "Ordering"
+      },
+      "QueryFilter": {
+        "properties": {
+          "dimension_id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]{0,47}$",
+            "title": "Dimension Id"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "eq",
+              "in",
+              "gt",
+              "gte",
+              "lt",
+              "lte",
+              "between",
+              "is_null",
+              "is_not_null"
+            ],
+            "title": "Operator"
+          },
+          "values": {
+            "items": {
+              "type": "string",
+              "maxLength": 200
+            },
+            "type": "array",
+            "maxItems": 50,
+            "title": "Values"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "dimension_id",
+          "operator"
+        ],
+        "title": "QueryFilter"
+      },
+      "QueryInput": {
+        "properties": {
+          "topic_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Topic Id"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/QueryPlan"
+          },
+          "include_analysis": {
+            "type": "boolean",
+            "title": "Include Analysis",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "topic_id",
+          "plan"
+        ],
+        "title": "QueryInput"
+      },
+      "QueryPlan": {
+        "properties": {
+          "metrics": {
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]{0,47}$"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Metrics"
+          },
+          "dimensions": {
+            "items": {
+              "$ref": "#/components/schemas/Grouping"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Dimensions"
+          },
+          "filters": {
+            "items": {
+              "$ref": "#/components/schemas/QueryFilter"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Filters"
+          },
+          "time_range": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TimeRange"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "order_by": {
+            "items": {
+              "$ref": "#/components/schemas/Ordering"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Order By"
+          },
+          "limit": {
+            "type": "integer",
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Limit",
+            "default": 100
+          },
+          "timeout_seconds": {
+            "type": "integer",
+            "maximum": 30.0,
+            "minimum": 1.0,
+            "title": "Timeout Seconds",
+            "default": 15
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "metrics"
+        ],
+        "title": "QueryPlan"
+      },
+      "ResultColumn": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "value_type": {
+            "type": "string",
+            "title": "Value Type"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit",
+            "default": ""
+          },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone",
+            "default": ""
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "value_type"
+        ],
+        "title": "ResultColumn"
+      },
+      "SessionInput": {
+        "properties": {
+          "ticket": {
+            "type": "string",
+            "format": "password",
+            "title": "Ticket",
+            "writeOnly": true
+          },
+          "challenge": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 32,
+            "title": "Challenge"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "ticket",
+          "challenge"
+        ],
+        "title": "SessionInput"
+      },
+      "SessionPublic": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "const": "bearer",
+            "title": "Token Type"
+          },
+          "expires_in": {
+            "type": "integer",
+            "title": "Expires In"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          },
+          "topic_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic Id"
+          },
+          "principal_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Principal Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "access_token",
+          "token_type",
+          "expires_in",
+          "session_id",
+          "topic_id",
+          "principal_id"
+        ],
+        "title": "SessionPublic"
+      },
+      "TaskPublic": {
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Task Id"
+          },
+          "topic_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Topic Id"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "analysis_status": {
+            "type": "string",
+            "title": "Analysis Status"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "status_url": {
+            "type": "string",
+            "title": "Status Url"
+          },
+          "clarification": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Clarification"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "task_id",
+          "topic_id",
+          "conversation_id",
+          "revision",
+          "status",
+          "message",
+          "analysis_status",
+          "expires_at",
+          "status_url",
+          "clarification",
+          "question"
+        ],
+        "title": "TaskPublic"
+      },
+      "TicketInput": {
+        "properties": {
+          "origin": {
+            "type": "string",
+            "maxLength": 300,
+            "title": "Origin"
+          },
+          "challenge": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 32,
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "title": "Challenge"
+          },
+          "topic_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "origin",
+          "challenge"
+        ],
+        "title": "TicketInput"
+      },
+      "TimeRange": {
+        "properties": {
+          "start": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Start"
+          },
+          "end": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "End"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "start",
+          "end"
+        ],
+        "title": "TimeRange"
+      },
+      "TokenInput": {
+        "properties": {
+          "grant_type": {
+            "type": "string",
+            "const": "client_credentials",
+            "title": "Grant Type",
+            "default": "client_credentials"
+          },
+          "client_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Client Id"
+          },
+          "client_secret": {
+            "type": "string",
+            "format": "password",
+            "title": "Client Secret",
+            "writeOnly": true
+          },
+          "subject_assertion": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "password",
+                "writeOnly": true
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject Assertion"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "client_id",
+          "client_secret"
+        ],
+        "title": "TokenInput"
+      },
+      "TokenPublic": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "const": "bearer",
+            "title": "Token Type"
+          },
+          "expires_in": {
+            "type": "integer",
+            "title": "Expires In"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "access_token",
+          "token_type",
+          "expires_in",
+          "session_id"
+        ],
+        "title": "TokenPublic"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

@@ -1,0 +1,782 @@
+{
+  "completed": true,
+  "evidence": "live_model_component_sample",
+  "model": "glm-5.3-flash",
+  "gateway_id": "194aff1a-34f7-4e71-aacb-e991cd5532e7",
+  "gateway_revision": 1,
+  "selection": "first PostgreSQL-verifiable dev question per database, sorted by question_id",
+  "selected": [
+    {
+      "db_id": "运动员比赛记录",
+      "id": "qid000001"
+    },
+    {
+      "db_id": "中国高校",
+      "id": "qid000002"
+    },
+    {
+      "db_id": "中国历史名城",
+      "id": "qid000003"
+    },
+    {
+      "db_id": "教材辅助参考书",
+      "id": "qid000004"
+    },
+    {
+      "db_id": "洗衣机",
+      "id": "qid000005"
+    },
+    {
+      "db_id": "中国卫视频道",
+      "id": "qid000006"
+    },
+    {
+      "db_id": "企业融资",
+      "id": "qid000008"
+    },
+    {
+      "db_id": "购书平台",
+      "id": "qid000009"
+    },
+    {
+      "db_id": "CCTV中国经济年度人物",
+      "id": "qid000010"
+    },
+    {
+      "db_id": "综艺节目",
+      "id": "qid000011"
+    },
+    {
+      "db_id": "友好城市",
+      "id": "qid000012"
+    },
+    {
+      "db_id": "奥运会参赛队伍",
+      "id": "qid000015"
+    },
+    {
+      "db_id": "欧洲杯球队",
+      "id": "qid000016"
+    },
+    {
+      "db_id": "坚果",
+      "id": "qid000612"
+    },
+    {
+      "db_id": "打车软件",
+      "id": "qid000615"
+    },
+    {
+      "db_id": "枪击事件",
+      "id": "qid000645"
+    },
+    {
+      "db_id": "城市财政收入",
+      "id": "qid000806"
+    }
+  ],
+  "prompt": "production EXPLORATION_SYSTEM + context.prepare + exploration.catalog + PlanDecision schema",
+  "attempts_per_question": 1,
+  "limitations": [
+    "small filtered sample, not representative accuracy",
+    "no API authentication/conversation/worker coverage",
+    "reference data may not reflect intended question semantics"
+  ],
+  "dataset_sha256": {
+    "db_content.json": "eaed5e5641e441fd363f1ccfbfe96e10452d4deb2e661bf4adbcdd652d0cdb51",
+    "db_schema.json": "7718bd33276ec3a7fc3d1799fdc32617abfd13129c9be032ad3f60ced0163dcc",
+    "dev.json": "5033c54318d5221a2532bc7c7388245e14ce1979ae9c79e928d4e21ec245c860",
+    "gold_dev.sql": "daa477413676ff997ba2921f0244430cdbd1a76a27b9639ac8cd36f00c1c45c5",
+    "test.json": "77b89d8cfdb0be30eb7201f8dd9cfadcfce9fb755e58ae4d6f8aecedc88f2b82",
+    "train.json": "7c0b8823869e573a8d8a00d8e460f08f70c31bb6fa42d5c9d4171ab8f435f11d"
+  },
+  "cases": [
+    {
+      "id": "qid000001",
+      "db_id": "运动员比赛记录",
+      "question": "没有比赛记录的篮球运动员有哪些，同时给出他们在球场上位于哪个位置？",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2517,
+        "completion_tokens": 613
+      },
+      "model_elapsed_ms": 12927,
+      "decision": {
+        "action": "plan",
+        "message": "查询逻辑：以篮球运动员表（t0）为基准，用 NOT EXISTS 按关联键 t1.球员id = t0.词条id 反查，筛选在比赛记录表（t1）中不存在任何记录的运动员，并返回其中文名和场上位置。仅针对比赛记录（t1）判断，不含生涯之最表（t2）。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT p.\"中文名\" AS 中文名, p.\"场上位置\" AS 场上位置 FROM t0 p WHERE NOT EXISTS (SELECT 1 FROM t1 m WHERE m.\"球员id\" = p.\"词条id\")",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "杜兰特",
+          "得分后卫"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "杜兰特",
+          "得分后卫"
+        ]
+      ],
+      "elapsed_ms": 13107
+    },
+    {
+      "id": "qid000002",
+      "db_id": "中国高校",
+      "question": "没有获得过奖项的高校有哪几所？",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2450,
+        "completion_tokens": 232
+      },
+      "model_elapsed_ms": 3591,
+      "decision": {
+        "action": "plan",
+        "message": "查询在奖项表中没有任何记录（未获得过奖项）的高校名称",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT t0.\"名称\" AS 高校名称 FROM t0 WHERE NOT EXISTS (SELECT 1 FROM t2 WHERE t2.\"高校id\" = t0.\"词条id\") ORDER BY t0.\"名称\"",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "中山大学"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "中山大学"
+        ]
+      ],
+      "elapsed_ms": 3711
+    },
+    {
+      "id": "qid000003",
+      "db_id": "中国历史名城",
+      "question": "哪些城市没有做过都城，给出这些城市名和其省份。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2130,
+        "completion_tokens": 592
+      },
+      "model_elapsed_ms": 12329,
+      "decision": {
+        "action": "plan",
+        "message": "查询从未做过都城的城市：从城市表 t0 中排除在都城表 t1 中出现过（t1.城市id 关联 t0.词条id）的城市，返回城市名与所属省份。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT t0.\"名称\" AS 城市名, t0.\"所属省份\" AS 省份 FROM t0 WHERE NOT EXISTS (SELECT 1 FROM t1 WHERE t1.\"城市id\" = t0.\"词条id\") ORDER BY 省份, 城市名",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [],
+      "actual_rows": [],
+      "elapsed_ms": 12483
+    },
+    {
+      "id": "qid000004",
+      "db_id": "教材辅助参考书",
+      "question": "哪些参考书不是试卷形式，给出书名和类型。",
+      "status": "mismatch",
+      "usage": {
+        "prompt_tokens": 2298,
+        "completion_tokens": 1425
+      },
+      "model_elapsed_ms": 38974,
+      "decision": {
+        "action": "plan",
+        "message": "从参考书表（t0）中筛选类型不为\"试卷\"的记录，返回书名（名称）和类型两列明细。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT \"名称\" AS 书名, \"类型\" AS 类型 FROM t0 WHERE \"类型\" <> '试卷'",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "典中点",
+          "出版书"
+        ],
+        [
+          "黄冈试卷",
+          "试卷"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "典中点",
+          "出版书"
+        ],
+        [
+          "零失误分层训练",
+          "出版书"
+        ]
+      ],
+      "elapsed_ms": 39100
+    },
+    {
+      "id": "qid000005",
+      "db_id": "洗衣机",
+      "question": "哪些洗衣机品牌没有门店，给出这些品牌名和其生产公司。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2630,
+        "completion_tokens": 417
+      },
+      "model_elapsed_ms": 11859,
+      "decision": {
+        "action": "plan",
+        "message": "以 t0 洗衣机品牌为左表，按 t0.词条id = t2.品牌id 左关联门店表 t2，筛选无任何门店记录的品牌，返回品牌名称及其所属公司（生产公司）。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT t0.\"名称\" AS \"品牌名称\", t0.\"所属公司\" AS \"生产公司\" FROM t0 LEFT JOIN t2 ON t0.\"词条id\" = t2.\"品牌id\" WHERE t2.\"品牌id\" IS NULL",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "西门子",
+          "西门子集团"
+        ],
+        [
+          "LG",
+          "韩国LG集团"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "西门子",
+          "西门子集团"
+        ],
+        [
+          "LG",
+          "韩国LG集团"
+        ]
+      ],
+      "elapsed_ms": 12011
+    },
+    {
+      "id": "qid000006",
+      "db_id": "中国卫视频道",
+      "question": "没有收视记录的电视剧有哪些？给出剧名和出品的公司。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2354,
+        "completion_tokens": 428
+      },
+      "model_elapsed_ms": 11094,
+      "decision": {
+        "action": "plan",
+        "message": "查询电视剧表中在电视剧收视表（t2）中不存在任何收视记录的剧，返回剧名与出品公司；使用 NOT EXISTS 反连接，不引入日期过滤。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT t1.\"名称\" AS \"剧名\", t1.\"出品公司\" AS \"出品公司\" FROM t1 WHERE NOT EXISTS (SELECT 1 FROM t2 WHERE t2.\"电视剧id\" = t1.\"词条id\")",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "甄嬛传",
+          "北京电视艺术中心"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "甄嬛传",
+          "北京电视艺术中心"
+        ]
+      ],
+      "elapsed_ms": 11242
+    },
+    {
+      "id": "qid000008",
+      "db_id": "企业融资",
+      "question": "哪些企业没有被投资过，给出其名字和法人。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2282,
+        "completion_tokens": 570
+      },
+      "model_elapsed_ms": 8306,
+      "decision": {
+        "action": "plan",
+        "message": "查询 t0 企业表中没有出现在投资公司表（t2）中的企业，返回其企业名称与法定代表人，即从未被任何投资公司投资过的企业。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT e.\"中文名\" AS 企业名称, e.\"法定代表人\" AS 法定代表人 FROM t0 e WHERE NOT EXISTS (SELECT 1 FROM t2 i WHERE i.\"企业id\" = e.\"词条id\")",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "知乎",
+          "张超"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "知乎",
+          "张超"
+        ]
+      ],
+      "elapsed_ms": 8439
+    },
+    {
+      "id": "qid000009",
+      "db_id": "购书平台",
+      "question": "哪些书籍没有电子版？给出书名和撰写者。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2625,
+        "completion_tokens": 413
+      },
+      "model_elapsed_ms": 6899,
+      "decision": {
+        "action": "plan",
+        "message": "查找在电子书表（t3）中没有任何记录的图书，输出书名与作者（撰写者），使用 NOT EXISTS 反连接避免一对多重复。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT t1.\"书名\" AS \"书名\", t1.\"作者\" AS \"撰写者\" FROM t1 WHERE NOT EXISTS (SELECT 1 FROM t3 WHERE t3.\"书名id\" = t1.\"词条id\")",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "半小时世界漫画史",
+          "李碧龙"
+        ],
+        [
+          "大众心理研究学",
+          "李楠集"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "半小时世界漫画史",
+          "李碧龙"
+        ],
+        [
+          "大众心理研究学",
+          "李楠集"
+        ]
+      ],
+      "elapsed_ms": 7045
+    },
+    {
+      "id": "qid000010",
+      "db_id": "CCTV中国经济年度人物",
+      "question": "哪些企业人物不在任何公司任职？给出名字和性别。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2480,
+        "completion_tokens": 364
+      },
+      "model_elapsed_ms": 11881,
+      "decision": {
+        "action": "plan",
+        "message": "查询企业人物中在人物公司职位表(t2)中没有任何任职记录的人物，输出其姓名与性别，无任职以 NOT EXISTS 关联 t0.词条id 与 t2.人物id 判断。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT t0.\"姓名\" AS 姓名, t0.\"性别\" AS 性别 FROM t0 WHERE NOT EXISTS (SELECT 1 FROM t2 WHERE t2.\"人物id\" = t0.\"词条id\")",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "张玉良",
+          "女"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "张玉良",
+          "女"
+        ]
+      ],
+      "elapsed_ms": 12089
+    },
+    {
+      "id": "qid000011",
+      "db_id": "综艺节目",
+      "question": "哪些明星没有参加过综艺节目？给出他们名字和民族。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2892,
+        "completion_tokens": 414
+      },
+      "model_elapsed_ms": 12286,
+      "decision": {
+        "action": "plan",
+        "message": "查找明星表中未出现在综艺节目嘉宾表中的明星，输出其姓名和民族（口径：以明星词条id在嘉宾表无任何嘉宾记录为准，未限定时间）。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT t1.\"姓名\" AS 明星姓名, t1.\"民族\" AS 民族 FROM t1 WHERE NOT EXISTS (SELECT 1 FROM t4 WHERE t4.\"明星id\" = t1.\"词条id\")",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "邓超",
+          "维族"
+        ],
+        [
+          "王祖蓝",
+          "维族"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "邓超",
+          "维族"
+        ],
+        [
+          "王祖蓝",
+          "维族"
+        ]
+      ],
+      "elapsed_ms": 12415
+    },
+    {
+      "id": "qid000012",
+      "db_id": "友好城市",
+      "question": "哪些城市不属于需要帮扶的贫困城市，并给出它们所在的省。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2420,
+        "completion_tokens": 513
+      },
+      "model_elapsed_ms": 12934,
+      "decision": {
+        "action": "plan",
+        "message": "从城市表(t0)中筛选未出现在对口帮扶城市表(t3)贫困城市id中的城市，返回城市名及其所属省份（用 NOT EXISTS 反连接，自动排除贫困城市id为空的干扰）。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT c.\"城市\" AS 城市, c.\"所属省份\" AS 所属省份 FROM t0 c WHERE NOT EXISTS (SELECT 1 FROM t3 p WHERE p.\"贫困城市id\" = c.\"词条id\")",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "深圳",
+          "广东"
+        ],
+        [
+          "乌鲁木齐",
+          "新疆"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "深圳",
+          "广东"
+        ],
+        [
+          "乌鲁木齐",
+          "新疆"
+        ]
+      ],
+      "elapsed_ms": 13064
+    },
+    {
+      "id": "qid000015",
+      "db_id": "奥运会参赛队伍",
+      "question": "在2008年北京奥运会中，哪些国家没有来参加？并给出它们位于哪个大洲。",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2732,
+        "completion_tokens": 1042
+      },
+      "model_elapsed_ms": 29532,
+      "decision": {
+        "action": "plan",
+        "message": "口径说明：目录中只有2008北京奥运会奖牌榜（t3）记录了与该届奥运相关的国家清单，t1仅有参赛国家总数而无可关联的参赛国名单，因此以\"未出现在2008北京奥运会奖牌榜中的国家\"近似为未参赛国家，并返回其所属大洲。注意：实际参赛但未获得任何奖牌的国家无法通过奖牌榜识别，会被包含在本结果中。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT c.\"名称\" AS 国家名称, c.\"所属洲\" AS 所属大洲 FROM t0 c WHERE NOT EXISTS (SELECT 1 FROM t3 m WHERE m.\"国家id\" = c.\"词条id\") ORDER BY 所属大洲, 国家名称",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "美国",
+          "北美洲"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "美国",
+          "北美洲"
+        ]
+      ],
+      "elapsed_ms": 29665
+    },
+    {
+      "id": "qid000016",
+      "db_id": "欧洲杯球队",
+      "question": "没有获得过欧洲杯冠军的球队有哪些？给出队名和所属的地区。",
+      "status": "mismatch",
+      "usage": {
+        "prompt_tokens": 2633,
+        "completion_tokens": 2146
+      },
+      "model_elapsed_ms": 32401,
+      "decision": {
+        "action": "plan",
+        "message": "从未在杯赛为“欧洲杯”的赛事中夺得冠军的球队：对球队表做反连接，排除曾在欧冠冠亚军记录（杯赛=欧洲杯）中作为冠军球队id出现过的球队，返回中文队名与所属地区。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT t0.\"中文队名\" AS \"队名\", t0.\"所属地区\" AS \"所属地区\" FROM t0 WHERE NOT EXISTS (SELECT 1 FROM t2 WHERE t2.\"冠军球队id\" = t0.\"词条id\" AND t2.\"杯赛\" = '欧洲杯') ORDER BY t0.\"中文队名\"",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "墨西哥",
+          "墨西哥"
+        ],
+        [
+          "荷兰",
+          "荷兰"
+        ],
+        [
+          "法国",
+          "法国"
+        ]
+      ],
+      "actual_rows": [
+        [
+          "墨西哥",
+          "墨西哥"
+        ],
+        [
+          "巴西",
+          "巴西"
+        ],
+        [
+          "法国",
+          "法国"
+        ],
+        [
+          "荷兰",
+          "荷兰"
+        ],
+        [
+          "西班牙",
+          "西班牙"
+        ]
+      ],
+      "elapsed_ms": 32678
+    },
+    {
+      "id": "qid000612",
+      "db_id": "坚果",
+      "question": "每个季节有多少种坚果有收入？",
+      "status": "error",
+      "usage": {
+        "prompt_tokens": 2907,
+        "completion_tokens": 1223
+      },
+      "model_elapsed_ms": 19431,
+      "decision": {
+        "action": "plan",
+        "message": "按季节统计t5中营业收入大于0的坚果种类数（COUNT DISTINCT 坚果id），无已发布指标，使用SQL自由探索。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT \"季节\" AS 季节, COUNT(DISTINCT \"坚果id\") AS 有收入的坚果种数 FROM t5 WHERE \"营业收入\" IS NOT NULL AND TRIM(\"营业收入\") <> '' AND \"营业收入\" ~ '^[0-9]+(\\.[0-9]+)?$' AND CAST(\"营业收入\" AS numeric) > 0 GROUP BY \"季节\" ORDER BY \"季节\"",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "bar",
+        "analysis_requested": false
+      },
+      "error": "SQL 包含未支持的表达式或非只读操作",
+      "elapsed_ms": 19459
+    },
+    {
+      "id": "qid000615",
+      "db_id": "打车软件",
+      "question": "每个公司开发的打车APP有几款？",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2447,
+        "completion_tokens": 519
+      },
+      "model_elapsed_ms": 14177,
+      "decision": {
+        "action": "plan",
+        "message": "按“所属公司”对打车APP表(t0)分组，统计每个公司拥有的APP数量（每行视为一款APP），并按数量降序排列。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT \"所属公司\" AS 所属公司, COUNT(*) AS APP数量 FROM t0 GROUP BY \"所属公司\" ORDER BY APP数量 DESC",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "bar",
+        "analysis_requested": false
+      },
+      "expected_rows": [
+        [
+          "滴滴",
+          1
+        ],
+        [
+          "易用车",
+          1
+        ],
+        [
+          "首汽",
+          1
+        ],
+        [
+          "一号专车",
+          1
+        ],
+        [
+          "优步",
+          1
+        ]
+      ],
+      "actual_rows": [
+        [
+          "滴滴",
+          1
+        ],
+        [
+          "易用车",
+          1
+        ],
+        [
+          "首汽",
+          1
+        ],
+        [
+          "一号专车",
+          1
+        ],
+        [
+          "优步",
+          1
+        ]
+      ],
+      "elapsed_ms": 14333
+    },
+    {
+      "id": "qid000645",
+      "db_id": "枪击事件",
+      "question": "在美国校园枪击事件中，哪个城市近几年发生的案件平均影响学生数大于伤亡人数低于20人的枪击事件中影响学生最少的",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2408,
+        "completion_tokens": 547
+      },
+      "model_elapsed_ms": 8385,
+      "decision": {
+        "action": "plan",
+        "message": "按发生城市分组统计近几年校园枪击事件的平均受影响学生数量，筛选出平均值大于伤亡人数低于20人事件中最小受影响学生数的城市",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT \"发生城市\" AS 城市, AVG(\"受影响学生数量\") AS 平均受影响学生数 FROM t2 GROUP BY \"发生城市\" HAVING AVG(\"受影响学生数量\") > (SELECT MIN(\"受影响学生数量\") FROM t2 WHERE \"伤亡人数\" < 20) ORDER BY 平均受影响学生数 DESC",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [],
+      "actual_rows": [],
+      "elapsed_ms": 8534
+    },
+    {
+      "id": "qid000806",
+      "db_id": "城市财政收入",
+      "question": "哪些年起成交建筑面积超过35万平方米",
+      "status": "match",
+      "usage": {
+        "prompt_tokens": 2512,
+        "completion_tokens": 360
+      },
+      "model_elapsed_ms": 10695,
+      "decision": {
+        "action": "plan",
+        "message": "查询 t2（300城土地成交）中成交建筑面积超过35（万平）的年份，按年份升序排列；若该列单位并非万平，请告知以调整阈值。",
+        "plan": null,
+        "sql_plan": {
+          "kind": "sql",
+          "sql": "SELECT \"年份\" AS 年份, \"成交建筑面积\" AS 成交建筑面积_万平 FROM t2 WHERE \"成交建筑面积\" > 35 ORDER BY \"年份\" ASC",
+          "limit": 100,
+          "timeout_seconds": 15
+        },
+        "chart": "table",
+        "analysis_requested": false
+      },
+      "expected_rows": [],
+      "actual_rows": [],
+      "elapsed_ms": 10795
+    }
+  ],
+  "counts": {
+    "match": 14,
+    "mismatch": 2,
+    "error": 1
+  }
+}

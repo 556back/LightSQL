@@ -148,6 +148,8 @@ def register_user(session: SessionDep, user_in: UserRegister) -> Any:
     """
     Create new user without the need to be logged in.
     """
+    if not settings.ENABLE_PUBLIC_SIGNUP:
+        raise HTTPException(status_code=403, detail="内部系统暂不开放注册，请联系管理员")
     user = crud.get_user_by_email(session=session, email=user_in.email)
     if user:
         raise HTTPException(

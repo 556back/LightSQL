@@ -1,0 +1,4904 @@
+{
+  "name": "M07 销售经营120题 · 合成留出验证",
+  "topic_id": "00000000-0000-0000-0000-000000000000",
+  "semantic_version": 1,
+  "source_snapshot": "M03五订单三客户冻结样例；sha256:e4abe92f3df812924108b8b7c16ba7ddd59a3bf01eda0d605451d50fab09f135",
+  "as_of": "2026-09-07",
+  "timezone": "Asia/Shanghai",
+  "provenance": "synthetic",
+  "owner": "合成资料；业务口径负责人待确认",
+  "cases": [
+    {
+      "id": "sales-total-gross_sales-1",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "按已发布的销售总额口径，全部日期、全部渠道和客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "4400"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-gross_sales-2",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "请统计销售总额，范围是全部日期、全部渠道和客户，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "4400"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-refund_amount-1",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "按已发布的退款金额口径，全部日期、全部渠道和客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "400"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-refund_amount-2",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "请统计退款金额，范围是全部日期、全部渠道和客户，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "400"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-net_sales-1",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "按已发布的净销售额口径，全部日期、全部渠道和客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "4000"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-net_sales-2",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "请统计净销售额，范围是全部日期、全部渠道和客户，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "4000"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-order_count-1",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "按已发布的支付订单数口径，全部日期、全部渠道和客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "4"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-order_count-2",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "请统计支付订单数，范围是全部日期、全部渠道和客户，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "4"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-avg_order-1",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "按已发布的客单价口径，全部日期、全部渠道和客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "1000"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ]
+      }
+    },
+    {
+      "id": "sales-total-avg_order-2",
+      "group": "sales-total",
+      "split": "dev",
+      "question": "请统计客单价，范围是全部日期、全部渠道和客户，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "total"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "1000"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ]
+      }
+    },
+    {
+      "id": "sales-day-gross_sales-1",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "按已发布的销售总额口径，全部日期，按订单日期逐日分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "2000"
+        ],
+        [
+          "2026-09-02",
+          "1500"
+        ],
+        [
+          "2026-09-03",
+          "900"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.order_date AS order_day, SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-gross_sales-2",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "请统计销售总额，范围是全部日期，按订单日期逐日分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "2000"
+        ],
+        [
+          "2026-09-02",
+          "1500"
+        ],
+        [
+          "2026-09-03",
+          "900"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.order_date AS order_day, SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-refund_amount-1",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "按已发布的退款金额口径，全部日期，按订单日期逐日分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "100"
+        ],
+        [
+          "2026-09-02",
+          "300"
+        ],
+        [
+          "2026-09-03",
+          "0"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.order_date AS order_day, SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-refund_amount-2",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "请统计退款金额，范围是全部日期，按订单日期逐日分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "100"
+        ],
+        [
+          "2026-09-02",
+          "300"
+        ],
+        [
+          "2026-09-03",
+          "0"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.order_date AS order_day, SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-net_sales-1",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "按已发布的净销售额口径，全部日期，按订单日期逐日分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "1900"
+        ],
+        [
+          "2026-09-02",
+          "1200"
+        ],
+        [
+          "2026-09-03",
+          "900"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.order_date AS order_day, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-net_sales-2",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "请统计净销售额，范围是全部日期，按订单日期逐日分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "1900"
+        ],
+        [
+          "2026-09-02",
+          "1200"
+        ],
+        [
+          "2026-09-03",
+          "900"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.order_date AS order_day, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-order_count-1",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "按已发布的支付订单数口径，全部日期，按订单日期逐日分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "2"
+        ],
+        [
+          "2026-09-02",
+          "1"
+        ],
+        [
+          "2026-09-03",
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.order_date AS order_day, COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-order_count-2",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "请统计支付订单数，范围是全部日期，按订单日期逐日分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "2"
+        ],
+        [
+          "2026-09-02",
+          "1"
+        ],
+        [
+          "2026-09-03",
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.order_date AS order_day, COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-avg_order-1",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "按已发布的客单价口径，全部日期，按订单日期逐日分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "950"
+        ],
+        [
+          "2026-09-02",
+          "1200"
+        ],
+        [
+          "2026-09-03",
+          "900"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT o.order_date AS order_day, 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-day-avg_order-2",
+      "group": "sales-day",
+      "split": "dev",
+      "question": "请统计客单价，范围是全部日期，按订单日期逐日分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "day"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_day",
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "2026-09-01",
+          "950"
+        ],
+        [
+          "2026-09-02",
+          "1200"
+        ],
+        [
+          "2026-09-03",
+          "900"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT o.order_date AS order_day, 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.order_date",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "order_day"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-range-gross_sales-1",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "按已发布的销售总额口径，订单日期从2026-09-01（含）到2026-09-03（不含），给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "3500"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-gross_sales-2",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "请统计销售总额，范围是订单日期从2026-09-01（含）到2026-09-03（不含），沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "3500"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-refund_amount-1",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "按已发布的退款金额口径，订单日期从2026-09-01（含）到2026-09-03（不含），给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "400"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-refund_amount-2",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "请统计退款金额，范围是订单日期从2026-09-01（含）到2026-09-03（不含），沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "400"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-net_sales-1",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "按已发布的净销售额口径，订单日期从2026-09-01（含）到2026-09-03（不含），给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "3100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-net_sales-2",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "请统计净销售额，范围是订单日期从2026-09-01（含）到2026-09-03（不含），沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "3100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-order_count-1",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "按已发布的支付订单数口径，订单日期从2026-09-01（含）到2026-09-03（不含），给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "3"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-order_count-2",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "请统计支付订单数，范围是订单日期从2026-09-01（含）到2026-09-03（不含），沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "3"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-avg_order-1",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "按已发布的客单价口径，订单日期从2026-09-01（含）到2026-09-03（不含），给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "1033.333333333333333333333333"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-range-avg_order-2",
+      "group": "sales-range",
+      "split": "dev",
+      "question": "请统计客单价，范围是订单日期从2026-09-01（含）到2026-09-03（不含），沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "range"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "1033.333333333333333333333333"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.order_date >= '2026-09-01' AND o.order_date < '2026-09-03'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "time_range": {
+          "start": "2026-09-01",
+          "end": "2026-09-03"
+        }
+      }
+    },
+    {
+      "id": "sales-online-gross_sales-1",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "按已发布的销售总额口径，全部日期，仅线上直营渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "2100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-gross_sales-2",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的销售总额口径，全部日期，仅线上直营渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "2100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-refund_amount-1",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "按已发布的退款金额口径，全部日期，仅线上直营渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-refund_amount-2",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的退款金额口径，全部日期，仅线上直营渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-net_sales-1",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "按已发布的净销售额口径，全部日期，仅线上直营渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "2000"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-net_sales-2",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的净销售额口径，全部日期，仅线上直营渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "2000"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-order_count-1",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "按已发布的支付订单数口径，全部日期，仅线上直营渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "2"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-order_count-2",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的支付订单数口径，全部日期，仅线上直营渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "2"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-avg_order-1",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "按已发布的客单价口径，全部日期，仅线上直营渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "1000"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-online-avg_order-2",
+      "group": "sales-online",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的客单价口径，全部日期，仅线上直营渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "online",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "1000"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='online'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "online"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-gross_sales-1",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "按已发布的销售总额口径，全部日期，仅合作渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "800"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-gross_sales-2",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的销售总额口径，全部日期，仅合作渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "800"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-refund_amount-1",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "按已发布的退款金额口径，全部日期，仅合作渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "0"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-refund_amount-2",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的退款金额口径，全部日期，仅合作渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "0"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-net_sales-1",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "按已发布的净销售额口径，全部日期，仅合作渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "800"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-net_sales-2",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的净销售额口径，全部日期，仅合作渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "800"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-order_count-1",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "按已发布的支付订单数口径，全部日期，仅合作渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-order_count-2",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的支付订单数口径，全部日期，仅合作渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-avg_order-1",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "按已发布的客单价口径，全部日期，仅合作渠道，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "800"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-partner-avg_order-2",
+      "group": "sales-partner",
+      "split": "dev",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的客单价口径，全部日期，仅合作渠道，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "partner",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "800"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' AND o.channel='partner'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "filters": [
+          {
+            "dimension_id": "channel",
+            "operator": "eq",
+            "values": [
+              "partner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-gross_sales-1",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "按已发布的销售总额口径，全部日期，按客户区域分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "1200"
+        ],
+        [
+          "华南",
+          "1700"
+        ],
+        [
+          "华北",
+          "1500"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.region AS region, SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-gross_sales-2",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "请统计销售总额，范围是全部日期，按客户区域分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "1200"
+        ],
+        [
+          "华南",
+          "1700"
+        ],
+        [
+          "华北",
+          "1500"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.region AS region, SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-refund_amount-1",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "按已发布的退款金额口径，全部日期，按客户区域分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "100"
+        ],
+        [
+          "华南",
+          "0"
+        ],
+        [
+          "华北",
+          "300"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.region AS region, SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-refund_amount-2",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "请统计退款金额，范围是全部日期，按客户区域分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "100"
+        ],
+        [
+          "华南",
+          "0"
+        ],
+        [
+          "华北",
+          "300"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.region AS region, SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-net_sales-1",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "按已发布的净销售额口径，全部日期，按客户区域分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "1100"
+        ],
+        [
+          "华南",
+          "1700"
+        ],
+        [
+          "华北",
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.region AS region, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-net_sales-2",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "请统计净销售额，范围是全部日期，按客户区域分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "1100"
+        ],
+        [
+          "华南",
+          "1700"
+        ],
+        [
+          "华北",
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.region AS region, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-order_count-1",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "按已发布的支付订单数口径，全部日期，按客户区域分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "1"
+        ],
+        [
+          "华南",
+          "2"
+        ],
+        [
+          "华北",
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.region AS region, COUNT(*) AS order_count FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-order_count-2",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "请统计支付订单数，范围是全部日期，按客户区域分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "1"
+        ],
+        [
+          "华南",
+          "2"
+        ],
+        [
+          "华北",
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.region AS region, COUNT(*) AS order_count FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-avg_order-1",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "按已发布的客单价口径，全部日期，按客户区域分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "1100"
+        ],
+        [
+          "华南",
+          "850"
+        ],
+        [
+          "华北",
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT c.region AS region, 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-region-avg_order-2",
+      "group": "sales-region",
+      "split": "blind",
+      "question": "请统计客单价，范围是全部日期，按客户区域分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "region"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "region",
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "华东",
+          "1100"
+        ],
+        [
+          "华南",
+          "850"
+        ],
+        [
+          "华北",
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT c.region AS region, 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.region",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "region"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-gross_sales-1",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "按已发布的销售总额口径，全部日期，按销售渠道分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "2100"
+        ],
+        [
+          "partner",
+          "800"
+        ],
+        [
+          "store",
+          "1500"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.channel AS channel, SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-gross_sales-2",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "请统计销售总额，范围是全部日期，按销售渠道分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "2100"
+        ],
+        [
+          "partner",
+          "800"
+        ],
+        [
+          "store",
+          "1500"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.channel AS channel, SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-refund_amount-1",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "按已发布的退款金额口径，全部日期，按销售渠道分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "100"
+        ],
+        [
+          "partner",
+          "0"
+        ],
+        [
+          "store",
+          "300"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.channel AS channel, SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-refund_amount-2",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "请统计退款金额，范围是全部日期，按销售渠道分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "100"
+        ],
+        [
+          "partner",
+          "0"
+        ],
+        [
+          "store",
+          "300"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.channel AS channel, SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-net_sales-1",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "按已发布的净销售额口径，全部日期，按销售渠道分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "2000"
+        ],
+        [
+          "partner",
+          "800"
+        ],
+        [
+          "store",
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.channel AS channel, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-net_sales-2",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "请统计净销售额，范围是全部日期，按销售渠道分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "2000"
+        ],
+        [
+          "partner",
+          "800"
+        ],
+        [
+          "store",
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.channel AS channel, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-order_count-1",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "按已发布的支付订单数口径，全部日期，按销售渠道分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "2"
+        ],
+        [
+          "partner",
+          "1"
+        ],
+        [
+          "store",
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.channel AS channel, COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-order_count-2",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "请统计支付订单数，范围是全部日期，按销售渠道分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "2"
+        ],
+        [
+          "partner",
+          "1"
+        ],
+        [
+          "store",
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT o.channel AS channel, COUNT(*) AS order_count FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-avg_order-1",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "按已发布的客单价口径，全部日期，按销售渠道分组，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "1000"
+        ],
+        [
+          "partner",
+          "800"
+        ],
+        [
+          "store",
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT o.channel AS channel, 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-channel-avg_order-2",
+      "group": "sales-channel",
+      "split": "blind",
+      "question": "请统计客单价，范围是全部日期，按销售渠道分组，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "channel"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "channel",
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "online",
+          "1000"
+        ],
+        [
+          "partner",
+          "800"
+        ],
+        [
+          "store",
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT o.channel AS channel, 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o WHERE o.status='paid' GROUP BY o.channel",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "channel"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-gross_sales-1",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "按已发布的销售总额口径，全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "华南示例客户",
+          "1700"
+        ],
+        [
+          "华北示例客户",
+          "1500"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.customer_name AS customer, SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY gross_sales DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "gross_sales",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-gross_sales-2",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "请统计销售总额，范围是全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "华南示例客户",
+          "1700"
+        ],
+        [
+          "华北示例客户",
+          "1500"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.customer_name AS customer, SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY gross_sales DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "gross_sales",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-refund_amount-1",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "按已发布的退款金额口径，全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "华北示例客户",
+          "300"
+        ],
+        [
+          "华东示例客户",
+          "100"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.customer_name AS customer, SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY refund_amount DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "refund_amount",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-refund_amount-2",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "请统计退款金额，范围是全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "华北示例客户",
+          "300"
+        ],
+        [
+          "华东示例客户",
+          "100"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.customer_name AS customer, SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY refund_amount DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "refund_amount",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-net_sales-1",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "按已发布的净销售额口径，全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "华南示例客户",
+          "1700"
+        ],
+        [
+          "华北示例客户",
+          "1200"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.customer_name AS customer, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY net_sales DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "net_sales",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-net_sales-2",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "请统计净销售额，范围是全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "华南示例客户",
+          "1700"
+        ],
+        [
+          "华北示例客户",
+          "1200"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.customer_name AS customer, SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY net_sales DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "net_sales",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-order_count-1",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "按已发布的支付订单数口径，全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "华南示例客户",
+          "2"
+        ],
+        [
+          "华东示例客户",
+          "1"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.customer_name AS customer, COUNT(*) AS order_count FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY order_count DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "order_count",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-order_count-2",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "请统计支付订单数，范围是全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "华南示例客户",
+          "2"
+        ],
+        [
+          "华东示例客户",
+          "1"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "0",
+      "reference_sql": "SELECT c.customer_name AS customer, COUNT(*) AS order_count FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY order_count DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "order_count",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-avg_order-1",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "按已发布的客单价口径，全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "华北示例客户",
+          "1200"
+        ],
+        [
+          "华东示例客户",
+          "1100"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT c.customer_name AS customer, 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY avg_order DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "avg_order",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-top-avg_order-2",
+      "group": "sales-top",
+      "split": "blind",
+      "question": "请统计客单价，范围是全部日期，按客户分组，取该指标最高的前两名；并列按客户名称升序，沿用已发布定义。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "top"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "customer",
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "华北示例客户",
+          "1200"
+        ],
+        [
+          "华东示例客户",
+          "1100"
+        ]
+      ],
+      "ordered": true,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT c.customer_name AS customer, 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' GROUP BY c.customer_name ORDER BY avg_order DESC, customer ASC LIMIT 2",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "dimensions": [
+          {
+            "dimension_id": "customer"
+          }
+        ],
+        "limit": 2,
+        "order_by": [
+          {
+            "field": "avg_order",
+            "direction": "desc"
+          },
+          {
+            "field": "customer",
+            "direction": "asc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-gross_sales-1",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "按已发布的销售总额口径，全部日期，仅华东示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-gross_sales-2",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的销售总额口径，全部日期，仅华东示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "1200"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-refund_amount-1",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "按已发布的退款金额口径，全部日期，仅华东示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-refund_amount-2",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的退款金额口径，全部日期，仅华东示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-net_sales-1",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "按已发布的净销售额口径，全部日期，仅华东示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "1100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-net_sales-2",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的净销售额口径，全部日期，仅华东示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "1100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-order_count-1",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "按已发布的支付订单数口径，全部日期，仅华东示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-order_count-2",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的支付订单数口径，全部日期，仅华东示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "1"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-avg_order-1",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "按已发布的客单价口径，全部日期，仅华东示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "1100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-east-avg_order-2",
+      "group": "sales-east",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的客单价口径，全部日期，仅华东示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "east",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "1100"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华东示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华东示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-gross_sales-1",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "按已发布的销售总额口径，全部日期，仅华南示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "1700"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-gross_sales-2",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的销售总额口径，全部日期，仅华南示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "gross_sales"
+      ],
+      "numeric_columns": [
+        "gross_sales"
+      ],
+      "expected_rows": [
+        [
+          "1700"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.gross_amount) AS gross_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "gross_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-refund_amount-1",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "按已发布的退款金额口径，全部日期，仅华南示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "0"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-refund_amount-2",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的退款金额口径，全部日期，仅华南示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "refund_amount"
+      ],
+      "numeric_columns": [
+        "refund_amount"
+      ],
+      "expected_rows": [
+        [
+          "0"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.refund_amount) AS refund_amount FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "refund_amount"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-net_sales-1",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "按已发布的净销售额口径，全部日期，仅华南示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "1700"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-net_sales-2",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的净销售额口径，全部日期，仅华南示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "net_sales"
+      ],
+      "numeric_columns": [
+        "net_sales"
+      ],
+      "expected_rows": [
+        [
+          "1700"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT SUM(o.net_amount) AS net_sales FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "net_sales"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-order_count-1",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "按已发布的支付订单数口径，全部日期，仅华南示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "2"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-order_count-2",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的支付订单数口径，全部日期，仅华南示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "order_count"
+      ],
+      "numeric_columns": [
+        "order_count"
+      ],
+      "expected_rows": [
+        [
+          "2"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "SELECT COUNT(*) AS order_count FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "order_count"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-avg_order-1",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "按已发布的客单价口径，全部日期，仅华南示例客户，给出结果。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "850"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-south-avg_order-2",
+      "group": "sales-south",
+      "split": "blind",
+      "question": "沿用刚才的客户或渠道筛选，再给我同一指标的结果。",
+      "history": [
+        "按已发布的客单价口径，全部日期，仅华南示例客户，给出结果。"
+      ],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "south",
+        "entity",
+        "followup"
+      ],
+      "expected_action": "answer",
+      "columns": [
+        "avg_order"
+      ],
+      "numeric_columns": [
+        "avg_order"
+      ],
+      "expected_rows": [
+        [
+          "850"
+        ]
+      ],
+      "ordered": false,
+      "tolerance": "1E-8",
+      "reference_sql": "SELECT 1.0 * SUM(o.net_amount) / NULLIF(COUNT(*), 0) AS avg_order FROM demo_sales.m03_orders o LEFT JOIN demo_sales.m03_customers c ON o.tenant_id=c.tenant_id AND o.customer_id=c.customer_id WHERE o.status='paid' AND c.customer_name='华南示例客户'",
+      "reference_plan": {
+        "metrics": [
+          "avg_order"
+        ],
+        "filters": [
+          {
+            "dimension_id": "customer",
+            "operator": "eq",
+            "values": [
+              "华南示例客户"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "sales-ambiguous-entity-1",
+      "group": "sales-ambiguous-entity",
+      "split": "dev",
+      "question": "示例渠道的净销售额是多少？",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "entity",
+        "ambiguity"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-ambiguous-entity-2",
+      "group": "sales-ambiguous-entity",
+      "split": "dev",
+      "question": "统计示例渠道对应的净销售额。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "entity",
+        "ambiguity"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-missing-metric-1",
+      "group": "sales-missing-metric",
+      "split": "dev",
+      "question": "帮我看看销售经营情况。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "ambiguity"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-missing-metric-2",
+      "group": "sales-missing-metric",
+      "split": "dev",
+      "question": "经营怎么样，帮我查一下。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "ambiguity"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-missing-period-1",
+      "group": "sales-missing-period",
+      "split": "dev",
+      "question": "统计那段时间的净销售额。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "missing-period"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-missing-period-2",
+      "group": "sales-missing-period",
+      "split": "dev",
+      "question": "查询之前说的那个期间的净销售额。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "missing-period"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-missing-basis-1",
+      "group": "sales-missing-basis",
+      "split": "dev",
+      "question": "查询销售额，但我还没确定要退款前还是退款后口径。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "definition"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-missing-basis-2",
+      "group": "sales-missing-basis",
+      "split": "dev",
+      "question": "销售金额该看哪个数？我没决定是否扣除退款。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "definition"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-missing-ranking-1",
+      "group": "sales-missing-ranking",
+      "split": "dev",
+      "question": "找出表现最好的客户，我尚未确定按什么指标排序。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "ambiguity"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-missing-ranking-2",
+      "group": "sales-missing-ranking",
+      "split": "dev",
+      "question": "哪些客户最好？我还没选评价指标。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "ambiguity"
+      ],
+      "expected_action": "clarify",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-yoy-1",
+      "group": "sales-yoy",
+      "split": "blind",
+      "question": "仅标准指标模式下计算净销售额同比增长率。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "comparison"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-yoy-2",
+      "group": "sales-yoy",
+      "split": "blind",
+      "question": "使用标准指标计划给出净销售额同比增幅。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "comparison"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-mom-1",
+      "group": "sales-mom",
+      "split": "blind",
+      "question": "仅标准指标模式下计算净销售额环比增长率。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "comparison"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-mom-2",
+      "group": "sales-mom",
+      "split": "blind",
+      "question": "使用标准指标计划给出净销售额环比增幅。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "comparison"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-profit-1",
+      "group": "sales-profit",
+      "split": "blind",
+      "question": "计算销售毛利，必须扣除商品成本。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "missing-data"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-profit-2",
+      "group": "sales-profit",
+      "split": "blind",
+      "question": "统计扣除商品成本后的销售毛利润。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "missing-data"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-inventory-1",
+      "group": "sales-inventory",
+      "split": "blind",
+      "question": "查询仓库当前库存数量。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "missing-data"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-inventory-2",
+      "group": "sales-inventory",
+      "split": "blind",
+      "question": "现在仓库还剩多少件商品？",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "missing-data"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-cross-source-1",
+      "group": "sales-cross-source",
+      "split": "blind",
+      "question": "把当前订单和另一个未接入数据源的收款流水关联核对。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "cross-source"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    },
+    {
+      "id": "sales-cross-source-2",
+      "group": "sales-cross-source",
+      "split": "blind",
+      "question": "跨数据源联查销售订单与尚未接入的银行收款明细。",
+      "history": [],
+      "mode": "metrics",
+      "actor_role": "admin",
+      "tags": [
+        "synthetic",
+        "cross-source"
+      ],
+      "expected_action": "unsupported",
+      "columns": [],
+      "numeric_columns": [],
+      "expected_rows": [],
+      "ordered": false,
+      "tolerance": "0",
+      "reference_sql": "",
+      "reference_plan": {}
+    }
+  ]
+}
