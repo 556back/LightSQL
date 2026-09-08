@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { ResultChart } from "@/components/Queries/ResultChart"
+import { ValidatedForm } from "@/components/ui/validated-form"
 import {
   createIntegrationApi,
   IntegrationError,
@@ -465,7 +466,7 @@ export function EmbedAsk() {
                 </article>
               ))}
             </section>
-            <form
+            <ValidatedForm
               className="sticky bottom-0 space-y-3 rounded-xl border bg-background p-3"
               onSubmit={(e) => {
                 e.preventDefault()
@@ -474,7 +475,7 @@ export function EmbedAsk() {
             >
               <textarea
                 aria-label="问题"
-                className="min-h-20 w-full resize-y rounded-lg border bg-background p-3 text-sm"
+                className="resize-none min-h-20 w-full resize-y rounded-lg border bg-background p-3 text-sm"
                 maxLength={2000}
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
@@ -518,7 +519,7 @@ export function EmbedAsk() {
                   {busy ? "正在提交…" : "发送"}
                 </button>
               </div>
-            </form>
+            </ValidatedForm>
           </>
         )}
       </div>

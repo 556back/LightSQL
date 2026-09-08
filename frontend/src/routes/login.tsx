@@ -71,11 +71,12 @@ function Login() {
     <AuthLayout>
       <Form {...form}>
         <form
+          noValidate
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-6"
         >
-          <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-2xl font-semibold">欢迎使用 LightSQL</h1>
+          <div className="flex flex-col items-start gap-3">
+            <h1 className="page-title">欢迎使用 LightSQL</h1>
             <p className="text-sm text-muted-foreground">
               登录你的内部数据工作空间
             </p>
@@ -93,6 +94,7 @@ function Login() {
                       data-testid="email-input"
                       placeholder="user@example.com"
                       type="email"
+                      autoComplete="username"
                       {...field}
                     />
                   </FormControl>
@@ -118,7 +120,8 @@ function Login() {
                   <FormControl>
                     <PasswordInput
                       data-testid="password-input"
-                      placeholder="Password"
+                      placeholder="请输入密码"
+                      autoComplete="current-password"
                       {...field}
                     />
                   </FormControl>

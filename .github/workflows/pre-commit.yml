@@ -29,6 +29,8 @@ jobs:
           # And it needs the full history to be able to compute diffs
           fetch-depth: 0
           persist-credentials: false
+      - name: Prepare public test configuration
+        run: cp .env.example .env
       # pre-commit lite ci needs the default checkout configs to work
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         name: Checkout PR for fork

@@ -9,3 +9,29 @@ backend/app/frontend/
 # Local demonstration credentials, databases, logs and screenshots
 .local/
 __pycache__/
+
+# Private configuration (only sanitized examples belong in Git)
+.env
+.env.*
+*.env
+!.env.example
+!*.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.backup
+*.log
+
+# Local runtimes, tooling, and test artifacts
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.idea/
+.coverage
+htmlcov/

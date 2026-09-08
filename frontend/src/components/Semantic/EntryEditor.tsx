@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { ValidatedForm } from "@/components/ui/validated-form"
 import {
   additiveLabels,
   aggregations,
@@ -144,7 +145,7 @@ export function EntryEditor({
       {multiline ? (
         <textarea
           aria-label={label}
-          className={control}
+          className={`resize-none ${control}`}
           rows={3}
           required={required}
           value={str(key)}
@@ -251,7 +252,7 @@ export function EntryEditor({
     <Field label={label} hint={hint}>
       <textarea
         aria-label={label}
-        className={control}
+        className={`resize-none ${control}`}
         rows={3}
         value={array(key).join("\n")}
         onChange={(e) => set(key, e.target.value.split("\n"))}
@@ -287,7 +288,7 @@ export function EntryEditor({
             {groups.find((g) => g.key === group)?.hint} 添加后记得保存草稿。
           </DialogDescription>
         </DialogHeader>
-        <form
+        <ValidatedForm
           className="space-y-5"
           onSubmit={(e) => {
             e.preventDefault()
@@ -669,7 +670,7 @@ export function EntryEditor({
             </Button>
             <Button type="submit">应用到工作区</Button>
           </DialogFooter>
-        </form>
+        </ValidatedForm>
       </DialogContent>
     </Dialog>
   )

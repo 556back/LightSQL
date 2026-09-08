@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react"
+import { ValidatedForm } from "@/components/ui/validated-form"
 import useAuth from "@/hooks/useAuth"
 import { IntegrationGuide } from "./IntegrationGuide"
 
@@ -322,7 +323,7 @@ export function IntegrationAdmin() {
             </button>
           ))}
       </div>
-      <form
+      <ValidatedForm
         className="grid gap-4 rounded-xl border bg-card p-5 sm:grid-cols-2"
         onSubmit={(e) => {
           e.preventDefault()
@@ -429,7 +430,7 @@ export function IntegrationAdmin() {
               API 接入可留空。
             </span>
             <textarea
-              className="block min-h-20 w-full rounded border bg-background p-2"
+              className="resize-none block min-h-20 w-full rounded border bg-background p-2"
               placeholder="https://erp.example.com"
               value={origins}
               onChange={(e) => setOrigins(e.target.value)}
@@ -491,7 +492,7 @@ export function IntegrationAdmin() {
             />
             <textarea
               aria-label="身份签名公钥"
-              className="min-h-32 w-full rounded border bg-background p-2 font-mono text-xs"
+              className="resize-none min-h-32 w-full rounded border bg-background p-2 font-mono text-xs"
               placeholder="RSA PUBLIC KEY / PUBLIC KEY PEM"
               value={form.assertion_public_key}
               onChange={(e) =>
@@ -515,7 +516,7 @@ export function IntegrationAdmin() {
             {checking ? "正在检查…" : "检查接入配置"}
           </button>
         </fieldset>
-      </form>
+      </ValidatedForm>
       {check && checkSnapshot === formSnapshot && (
         <section
           aria-label="接入检查结果"

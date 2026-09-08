@@ -1,5 +1,12 @@
 import { isAxiosError } from "axios"
-import type { ReactNode } from "react"
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+  useId,
+} from "react"
 import type { SemanticDefinition, TopicSummary } from "@/client"
 
 export type Definition = Required<SemanticDefinition>
@@ -67,12 +74,29 @@ export function Field({
   children: ReactNode
   hint?: string
 }) {
+  const id = useId()
+  const child =
+    Children.count(children) === 1 && isValidElement(children)
+      ? (children as ReactElement<{ id?: string; "aria-describedby"?: string }>)
+      : null
+  const fieldId = child?.props.id || id
   return (
     <div className="flex min-w-0 flex-col gap-2 text-sm font-medium">
-      {label}
-      {children}
+      <label htmlFor={fieldId}>{label}</label>
+      {child
+        ? cloneElement(child, {
+            id: fieldId,
+            "aria-describedby":
+              [child.props["aria-describedby"], hint ? `${fieldId}-hint` : ""]
+                .filter(Boolean)
+                .join(" ") || undefined,
+          })
+        : children}
       {hint && (
-        <span className="text-xs font-normal leading-5 text-muted-foreground">
+        <span
+          id={`${fieldId}-hint`}
+          className="text-xs font-normal leading-5 text-muted-foreground"
+        >
           {hint}
         </span>
       )}

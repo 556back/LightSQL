@@ -1,0 +1,33 @@
+{
+  "profile": "product-admin",
+  "sourceRoots": [
+    "frontend/src"
+  ],
+  "locale": "zh-CN",
+  "canonicalMap": "UX-CONTRACT.md",
+  "requiredCapabilities": [
+    "Select/Listbox",
+    "Form",
+    "Scrollbar",
+    "Toast",
+    "CRUD"
+  ],
+  "ownership": {
+    "Select/Listbox": "native",
+    "Date": "native"
+  },
+  "requiredCommands": [
+    "build",
+    "e2e",
+    "design"
+  ],
+  "commands": {
+    "build": "npm --prefix frontend run build",
+    "e2e": "node scripts/tests/frontend_ux.cjs",
+    "design": "node scripts/tests/design_ux.cjs"
+  },
+  "evidence": {
+    "crudFullFlow": "scripts/tests/frontend_ux.cjs",
+    "failurePaths": "scripts/tests/frontend_ux.cjs"
+  }
+}

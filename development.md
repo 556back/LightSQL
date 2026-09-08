@@ -1,5 +1,7 @@
 # FastAPI Project - Development
 
+> LightSQL 当前本地开发请优先使用 [本地开发启动教程](docs/本地开发启动教程.md)，其中包含目录、查询及外部任务 Worker。下文为基础模板工作流；执行前需复制 `.env.example` 为 `.env`，并按需复制 `frontend/.env.example` 为 `frontend/.env`。真实密码与密钥只写在本地配置中。
+
 ## Local Development
 
 For local development, run PostgreSQL and Mailpit with Docker Compose, and run the FastAPI and Vite development servers locally.

@@ -8,3 +8,17 @@ frontend/node_modules
 frontend/playwright-report
 frontend/test-results
 node_modules
+.local
+**/.env
+**/.env.*
+**/*.env
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*.dump
+**/*.backup
+**/*.log
+.idea
+.agents
+.claude

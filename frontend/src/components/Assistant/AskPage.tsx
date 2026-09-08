@@ -1,7 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Link, useNavigate, useSearch } from "@tanstack/react-router"
-import { MessageSquare, Plus, Send, ShieldCheck } from "lucide-react"
-import { useState } from "react"
+import {
+  ArrowUpRight,
+  ChartNoAxesCombined,
+  MessageSquare,
+  Plus,
+  Send,
+  ShieldCheck,
+  Table2,
+  TrendingUp,
+} from "lucide-react"
+import { useRef, useState } from "react"
 import {
   AssistantService,
   type ConversationPublic,
@@ -9,9 +18,20 @@ import {
   TopicsService,
   type TurnPublic,
 } from "@/client"
+import { DataSpectrum } from "@/components/Common/DataSpectrum"
+import { PageHeader } from "@/components/Common/PageHeader"
 import { ResultPanel } from "@/components/Queries/QueryPage"
 import { control, errorMessage, Field } from "@/components/Semantic/shared"
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { SearchInput } from "@/components/ui/search-input"
 import useAuth from "@/hooks/useAuth"
 import { AnswerEvidence } from "./AnswerEvidence"
 import { AnswerFeedback } from "./AnswerFeedback"
@@ -70,22 +90,23 @@ export function AskPage() {
   })
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p className="text-xs tracking-widest text-muted-foreground">
-            探索与分析
-          </p>
-          <h1 className="mt-2 text-2xl font-semibold">智能问数</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            用自然语言查明细、做统计、看趋势，自动生成
-            SQL、图表与分析。指标口径按需使用。
-          </p>
-        </div>
-      </div>
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border bg-card p-4 text-sm">
+      <PageHeader
+        eyebrow="探索与分析 / 自然语言查询"
+        title="智能问数"
+        description="用熟悉的业务语言，查明细、看趋势、发现数据之间的联系。"
+      />
+      <div className="flex flex-wrap items-center gap-3 border-b pb-4 text-xs text-muted-foreground">
         <ShieldCheck className="size-4 text-emerald-600" />
         <span>
-          当前模型：{String(model.data?.name || "正在读取配置…")}
+          当前模型：
+          {String(
+            model.data?.name ||
+              (model.isPending
+                ? "正在读取配置…"
+                : model.isError
+                  ? "配置读取失败"
+                  : "尚未配置"),
+          )}
           {model.data?.configured ? ` · ${model.data.model}` : ""}
         </span>
         {user?.is_superuser && (
@@ -138,16 +159,15 @@ export function AskPage() {
         </p>
       )}
       <div className="grid min-w-0 gap-6 xl:grid-cols-[220px_minmax(0,1fr)]">
-        <aside className="max-h-72 space-y-3 overflow-y-auto rounded-xl border bg-card p-4 xl:max-h-[680px]">
+        <aside className="max-h-72 space-y-4 overflow-y-auto rounded-2xl border bg-card p-5 xl:max-h-[680px]">
           <h2 className="text-sm font-medium">最近会话</h2>
           <p className="text-xs text-muted-foreground">
             问题与计划保留 24 小时
           </p>
-          <input
-            aria-label="搜索历史会话"
-            className={control}
+          <SearchInput
+            label="搜索历史会话"
             value={historySearch}
-            onChange={(e) => setHistorySearch(e.target.value)}
+            onValueChange={setHistorySearch}
             placeholder="搜索问题或反馈"
           />
           {history.isError && (
@@ -171,7 +191,7 @@ export function AskPage() {
                 type="button"
                 key={c.id}
                 onClick={() => selectConversation(c.id)}
-                className={`w-full rounded-lg border p-3 text-left text-sm ${c.id === conversationId ? "border-primary/50 bg-primary/5" : "bg-card"}`}
+                className={`w-full rounded-lg border p-3 text-left text-sm ${c.id === conversationId ? "border-primary/50 bg-primary/5" : "bg-card hover:bg-muted"}`}
               >
                 <p className="line-clamp-2 break-words">
                   {c.turns[0]?.question || "新会话"}
@@ -212,16 +232,34 @@ export function AskPage() {
               onDeleted={() => selectConversation("")}
             />
           ) : (
-            <div className="flex min-h-80 flex-col items-center justify-center rounded-xl border bg-card px-6 py-12 text-center shadow-xs">
-              <span className="rounded-2xl bg-primary/8 p-4">
+            <div className="ask-welcome flex flex-col items-center justify-center rounded-2xl border bg-card px-6 py-12 text-center">
+              <DataSpectrum />
+              <span className="rounded-2xl border border-primary/15 bg-primary/8 p-4">
                 <MessageSquare className="size-7 text-primary" />
               </span>
-              <h2 className="mt-5 text-lg font-semibold">今天想了解什么？</h2>
+              <h2 className="mt-5 text-2xl font-medium tracking-tight">
+                今天想了解什么？
+              </h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 {selected
                   ? "例如：本月销售额是多少？按地区看看订单分布。"
                   : "先选择一个已发布主题，确定本次分析的数据范围。"}
               </p>
+              <div className="mt-7 flex flex-wrap justify-center gap-3 text-xs text-muted-foreground">
+                {[
+                  { icon: Table2, text: "查询业务明细" },
+                  { icon: TrendingUp, text: "追踪变化趋势" },
+                  { icon: ChartNoAxesCombined, text: "比较数据分布" },
+                ].map(({ icon: Icon, text }) => (
+                  <span
+                    key={text}
+                    className="flex items-center gap-2 rounded-lg border bg-card/80 px-3 py-2.5"
+                  >
+                    <Icon className="size-4 text-primary" />
+                    {text}
+                  </span>
+                ))}
+              </div>
               {selected ? (
                 <Button
                   className="mt-6"
@@ -230,6 +268,7 @@ export function AskPage() {
                 >
                   <Plus className="size-4" />
                   {create.isPending ? "正在创建…" : "开始新会话"}
+                  <ArrowUpRight className="size-4" />
                 </Button>
               ) : (
                 <Button className="mt-6" variant="outline" asChild>
@@ -256,6 +295,8 @@ function ConversationPanel({
   const qc = useQueryClient()
   const stream = useConversationStream(id)
   const [question, setQuestion] = useState("")
+  const deleteButton = useRef<HTMLButtonElement>(null)
+  const [confirmDelete, setConfirmDelete] = useState(false)
   const [reset, setReset] = useState(false)
   const [mode, setMode] = useState<"auto" | "metrics" | "explore">("auto")
   const [autoExecute, setAutoExecute] = useState(true)
@@ -402,7 +443,11 @@ function ConversationPanel({
             size="sm"
             variant="ghost"
             disabled={busy || remove.isPending}
-            onClick={() => remove.mutate()}
+            ref={deleteButton}
+            onClick={() => {
+              remove.reset()
+              setConfirmDelete(true)
+            }}
           >
             删除会话
           </Button>
@@ -625,10 +670,12 @@ function ConversationPanel({
         </article>
       ))}
       <form
+        noValidate
         className="space-y-3 rounded-xl border bg-card p-5"
         onSubmit={(e) => {
           e.preventDefault()
-          if (question.trim()) ask.mutate({ text: question.trim() })
+          if (!busy && enabled && question.trim())
+            ask.mutate({ text: question.trim() })
         }}
       >
         <label htmlFor="ask-question" className="text-sm font-medium">
@@ -636,7 +683,7 @@ function ConversationPanel({
         </label>
         <textarea
           id="ask-question"
-          className={`${control} mt-2 min-h-28 resize-y`}
+          className={`${control} mt-2 min-h-36 resize-none`}
           maxLength={2000}
           required
           value={question}
@@ -654,7 +701,12 @@ function ConversationPanel({
             />
             清除上下文，独立提问
           </label>
-          <Button type="submit" disabled={busy || !enabled || !question.trim()}>
+          <Button
+            className="min-w-36"
+            type="submit"
+            aria-busy={busy}
+            disabled={busy || !enabled || !question.trim()}
+          >
             <Send className="size-4" />
             {busy ? "正在理解问题…" : "发送问题"}
           </Button>
@@ -664,6 +716,50 @@ function ConversationPanel({
           经只读、字段及行权限校验后执行。请求分析时仅外发本次结果的数值摘要。
         </p>
       </form>
+      <Dialog
+        open={confirmDelete}
+        onOpenChange={(open) => !remove.isPending && setConfirmDelete(open)}
+      >
+        <DialogContent
+          onCloseAutoFocus={(event) => {
+            event.preventDefault()
+            deleteButton.current?.focus()
+          }}
+          onOpenAutoFocus={(event) => {
+            event.preventDefault()
+            document.getElementById("cancel-delete-conversation")?.focus()
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>删除此会话？</DialogTitle>
+            <DialogDescription>
+              此会话的问题与查询计划将被删除，删除后无法恢复。已登记的质量反馈遵循原有保留规则。
+            </DialogDescription>
+          </DialogHeader>
+          {remove.isError && (
+            <p role="alert" className="text-sm text-destructive">
+              {errorMessage(remove.error)}
+            </p>
+          )}
+          <DialogFooter>
+            <Button
+              id="cancel-delete-conversation"
+              variant="outline"
+              disabled={remove.isPending}
+              onClick={() => setConfirmDelete(false)}
+            >
+              取消
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={remove.isPending}
+              onClick={() => remove.mutate()}
+            >
+              删除会话
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       {(ask.isError || execute.isError || remove.isError) && (
         <p role="alert" className="text-sm text-destructive">
           {errorMessage(ask.error || execute.error || remove.error)}

@@ -33,8 +33,11 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="px-6 py-6 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:items-center">
+      <SidebarHeader className="px-6 py-7 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:items-center">
         <Logo variant="responsive" />
+        <p className="mt-3 text-[10px] tracking-[0.18em] text-muted-foreground group-data-[collapsible=icon]:hidden">
+          企业数据工作台
+        </p>
       </SidebarHeader>
       <SidebarContent>
         <Main label="探索与分析" items={baseItems} />
@@ -58,9 +61,9 @@ export function AppSidebar() {
             />
           </>
         )}
-        <div className="mx-4 mt-auto mb-6 rounded-lg border bg-background p-3 group-data-[collapsible=icon]:hidden">
+        <div className="mx-4 mt-auto mb-6 rounded-xl border border-sidebar-border bg-sidebar-accent/40 p-4 group-data-[collapsible=icon]:hidden">
           <p className="text-xs font-medium">从数据到答案</p>
-          <p className="mt-1 text-[11px] leading-5 text-muted-foreground">
+          <p className="mt-1 text-xs leading-6 text-muted-foreground">
             选好业务主题，用一句话开始分析。
           </p>
         </div>

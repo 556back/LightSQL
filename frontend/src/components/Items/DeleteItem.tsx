@@ -62,7 +62,7 @@ const DeleteItem = ({ id, onSuccess }: DeleteItemProps) => {
         Delete Item
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle>Delete Item</DialogTitle>
             <DialogDescription>

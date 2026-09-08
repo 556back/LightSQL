@@ -16,6 +16,8 @@ import {
 } from "@/client"
 import { control, errorMessage } from "@/components/Semantic/shared"
 import { Button } from "@/components/ui/button"
+import { ValidatedForm } from "@/components/ui/validated-form"
+import { type CaseResult, RunDiagnostics } from "./RunDiagnostics"
 
 type Dataset = {
   id: string
@@ -39,7 +41,7 @@ type Summary = {
   cost: string | null
   currency: string
   errors: Record<string, number>
-  cases: { case_id: string; correct: boolean; error_category: string }[]
+  cases: CaseResult[]
 }
 type Run = {
   id: string
@@ -408,7 +410,7 @@ function ReviewCard({
           ))}
         </details>
       )}
-      <form
+      <ValidatedForm
         className="mt-4 grid gap-3 md:grid-cols-2"
         onSubmit={(event) => {
           event.preventDefault()
@@ -473,7 +475,7 @@ function ReviewCard({
           审核说明
           <textarea
             aria-label="审核说明"
-            className={`${control} min-h-20`}
+            className={`resize-none ${`${control} min-h-20`}`}
             required
             maxLength={2000}
             value={note}
@@ -497,16 +499,19 @@ function ReviewCard({
             {errorMessage(mutation.error)}
           </p>
         )}
-      </form>
+      </ValidatedForm>
     </article>
   )
 }
+
+class ImportValidationError extends Error {}
 
 function EvaluationPanel() {
   const qc = useQueryClient()
   const [datasetId, setDatasetId] = useState("")
   const [split, setSplit] = useState("dev")
   const [error, setError] = useState("")
+  const [notice, setNotice] = useState("")
   const datasets = useQuery({
     queryKey: ["quality", "datasets"],
     queryFn: async () =>
@@ -527,20 +532,68 @@ function EvaluationPanel() {
       file: File
       kind: "dataset" | "run"
     }) => {
-      if (file.size > 2_000_000) throw new Error("文件不能超过 2 MB")
-      const body = JSON.parse(await file.text())
+      if (file.size > 2_000_000)
+        throw new ImportValidationError("文件不能超过 2 MB")
+      let parsed: unknown
+      try {
+        parsed = JSON.parse((await file.text()).replace(/^\uFEFF/, ""))
+      } catch {
+        throw new ImportValidationError(
+          "文件不是有效的 JSON，请检查格式后重新选择",
+        )
+      }
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        throw new ImportValidationError("文件需要包含题集或评测运行对象")
+      }
+      // Accept both raw inputs and our evidence exports; the server still
+      // validates the full definition and verifies the dataset identity/digest.
+      const body = "definition" in parsed ? parsed.definition : parsed
+      if (
+        !body ||
+        typeof body !== "object" ||
+        Array.isArray(body) ||
+        !(kind === "dataset" ? "cases" in body : "observations" in body)
+      ) {
+        throw new ImportValidationError(
+          kind === "dataset"
+            ? "请选择包含 cases 的金标题集文件"
+            : "请选择包含 observations 的评测运行文件",
+        )
+      }
       if (kind === "dataset") {
         const response = await QualityService.createDataset({
           body: body as DatasetInput,
         })
         setDatasetId(String(response.data.id))
-      } else await QualityService.createRun({ body: body as RunInput })
+        setSplit(
+          (body as DatasetInput).cases.some((item) => item.split === "dev")
+            ? "dev"
+            : "blind",
+        )
+      } else {
+        await QualityService.createRun({ body: body as RunInput })
+        setDatasetId((body as RunInput).dataset_id)
+        setSplit((body as RunInput).split)
+      }
+      return kind
     },
-    onSuccess: () => {
+    onMutate: () => {
       setError("")
+      setNotice("")
+    },
+    onSuccess: (kind) => {
+      setError("")
+      setNotice(
+        kind === "dataset"
+          ? "题集已导入，已切换到新题集。运行文件仍需对应其原题集 ID 与摘要。"
+          : "评测运行已导入，已切换到对应题集和集合。",
+      )
       qc.invalidateQueries({ queryKey: ["quality"] })
     },
-    onError: (e) => setError(errorMessage(e)),
+    onError: (e) =>
+      setError(
+        e instanceof ImportValidationError ? e.message : errorMessage(e),
+      ),
   })
   const exportData = async () => {
     try {
@@ -560,6 +613,10 @@ function EvaluationPanel() {
         <p className="mt-2 text-sm text-muted-foreground">
           导入经核对的题集及逐题运行结果，服务端按实际结果计算分数。仅比较同一题集、集合和数据快照；A
           完整语义、B 匿名化、C 逻辑语义与本地实体、D 内部模型。回放仅验证流程。
+        </p>
+        <p className="mt-2 text-xs text-muted-foreground">
+          支持原始 JSON 和本页导出文件，每个文件不超过 2
+          MB。重新导入题集会创建新记录；导入运行保留原题集关联。
         </p>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {[
@@ -588,6 +645,9 @@ function EvaluationPanel() {
             {error}
           </p>
         )}
+        <p role="status" className="mt-3 min-h-5 text-sm text-muted-foreground">
+          {upload.isPending ? "正在校验并导入文件…" : notice}
+        </p>
         <div className="mt-4 flex flex-wrap items-end gap-3">
           <label className="min-w-0 basis-full text-sm sm:flex-1 sm:basis-0">
             比较题集
@@ -634,6 +694,11 @@ function EvaluationPanel() {
       )}
       {runs.isError && (
         <Failure error={runs.error} retry={() => runs.refetch()} />
+      )}
+      {!!datasetId && runs.isPending && (
+        <p role="status" className="py-6 text-center text-muted-foreground">
+          正在读取评测运行…
+        </p>
       )}
       {!!datasetId &&
         runs.data?.filter((run) => run.split === split).length === 0 && (
@@ -684,14 +749,7 @@ function EvaluationPanel() {
                 </strong>
               </p>
             </div>
-            <details className="mt-4 text-sm">
-              <summary className="cursor-pointer">逐题错误分析</summary>
-              {run.summary.cases.map((c) => (
-                <p key={c.case_id} className="mt-2 break-words">
-                  {c.case_id} · {c.correct ? "通过" : c.error_category}
-                </p>
-              ))}
-            </details>
+            <RunDiagnostics cases={run.summary.cases} />
             <Button
               className="mt-4"
               variant="outline"

@@ -33,6 +33,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { ValidatedForm } from "@/components/ui/validated-form"
 import useAuth from "@/hooks/useAuth"
 import { type Entry, EntryEditor } from "./EntryEditor"
 import {
@@ -742,7 +743,7 @@ function AdminWorkspace({ initial }: { initial: TopicDetail }) {
           <Field label="主题说明">
             <textarea
               aria-label="主题说明"
-              className={control}
+              className={`resize-none ${control}`}
               rows={3}
               maxLength={500}
               value={meta.description}
@@ -1039,7 +1040,7 @@ function AdminWorkspace({ initial }: { initial: TopicDetail }) {
                   : "此操作删除当前未发布主题及其成员授权。"}
             </DialogDescription>
           </DialogHeader>
-          <form
+          <ValidatedForm
             className="space-y-4"
             onSubmit={(e) => {
               e.preventDefault()
@@ -1093,7 +1094,7 @@ function AdminWorkspace({ initial }: { initial: TopicDetail }) {
                   aria-label={
                     modal === "publish" ? "发布说明" : "JSON / YAML 内容"
                   }
-                  className={`${control} ${modal === "import" ? "font-mono text-xs" : ""}`}
+                  className={`resize-none ${`${control} ${modal === "import" ? "font-mono text-xs" : ""}`}`}
                   rows={modal === "import" ? 12 : 3}
                   required
                   maxLength={modal === "import" ? 200000 : 300}
@@ -1124,7 +1125,7 @@ function AdminWorkspace({ initial }: { initial: TopicDetail }) {
                       : "确认删除"}
               </Button>
             </DialogFooter>
-          </form>
+          </ValidatedForm>
         </DialogContent>
       </Dialog>
       <Dialog

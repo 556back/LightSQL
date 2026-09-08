@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ValidatedForm } from "@/components/ui/validated-form"
 import {
   DatabaseIcon,
   databaseLabel,
@@ -88,7 +89,7 @@ export function SourceEditor({
             配置数据库连接，建立数据分析的第一步。
           </DialogDescription>
         </DialogHeader>
-        <form
+        <ValidatedForm
           className="space-y-5 pt-2"
           onSubmit={(event) => {
             event.preventDefault()
@@ -279,7 +280,7 @@ export function SourceEditor({
               {source ? "保存修改" : "保存连接"}
             </Button>
           </DialogFooter>
-        </form>
+        </ValidatedForm>
       </DialogContent>
     </Dialog>
   )

@@ -1,10 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { Link, useNavigate, useSearch } from "@tanstack/react-router"
-import { ArrowRight, Layers3, MessageSquare, Plus, Search } from "lucide-react"
-import { useState } from "react"
+import {
+  ArrowRight,
+  Database,
+  Layers3,
+  Loader2,
+  MessageSquare,
+  Plus,
+} from "lucide-react"
+import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { DatasourcesService, TopicsService } from "@/client"
 import { DataJourney } from "@/components/Common/DataJourney"
+import { DataSpectrum } from "@/components/Common/DataSpectrum"
+import { PageHeader } from "@/components/Common/PageHeader"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -14,6 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
+import { SearchInput } from "@/components/ui/search-input"
 import useAuth from "@/hooks/useAuth"
 import { control, errorMessage, Field, Status } from "./shared"
 
@@ -23,8 +33,11 @@ export function TopicsPage() {
   const navigate = useNavigate()
   const cache = useQueryClient()
   const [search, setSearch] = useState("")
+  const [displayLimit, setDisplayLimit] = useState(12)
   const [status, setStatus] = useState("all")
+  const createButton = useRef<HTMLButtonElement>(null)
   const [creating, setCreating] = useState(false)
+  const [formError, setFormError] = useState("")
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -61,40 +74,57 @@ export function TopicsPage() {
           : t.availability !== "ready")),
   )
   return (
-    <div className="space-y-7">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="mb-2 text-[11px] tracking-[0.16em] text-muted-foreground">
-            业务数据空间
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="探索与分析 / 业务数据空间"
+        title="业务主题"
+        description={
+          user?.is_superuser
+            ? "把数据整理成业务语言。选择分析范围，或为团队构建一个新的主题。"
+            : "选择你要分析的业务范围，开始提问，或查看指标的计算口径。"
+        }
+        action={
+          user?.is_superuser && (
+            <Button
+              ref={createButton}
+              onClick={() => {
+                const enabled =
+                  sources.data?.data.filter((source) => source.enabled) ?? []
+                setForm({
+                  name: "",
+                  description: "",
+                  owner: user?.full_name || "",
+                  source_id:
+                    enabled.find((source) => source.id === intent.source)?.id ??
+                    (enabled.length === 1 ? enabled[0].id : ""),
+                })
+                setFormError("")
+                create.reset()
+                setCreating(true)
+              }}
+            >
+              <Plus className="size-4" />
+              新建主题
+            </Button>
+          )
+        }
+      />
+      <section className="topic-intro" aria-label="主题使用指南">
+        <DataSpectrum />
+        <div className="topic-intro-copy">
+          <p className="mb-3 text-[11px] tracking-[0.15em] text-sidebar-primary">
+            让业务问题，连接真实数据
           </p>
-          <h1 className="text-2xl font-semibold tracking-tight">业务主题</h1>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            {user?.is_superuser
-              ? "把相关数据表整理为一个分析范围，例如「销售经营」。发布后，大家就能围绕它提问。"
-              : "选择你要分析的业务范围，开始提问，或查看指标的计算口径。"}
+          <h2 className="text-2xl font-medium tracking-tight sm:text-[28px]">
+            从一个主题，发现更多可能。
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-sidebar-foreground/80">
+            每个主题，都是一组有业务含义的数据。
+            <br className="hidden sm:block" />
+            选择已发布主题，开始你的下一次探索。
           </p>
         </div>
-        {user?.is_superuser && (
-          <Button
-            onClick={() => {
-              const enabled =
-                sources.data?.data.filter((source) => source.enabled) ?? []
-              setForm({
-                name: "",
-                description: "",
-                owner: user?.full_name || "",
-                source_id:
-                  enabled.find((source) => source.id === intent.source)?.id ??
-                  (enabled.length === 1 ? enabled[0].id : ""),
-              })
-              setCreating(true)
-            }}
-          >
-            <Plus className="size-4" />
-            新建主题
-          </Button>
-        )}
-      </div>
+      </section>
       {user?.is_superuser && <DataJourney current="/topics" />}
       {user?.is_superuser &&
         sources.data?.data.some(
@@ -109,7 +139,7 @@ export function TopicsPage() {
             」进入。点击“新建主题”时会自动选择这个数据库。
           </p>
         )}
-      <div className="grid grid-cols-3 divide-x rounded-xl border bg-card py-5">
+      <div className="grid grid-cols-3 divide-x border-b pb-5">
         {[
           ["业务主题", topics.data?.length ?? 0],
           [
@@ -121,9 +151,14 @@ export function TopicsPage() {
             topics.data?.reduce((n, t) => n + t.metric_count, 0) ?? 0,
           ],
         ].map(([label, count]) => (
-          <div key={label} className="px-4 sm:px-6">
+          <div
+            key={label}
+            className="flex flex-wrap items-baseline gap-x-3 gap-y-1 px-3 sm:px-5"
+          >
             <p className="text-xs text-muted-foreground">{label}</p>
-            <p className="mt-2 text-2xl font-semibold tabular-nums">{count}</p>
+            <p className="stat-value text-2xl">
+              {topics.isPending || topics.isError ? "—" : count}
+            </p>
           </div>
         ))}
       </div>
@@ -142,25 +177,34 @@ export function TopicsPage() {
               size="sm"
               variant={status === value ? "secondary" : "ghost"}
               aria-pressed={status === value}
-              onClick={() => setStatus(value)}
+              onClick={() => {
+                setStatus(value)
+                setDisplayLimit(12)
+              }}
             >
               {label}
             </Button>
           ))}
         </fieldset>
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3 top-2.5 size-4 text-muted-foreground" />
-          <input
-            aria-label="搜索主题"
-            className={`${control} pl-9`}
-            placeholder="搜索主题名称或说明"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+        <SearchInput
+          className="w-full sm:w-72"
+          label="搜索主题"
+          placeholder="搜索主题名称或说明"
+          value={search}
+          onValueChange={(value) => {
+            setSearch(value)
+            setDisplayLimit(12)
+          }}
+        />
       </div>
       {topics.isPending ? (
-        <p className="text-sm text-muted-foreground">正在加载业务主题…</p>
+        <div
+          role="status"
+          className="flex min-h-72 items-center justify-center gap-2 text-sm text-muted-foreground"
+        >
+          <Loader2 className="size-4 animate-spin" />
+          正在加载业务主题…
+        </div>
       ) : topics.isError ? (
         <div role="alert" className="rounded-xl border p-6">
           <p>{errorMessage(topics.error)}</p>
@@ -203,14 +247,15 @@ export function TopicsPage() {
           )}
         </div>
       ) : (
-        <div className="grid gap-4 lg:grid-cols-2">
-          {list.map((topic) => (
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {list.slice(0, displayLimit).map((topic) => (
             <article
               key={topic.id}
-              className="group flex min-w-0 flex-col gap-4 rounded-xl border bg-card p-5 shadow-xs transition-shadow hover:shadow-md sm:p-6"
+              data-availability={topic.availability}
+              className="topic-card group flex min-w-0 flex-col gap-5 rounded-2xl border bg-card p-5 sm:p-6"
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="rounded-lg bg-primary/8 p-2.5 text-primary">
+                <span className="topic-card-icon rounded-xl p-3">
                   <Layers3 className="size-5" />
                 </span>
                 <Status value={topic.availability} />
@@ -239,8 +284,8 @@ export function TopicsPage() {
                 </span>
               </div>
               {topic.source_name && (
-                <p className="truncate text-xs text-muted-foreground">
-                  数据源 · {topic.source_name}
+                <p className="flex items-center gap-2 break-all text-xs text-muted-foreground">
+                  <Database className="size-3.5 shrink-0" /> {topic.source_name}
                 </p>
               )}
               <div className="flex flex-wrap items-center justify-between gap-2">
@@ -271,11 +316,26 @@ export function TopicsPage() {
           ))}
         </div>
       )}
+      {list.length > displayLimit && (
+        <div className="flex justify-center">
+          <Button
+            variant="outline"
+            onClick={() => setDisplayLimit((count) => count + 12)}
+          >
+            加载更多主题（还有 {list.length - displayLimit} 个）
+          </Button>
+        </div>
+      )}
       <Dialog
         open={creating}
         onOpenChange={(open) => !create.isPending && setCreating(open)}
       >
-        <DialogContent>
+        <DialogContent
+          onCloseAutoFocus={(event) => {
+            event.preventDefault()
+            createButton.current?.focus()
+          }}
+        >
           <DialogHeader>
             <DialogTitle>新建业务主题</DialogTitle>
             <DialogDescription>
@@ -283,9 +343,26 @@ export function TopicsPage() {
             </DialogDescription>
           </DialogHeader>
           <form
+            noValidate
             className="space-y-4"
             onSubmit={(e) => {
               e.preventDefault()
+              if (create.isPending) return
+              const invalid = !form.name.trim()
+                ? "主题名称"
+                : !form.owner.trim()
+                  ? "业务责任人"
+                  : !form.source_id
+                    ? "绑定数据源"
+                    : ""
+              if (invalid) {
+                setFormError(`请填写${invalid}`)
+                e.currentTarget
+                  .querySelector<HTMLElement>(`[aria-label="${invalid}"]`)
+                  ?.focus()
+                return
+              }
+              setFormError("")
               create.mutate()
             }}
           >
@@ -298,6 +375,12 @@ export function TopicsPage() {
               <Field key={key} label={label}>
                 <input
                   aria-label={label}
+                  aria-invalid={formError === `请填写${label}`}
+                  aria-describedby={
+                    formError === `请填写${label}`
+                      ? "topic-form-error"
+                      : undefined
+                  }
                   className={control}
                   required
                   maxLength={key === "name" ? 80 : 120}
@@ -352,7 +435,7 @@ export function TopicsPage() {
             <Field label="主题说明">
               <textarea
                 aria-label="主题说明"
-                className={control}
+                className={`${control} resize-none`}
                 maxLength={500}
                 rows={3}
                 placeholder="例如：分析订单金额、客户分布和销售趋势"
@@ -362,6 +445,15 @@ export function TopicsPage() {
                 }
               />
             </Field>
+            {(formError || create.isError) && (
+              <p
+                id="topic-form-error"
+                role="alert"
+                className="text-sm text-destructive"
+              >
+                {formError || errorMessage(create.error)}
+              </p>
+            )}
             <DialogFooter>
               <Button
                 variant="outline"

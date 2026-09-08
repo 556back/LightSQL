@@ -70,6 +70,7 @@ const ChangePassword = () => {
       <h3 className="text-lg font-semibold py-4">Change Password</h3>
       <Form {...form}>
         <form
+          noValidate
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >

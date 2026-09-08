@@ -2,13 +2,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   ArrowRight,
   CheckCircle2,
-  ChevronRight,
   Database,
   Ellipsis,
   KeyRound,
   Loader2,
   Plus,
-  Search,
   ShieldCheck,
   Unplug,
   XCircle,
@@ -17,6 +15,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { type DataSourcePublic, DatasourcesService } from "@/client"
 import { DataJourney } from "@/components/Common/DataJourney"
+import { PageHeader } from "@/components/Common/PageHeader"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -32,7 +31,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+import { SearchInput } from "@/components/ui/search-input"
 import {
   Sheet,
   SheetContent,
@@ -55,6 +54,7 @@ export function DataSourcesPage() {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const [search, setSearch] = useState("")
+  const [page, setPage] = useState(1)
   const [kindFilter, setKindFilter] = useState("all")
   const [editor, setEditor] = useState<DataSourcePublic | "new" | null>(null)
   const [detailId, setDetailId] = useState<string | null>(null)
@@ -124,6 +124,9 @@ export function DataSourcesPage() {
         .toLowerCase()
         .includes(search.toLowerCase()),
   )
+  const pageCount = Math.max(1, Math.ceil(visible.length / 10))
+  const activePage = Math.min(page, pageCount)
+  const pageSources = visible.slice((activePage - 1) * 10, activePage * 10)
   const connected = sources.filter(
     (source) => source.enabled && source.status === "connected",
   ).length
@@ -142,27 +145,21 @@ export function DataSourcesPage() {
     )
   return (
     <div className="mx-auto max-w-[1280px] space-y-7 pb-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <div className="mb-3 flex items-center gap-2 text-xs font-medium text-muted-foreground">
-            <span>数据管理</span>
-            <ChevronRight className="size-3" />
-            <span className="text-foreground">数据库连接</span>
-          </div>
-          <h1 className="text-2xl font-semibold tracking-tight">数据库连接</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            管理业务数据库的连接信息。连接成功后，前往数据表目录选择要分析的表。
-          </p>
-        </div>
-        <Button
-          className="mt-6 h-10 px-4"
-          onClick={() => setEditor("new")}
-          disabled={!user?.is_superuser}
-        >
-          <Plus className="size-4" />
-          添加数据源
-        </Button>
-      </div>
+      <PageHeader
+        eyebrow="数据准备 / 数据管理"
+        title="数据库连接"
+        description="管理业务数据库的连接信息。连接成功后，前往数据表目录选择要分析的表。"
+        action={
+          <Button
+            className="h-10 px-4"
+            onClick={() => setEditor("new")}
+            disabled={!user?.is_superuser}
+          >
+            <Plus className="size-4" />
+            添加数据源
+          </Button>
+        }
+      />
       <DataJourney current="/datasources" />
       <div className="grid gap-4 sm:grid-cols-3">
         {[
@@ -217,21 +214,24 @@ export function DataSourcesPage() {
             </span>
           </div>
           <div className="flex flex-wrap gap-2">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-3 top-2.5 size-4 text-muted-foreground" />
-              <Input
-                aria-label="搜索数据源"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="h-9 w-60 bg-background pl-9"
-                placeholder="搜索名称、地址或数据库"
-              />
-            </div>
+            <SearchInput
+              label="搜索数据源"
+              value={search}
+              onValueChange={(value) => {
+                setSearch(value)
+                setPage(1)
+              }}
+              className="w-full sm:w-64"
+              placeholder="搜索名称、地址或数据库"
+            />
             <select
               aria-label="数据库类型筛选"
               value={kindFilter}
-              onChange={(e) => setKindFilter(e.target.value)}
-              className="h-9 rounded-md border bg-background px-3 text-sm"
+              onChange={(e) => {
+                setKindFilter(e.target.value)
+                setPage(1)
+              }}
+              className="h-10 rounded-md border bg-background px-3 text-sm"
             >
               <option value="all">全部类型</option>
               {Object.entries(kinds).map(([key, value]) => (
@@ -267,7 +267,7 @@ export function DataSourcesPage() {
             <p className="mb-5 mt-2 text-sm text-muted-foreground">
               {sources.length
                 ? "试试其他关键词，或切换数据库类型。"
-                : "支持 PostgreSQL、MySQL、Oracle、达梦和人大金仓，连接信息会安全保存。"}
+                : "支持 PostgreSQL、MySQL、Oracle，连接信息会安全保存。"}
             </p>
             {!sources.length && (
               <Button variant="outline" onClick={() => setEditor("new")}>
@@ -289,7 +289,7 @@ export function DataSourcesPage() {
                 </tr>
               </thead>
               <tbody>
-                {visible.map((source) => (
+                {pageSources.map((source) => (
                   <tr
                     key={source.id}
                     className="group border-t transition-colors hover:bg-muted/25"
@@ -394,6 +394,32 @@ export function DataSourcesPage() {
               </tbody>
             </table>
           </div>
+        )}
+        {visible.length > 10 && (
+          <nav
+            aria-label="数据源分页"
+            className="flex flex-wrap items-center justify-end gap-3 border-t px-5 py-3 text-xs text-muted-foreground"
+          >
+            <span>
+              第 {activePage} / {pageCount} 页 · {visible.length} 个结果
+            </span>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={activePage === 1}
+              onClick={() => setPage(activePage - 1)}
+            >
+              上一页
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={activePage === pageCount}
+              onClick={() => setPage(activePage + 1)}
+            >
+              下一页
+            </Button>
+          </nav>
         )}
         <div className="flex flex-wrap justify-between gap-2 border-t bg-muted/15 px-5 py-3 text-xs text-muted-foreground">
           <span>

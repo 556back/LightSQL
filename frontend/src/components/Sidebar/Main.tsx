@@ -51,10 +51,14 @@ export function Main({ items, label }: MainProps) {
                 <SidebarMenuButton
                   tooltip={item.title}
                   isActive={isActive}
-                  className="h-10 rounded-lg px-3 text-sm data-[active=true]:bg-primary/10 data-[active=true]:text-primary data-[active=true]:font-semibold"
+                  className="h-11 rounded-lg px-3 text-sm data-[active=true]:bg-sidebar-accent data-[active=true]:text-primary data-[active=true]:font-semibold"
                   asChild
                 >
-                  <RouterLink to={item.path} onClick={handleMenuClick}>
+                  <RouterLink
+                    to={item.path}
+                    onClick={handleMenuClick}
+                    aria-current={isActive ? "page" : undefined}
+                  >
                     <item.icon />
                     <span>{item.title}</span>
                   </RouterLink>

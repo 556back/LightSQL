@@ -19,7 +19,7 @@ export function Logo({
       {variant !== "icon" && (
         <span
           className={cn(
-            "text-xl font-semibold tracking-tight",
+            "font-[family-name:var(--font-display)] text-[23px] font-semibold tracking-tight",
             variant === "responsive" && "group-data-[collapsible=icon]:hidden",
           )}
         >

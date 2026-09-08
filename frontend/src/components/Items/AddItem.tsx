@@ -85,7 +85,7 @@ const AddItem = () => {
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form noValidate onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid gap-4 py-4">
               <FormField
                 control={form.control}

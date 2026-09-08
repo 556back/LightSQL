@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
+  SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
@@ -28,41 +29,43 @@ export const SidebarAppearance = () => {
   const Icon = ICON_MAP[theme]
 
   return (
-    <SidebarMenuItem>
-      <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild>
-          <SidebarMenuButton tooltip="显示主题" data-testid="theme-button">
-            <Icon className="size-4 text-muted-foreground" />
-            <span>显示主题</span>
-            <span className="sr-only">切换显示主题</span>
-          </SidebarMenuButton>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          side={isMobile ? "top" : "right"}
-          align="end"
-          className="w-(--radix-dropdown-menu-trigger-width) min-w-56"
-        >
-          <DropdownMenuItem
-            data-testid="light-mode"
-            onClick={() => setTheme("light")}
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuButton tooltip="显示主题" data-testid="theme-button">
+              <Icon className="size-4 text-muted-foreground" />
+              <span>显示主题</span>
+              <span className="sr-only">切换显示主题</span>
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            side={isMobile ? "top" : "right"}
+            align="end"
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56"
           >
-            <Sun className="mr-2 h-4 w-4" />
-            浅色
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            data-testid="dark-mode"
-            onClick={() => setTheme("dark")}
-          >
-            <Moon className="mr-2 h-4 w-4" />
-            深色
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setTheme("system")}>
-            <Monitor className="mr-2 h-4 w-4" />
-            跟随系统
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </SidebarMenuItem>
+            <DropdownMenuItem
+              data-testid="light-mode"
+              onClick={() => setTheme("light")}
+            >
+              <Sun className="mr-2 h-4 w-4" />
+              浅色
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              data-testid="dark-mode"
+              onClick={() => setTheme("dark")}
+            >
+              <Moon className="mr-2 h-4 w-4" />
+              深色
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("system")}>
+              <Monitor className="mr-2 h-4 w-4" />
+              跟随系统
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
   )
 }
 

@@ -2,7 +2,9 @@
 import copy
 import uuid
 from datetime import timedelta
-from decimal import Decimal
+from decimal import Decimal, localcontext
+from fractions import Fraction
+from itertools import permutations
 
 import pytest
 from fastapi import HTTPException
@@ -13,7 +15,12 @@ from app.modules.assistant.models import AssistantTurn, Conversation
 from app.modules.assistant.service import purge
 from app.modules.datasources.models import now
 from app.modules.quality import operations
-from app.modules.quality.evaluation import equal_rows, score
+from app.modules.quality.evaluation import (
+    equal_rows,
+    numeric_equal,
+    row_difference,
+    score,
+)
 from app.modules.quality.models import (
     DatasetInput,
     GoldCase,
@@ -216,6 +223,10 @@ def test_run_api_digest_score_and_no_payload_in_listing(assistant_env):
     response = client.post(BASE + "/runs", json=body)
     assert response.status_code == 201, response.text
     assert response.json()["summary"]["correct"] == 2
+    assert response.json()["summary"]["scoring_version"] == 2
+    stored = client.get(BASE + "/runs/" + response.json()["id"]).json()
+    assert stored["summary"] == response.json()["summary"]
+    assert stored["summary"]["cases"][0]["difference"] is None
     body["dataset_digest"] = "b" * 64
     assert client.post(BASE + "/runs", json=body).status_code == 409
     listing = client.get(BASE + "/runs").json()
@@ -255,3 +266,142 @@ def test_quality_validation_does_not_echo_payload(env):
     body["cases"][0]["question"] = "private" * 500
     response = client.post(BASE + "/datasets", json=body)
     assert response.status_code == 422 and "private" not in response.text
+
+
+@pytest.mark.parametrize("ordered", [False, True])
+@pytest.mark.parametrize(
+    "left,right,tolerance,expected",
+    [
+        ("1.00000000000000000000000000001", "0", "1", False),
+        ("1", "-1e-1000000", "1", False),
+        ("1", "1e-1000000", "1", True),
+        ("1e9999999", "0", "1", False),
+        ("1e9999999", "1e9999999", "0", True),
+        ("1e-9999999", "0", "0", False),
+        (
+            "123456789012345678901234567890.01",
+            "123456789012345678901234567890.02",
+            "0.01",
+            True,
+        ),
+        ("0", "-0", "0", True),
+    ],
+)
+def test_decimal_comparison_preserves_precision_and_extreme_exponents(
+    ordered, left, right, tolerance, expected
+):
+    case = GoldCase.model_validate(dataset()["cases"][0])
+    case.expected_rows, case.tolerance, case.ordered = (
+        [[left]],
+        Decimal(tolerance),
+        ordered,
+    )
+    observed = Observation(
+        case_id=case.id,
+        action="answer",
+        columns=case.columns,
+        rows=[[right]],
+        elapsed_ms=1,
+    )
+    with localcontext() as ctx:
+        ctx.prec = 6
+        assert equal_rows(case, observed) is expected
+
+
+def test_numeric_comparison_matches_exact_rational_oracle():
+    values = [
+        Decimal(v)
+        for v in (
+            "-1.00000000000000000000000000001",
+            "-1",
+            "-0.00001",
+            "0",
+            "0.99999999999999999999999999999",
+            "1",
+            "1e50",
+        )
+    ]
+    for left in values:
+        for right in values:
+            for tolerance in (Decimal(0), Decimal("0.00001"), Decimal(1)):
+                expected = abs(Fraction(left) - Fraction(right)) <= Fraction(tolerance)
+                assert numeric_equal(left, right, tolerance) is expected
+
+
+def test_unordered_tolerance_matches_exhaustive_assignment_oracle():
+    case = GoldCase.model_validate(dataset()["cases"][0])
+    case.expected_rows, case.tolerance = [["0"], ["1"], ["1"]], Decimal("0.5")
+    for values in permutations(("-0.5", "0.5", "1.5")):
+        observation = Observation(
+            case_id=case.id,
+            action="answer",
+            columns=case.columns,
+            rows=[[v] for v in values],
+            elapsed_ms=1,
+        )
+        expected = any(
+            all(
+                abs(Fraction(want[0]) - Fraction(got)) <= Fraction(1, 2)
+                for want, got in zip(case.expected_rows, assignment, strict=True)
+            )
+            for assignment in permutations(values)
+        )
+        assert equal_rows(case, observation) is expected
+
+
+@pytest.mark.parametrize(
+    "changes,code",
+    [
+        ({"truncated": True}, "truncated"),
+        ({"columns": ["different"]}, "columns"),
+        ({"rows": []}, "row_count"),
+        ({"rows": [["4000", "private"]]}, "row_width"),
+        ({"rows": [["private"]]}, "numeric_value"),
+        ({"rows": [["3999"]]}, "unordered_rows"),
+        ({"action": "clarify"}, "action"),
+        ({"critical": True}, "critical"),
+        ({"error_category": "permission"}, "reported_error"),
+    ],
+)
+def test_scoring_reports_differences_without_cell_values(changes, code):
+    body = run_body()
+    body["observations"][0].update(changes)
+    summary = score(
+        DatasetInput.model_validate(dataset()), RunInput.model_validate(body)
+    )
+    assert summary["scoring_version"] == 2
+    assert summary["correct"] == 1
+    assert summary["cases"][0]["difference"]["code"] == code
+    assert summary["cases"][1]["difference"] is None
+    assert "private" not in str(summary)
+
+
+def test_exact_unordered_thousand_rows_preserves_types_and_multiplicity():
+    case = GoldCase.model_validate(dataset()["cases"][0])
+    case.expected_rows = [[str(i % 100)] for i in range(1000)]
+    observed = Observation(
+        case_id=case.id,
+        action="answer",
+        columns=case.columns,
+        rows=list(reversed(case.expected_rows)),
+        elapsed_ms=1,
+    )
+    assert equal_rows(case, observed)
+    observed.rows[0] = [True]
+    assert not equal_rows(case, observed)
+    observed.rows[0] = ["98"]
+    assert not equal_rows(case, observed)
+
+
+def test_invalid_reference_and_ordered_diagnostics():
+    case = GoldCase.model_validate(dataset()["cases"][0])
+    observed = Observation.model_validate(run_body()["observations"][0])
+    case.expected_rows = [["NaN"]]
+    assert row_difference(case, observed) == {
+        "code": "numeric_value",
+        "row": 1,
+        "column": 1,
+        "side": "expected",
+    }
+    case.expected_rows, case.ordered = [["1"]], True
+    assert row_difference(case, observed) == {"code": "ordered_rows", "row": 1}

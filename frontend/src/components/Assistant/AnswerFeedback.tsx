@@ -7,6 +7,7 @@ import {
 } from "@/client"
 import { control, errorMessage } from "@/components/Semantic/shared"
 import { Button } from "@/components/ui/button"
+import { ValidatedForm } from "@/components/ui/validated-form"
 
 export function AnswerFeedback({
   conversationId,
@@ -68,7 +69,7 @@ export function AnswerFeedback({
         </Button>
       </div>
       {editing && (
-        <form
+        <ValidatedForm
           className="mt-3 space-y-3"
           onSubmit={(event) => {
             event.preventDefault()
@@ -108,7 +109,7 @@ export function AnswerFeedback({
             补充说明
             <textarea
               aria-label="反馈说明"
-              className={`${control} min-h-20`}
+              className={`resize-none ${`${control} min-h-20`}`}
               maxLength={1000}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
@@ -122,7 +123,7 @@ export function AnswerFeedback({
           <Button size="sm" disabled={mutation.isPending}>
             保存反馈
           </Button>
-        </form>
+        </ValidatedForm>
       )}
       {mutation.isError && (
         <p role="alert" className="mt-2 text-destructive">

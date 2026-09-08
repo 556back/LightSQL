@@ -10,6 +10,7 @@ import {
 } from "@/client"
 import { control, errorMessage, Field } from "@/components/Semantic/shared"
 import { Button } from "@/components/ui/button"
+import { ValidatedForm } from "@/components/ui/validated-form"
 
 type WritableGateway = GatewayInputWritable
 const blank: WritableGateway = {
@@ -255,7 +256,7 @@ function GatewayForm({
     },
   })
   return (
-    <form
+    <ValidatedForm
       onSubmit={(e) => {
         e.preventDefault()
         save.mutate()
@@ -408,6 +409,6 @@ function GatewayForm({
           取消
         </Button>
       </div>
-    </form>
+    </ValidatedForm>
   )
 }

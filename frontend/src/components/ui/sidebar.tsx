@@ -20,8 +20,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
 import { useIsMobile } from "@/hooks/useMobile"
+import { cn } from "@/lib/utils"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -107,6 +107,12 @@ function SidebarProvider({
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (
+        !event.isComposing &&
+        !(
+          event.target instanceof HTMLElement &&
+          (event.target.isContentEditable ||
+            /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName))
+        ) &&
         event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
         (event.metaKey || event.ctrlKey)
       ) {
@@ -206,8 +212,8 @@ function Sidebar({
           side={side}
         >
           <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+            <SheetTitle>工作空间导航</SheetTitle>
+            <SheetDescription>选择要打开的功能页面。</SheetDescription>
           </SheetHeader>
           <div className="flex h-full w-full flex-col">{children}</div>
         </SheetContent>
@@ -268,13 +274,15 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar, open } = useSidebar()
-  const sidebarCopy = open ? "Collapse Sidebar" : "Open Sidebar"
+  const { toggleSidebar, open, isMobile, openMobile } = useSidebar()
+  const expanded = isMobile ? openMobile : open
+  const sidebarCopy = expanded ? "收起导航栏" : "打开导航栏"
 
   return (
     <Button
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
+      aria-expanded={expanded}
       variant="ghost"
       size="icon"
       className={cn("size-7", className)}
@@ -297,7 +305,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
     <button
       data-sidebar="rail"
       data-slot="sidebar-rail"
-      aria-label="Toggle Sidebar"
+      aria-label="切换导航栏"
       tabIndex={-1}
       onClick={toggleSidebar}
       title="Toggle Sidebar"
@@ -580,7 +588,7 @@ function SidebarMenuAction({
         "peer-data-[size=lg]/menu-button:top-2.5",
         "group-data-[collapsible=icon]:hidden",
         showOnHover &&
-        "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
+          "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
         className,
       )}
       {...props}

@@ -48,7 +48,7 @@ const DeleteConfirmation = () => {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle>Confirmation Required</DialogTitle>
             <DialogDescription>

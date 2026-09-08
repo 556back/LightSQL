@@ -62,7 +62,7 @@ const DeleteUser = ({ id, onSuccess }: DeleteUserProps) => {
         Delete User
       </DropdownMenuItem>
       <DialogContent className="sm:max-w-md">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
             <DialogTitle>Delete User</DialogTitle>
             <DialogDescription>
