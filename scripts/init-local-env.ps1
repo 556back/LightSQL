@@ -1,6 +1,11 @@
 param(
     [string]$AdminEmail = 'admin@lightsql.example.com',
-    [ValidateRange(1024, 65535)][int]$Port = 18000
+    [ValidateRange(1024, 65535)][int]$Port = 18000,
+    [string]$AdminPassword,
+    [string]$PostgresPassword,
+    [string]$SecretKey,
+    [string]$DatasourceEncryptionKey,
+    [string]$ProjectName = 'lightsql-local'
 )
 $ErrorActionPreference = 'Stop'
 if ($AdminEmail -notmatch '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$') {
@@ -25,12 +30,13 @@ function New-HexSecret {
 }
 $encryptionKey = [Convert]::ToBase64String((New-RandomBytes 32)).Replace('+', '-').Replace('/', '_')
 $lines = @(
+    "LIGHTSQL_PROJECT_NAME=$ProjectName",
     "LIGHTSQL_PORT=$Port",
     "FIRST_SUPERUSER=$AdminEmail",
-    "FIRST_SUPERUSER_PASSWORD=$(New-HexSecret)",
-    "POSTGRES_PASSWORD=$(New-HexSecret)",
-    "SECRET_KEY=$(New-HexSecret)",
-    "DATASOURCE_ENCRYPTION_KEY=$encryptionKey",
+    "FIRST_SUPERUSER_PASSWORD=$(if ($AdminPassword) { $AdminPassword } else { New-HexSecret })",
+    "POSTGRES_PASSWORD=$(if ($PostgresPassword) { $PostgresPassword } else { New-HexSecret })",
+    "SECRET_KEY=$(if ($SecretKey) { $SecretKey } else { New-HexSecret })",
+    "DATASOURCE_ENCRYPTION_KEY=$(if ($DatasourceEncryptionKey) { $DatasourceEncryptionKey } else { $encryptionKey })",
     'DATASOURCE_ALLOWED_HOSTS=[]',
     'MODEL_GATEWAY_ALLOWED_BASE_URLS=[]'
 )

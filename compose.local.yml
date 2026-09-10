@@ -1,4 +1,4 @@
-name: lightsql-local
+name: ${LIGHTSQL_PROJECT_NAME:-lightsql-local}
 
 x-environment: &environment
   PROJECT_NAME: LightSQL
